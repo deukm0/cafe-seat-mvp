@@ -1,87 +1,23 @@
 import { useState, useEffect } from "react";
 import { subscribeCafes } from "./firebase";
 
-// ── 실제 현장 조사 데이터 (2026.05) ──────────────────────────────────────
-// Firebase 연동 후에는 이 배열 대신 Firestore 실시간 구독으로 대체됨
+// ── MOCK 데이터 (Firebase 연결 전 fallback / 개발용) ────────────────────────
 const MOCK_CAFES = [
-  {
-    id: "starbucks_dongmun",
-    name: "스타벅스 연대동문점",
-    totalSeats: 50,
-    walkMin: 2,
-    naverUrl: "https://map.naver.com/v5/search/스타벅스 연대동문점",
-    popularity: 72,
-  },
-  {
-    id: "letmealone",
-    name: "렛미얼론",
-    totalSeats: 80,
-    walkMin: 8,
-    naverUrl: "https://map.naver.com/v5/search/렛미얼론",
-    popularity: 38,
-  },
-  {
-    id: "eagle_dabang",
-    name: "독수리다방",
-    totalSeats: 70,
-    walkMin: 9,
-    naverUrl: "https://map.naver.com/v5/search/독수리다방",
-    popularity: 55,
-  },
-  {
-    id: "twosome_yonsei",
-    name: "투썸플레이스 신촌연세로점",
-    totalSeats: 50,
-    walkMin: 10,
-    naverUrl: "https://map.naver.com/v5/search/투썸플레이스 신촌연세로점",
-    popularity: 81,
-  },
-  {
-    id: "starbucks_yonsei",
-    name: "스타벅스 연대점",
-    totalSeats: 60,
-    walkMin: 9,
-    naverUrl: "https://map.naver.com/v5/search/스타벅스 연대점",
-    popularity: 20,
-  },
-  {
-    id: "hollys_sinchon",
-    name: "할리스커피 신촌점",
-    totalSeats: 50,
-    walkMin: 9,
-    naverUrl: "https://map.naver.com/v5/search/할리스커피 신촌점",
-    popularity: 63,
-  },
-  {
-    id: "cafe_place",
-    name: "카페 플레이스",
-    totalSeats: 60,
-    walkMin: 11,
-    naverUrl: "https://map.naver.com/v5/search/카페 플레이스",
-    popularity: 45,
-  },
-  {
-    id: "mahogany_yonsei",
-    name: "마호가니 연세대 공학관점",
-    totalSeats: 40,
-    walkMin: 5,
-    naverUrl: "https://map.naver.com/v5/search/마호가니 연세대 공학관점",
-    popularity: 30,
-  },
-  {
-    id: "cafe_ann",
-    name: "카페앤",
-    totalSeats: 70,
-    walkMin: 12,
-    naverUrl: "https://map.naver.com/v5/search/카페앤",
-    popularity: 75,
-  },
+  { id: "letmealone",    name: "렛미얼론",                  totalSeats: 80, walkMin: 8,  naverUrl: "https://map.naver.com/p/entry/place/1618419604", popularity: 38 },
+  { id: "eagle_dabang",  name: "독수리다방",                 totalSeats: 70, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/31608233",   popularity: 55 },
+  { id: "twosome_yonsei",name: "투썸플레이스 신촌연세로점",   totalSeats: 50, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/1935823121", popularity: 81 },
+  { id: "starbucks_yonsei",name:"스타벅스 연대점",           totalSeats: 60, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11807591",   popularity: 0  },
+  { id: "hollys_sinchon",name: "할리스 신촌점",              totalSeats: 50, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11593558",   popularity: 63 },
+  { id: "mahogany_yonsei",name:"마호가니 연세대점",           totalSeats: 40, walkMin: 5,  naverUrl: "https://map.naver.com/p/entry/place/1432206951", popularity: 30 },
+  { id: "cafe_ann",      name: "카페앤 신촌점",               totalSeats: 70, walkMin: 12, naverUrl: "https://map.naver.com/p/entry/place/1975933458", popularity: 75 },
+  { id: "elpis_sinchon", name: "엘피스카페 신촌점",           totalSeats: 80, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/38275926",   popularity: 65 },
 ];
 
-// ── 혼잡도 계산 유틸 ──────────────────────────────────────────────────────
+// ── 혼잡도 계산 ───────────────────────────────────────────────────────────
 function getStatus(popularity) {
-  if (popularity <= 40) return "여유";
-  if (popularity <= 70) return "보통";
+  if (popularity === 0) return "영업종료";
+  if (popularity <= 40)  return "여유";
+  if (popularity <= 70)  return "보통";
   return "혼잡";
 }
 
@@ -90,23 +26,34 @@ function getAvailableSeats(totalSeats, popularity) {
 }
 
 function enrichCafe(cafe) {
-  const status = getStatus(cafe.popularity);
-  const available = getAvailableSeats(cafe.totalSeats, cafe.popularity);
+  const status    = getStatus(cafe.popularity);
+  const available = status === "영업종료"
+    ? 0
+    : getAvailableSeats(cafe.totalSeats, cafe.popularity);
   return { ...cafe, status, available };
 }
 
 // ── Status config ─────────────────────────────────────────────────────────
 const STATUS_CONFIG = {
-  여유: { color: "#22c55e", bg: "rgba(34,197,94,0.12)", label: "🟢 여유", dot: "#22c55e" },
-  보통: { color: "#f59e0b", bg: "rgba(245,158,11,0.12)", label: "🟡 보통", dot: "#f59e0b" },
-  혼잡: { color: "#ef4444", bg: "rgba(239,68,68,0.12)", label: "🔴 혼잡", dot: "#ef4444" },
+  여유:     { color: "#22c55e", bg: "rgba(34,197,94,0.12)",   dot: "#22c55e" },
+  보통:     { color: "#f59e0b", bg: "rgba(245,158,11,0.12)",  dot: "#f59e0b" },
+  혼잡:     { color: "#ef4444", bg: "rgba(239,68,68,0.12)",   dot: "#ef4444" },
+  영업종료: { color: "#9ca3af", bg: "rgba(156,163,175,0.10)", dot: "#9ca3af" },
 };
 
-const FILTERS = ["전체", "여유", "보통", "혼잡"];
+const OPEN_FILTERS = ["전체", "여유", "보통", "혼잡"];
 
-// ── 컴포넌트들 ──────────────────────────────────────────────────────────────
+// ── 길찾기 URL 생성 ────────────────────────────────────────────────────────
+// Firebase에 naver_direction_url 필드가 있으면 그걸 우선 사용 (잘못된 핀 대응)
+// 없으면 naver_url (place 상세 페이지) — 상세 페이지에서 길찾기 버튼 제공
+function getDirectionUrl(cafe) {
+  if (cafe.naverDirectionUrl) return cafe.naverDirectionUrl;
+  return cafe.naverUrl || "#";
+}
 
+// ── OccupancyBar ──────────────────────────────────────────────────────────
 function OccupancyBar({ popularity, status }) {
+  if (status === "영업종료") return null;
   const cfg = STATUS_CONFIG[status];
   return (
     <div style={{ marginTop: 10 }}>
@@ -127,8 +74,10 @@ function OccupancyBar({ popularity, status }) {
   );
 }
 
+// ── StatusBadge ───────────────────────────────────────────────────────────
 function StatusBadge({ status }) {
   const cfg = STATUS_CONFIG[status];
+  const isClosed = status === "영업종료";
   return (
     <span style={{
       display: "inline-flex", alignItems: "center", gap: 5,
@@ -138,21 +87,24 @@ function StatusBadge({ status }) {
       fontSize: 12, fontWeight: 700,
       letterSpacing: "0.03em",
     }}>
-      <span style={{
-        width: 7, height: 7, borderRadius: "50%",
-        background: cfg.color,
-        display: "inline-block",
-        boxShadow: `0 0 6px ${cfg.color}`,
-        animation: status === "혼잡" ? "pulse 1.4s infinite" : "none",
-      }} />
+      {!isClosed && (
+        <span style={{
+          width: 7, height: 7, borderRadius: "50%",
+          background: cfg.color,
+          display: "inline-block",
+          boxShadow: status === "혼잡" ? `0 0 6px ${cfg.color}` : "none",
+          animation: status === "혼잡" ? "pulse 1.4s infinite" : "none",
+        }} />
+      )}
       {status}
     </span>
   );
 }
 
+// ── CafeCard ──────────────────────────────────────────────────────────────
 function CafeCard({ cafe, index }) {
+  const isClosed = cafe.status === "영업종료";
   const cfg = STATUS_CONFIG[cafe.status];
-  const seatRatio = cafe.available / cafe.totalSeats;
 
   return (
     <div
@@ -162,16 +114,20 @@ function CafeCard({ cafe, index }) {
         padding: "20px 22px",
         boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
         border: "1.5px solid",
-        borderColor: cafe.status === "혼잡" ? "rgba(239,68,68,0.18)" : "rgba(0,0,0,0.06)",
+        borderColor: !isClosed && cafe.status === "혼잡"
+          ? "rgba(239,68,68,0.18)"
+          : "rgba(0,0,0,0.06)",
         display: "flex",
         flexDirection: "column",
         gap: 0,
+        opacity: isClosed ? 0.55 : 1,
         animation: `fadeUp 0.4s ease both`,
         animationDelay: `${index * 0.06}s`,
         transition: "transform 0.18s ease, box-shadow 0.18s ease",
         cursor: "default",
       }}
       onMouseEnter={e => {
+        if (isClosed) return;
         e.currentTarget.style.transform = "translateY(-3px)";
         e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,0.11)";
       }}
@@ -183,48 +139,62 @@ function CafeCard({ cafe, index }) {
       {/* 상단: 카페명 + 배지 */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: isClosed ? "#aaa" : "#1a1a1a", lineHeight: 1.3 }}>
             {cafe.name}
           </div>
-          <div style={{ fontSize: 12, color: "#999", marginTop: 2 }}>
-            도보 {cafe.walkMin}분 · {cafe.address}
+          <div style={{ fontSize: 12, color: "#bbb", marginTop: 2 }}>
+            도보 {cafe.walkMin}분
           </div>
         </div>
         <StatusBadge status={cafe.status} />
       </div>
 
-      {/* 좌석 정보 */}
-      <div style={{
-        marginTop: 16,
-        padding: "12px 14px",
-        borderRadius: 12,
-        background: cfg.bg,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}>
-        <div>
-          <span style={{ fontSize: 26, fontWeight: 800, color: cfg.color, lineHeight: 1 }}>
-            {cafe.available}
-          </span>
-          <span style={{ fontSize: 13, color: "#888", marginLeft: 4 }}>
-            / {cafe.totalSeats}석
-          </span>
+      {/* 좌석 정보 or 영업종료 안내 */}
+      {isClosed ? (
+        <div style={{
+          marginTop: 16,
+          padding: "14px",
+          borderRadius: 12,
+          background: "rgba(0,0,0,0.03)",
+          textAlign: "center",
+          color: "#bbb",
+          fontSize: 13,
+        }}>
+          현재 영업 중이 아닙니다
         </div>
-        <div style={{ fontSize: 12, color: "#aaa", textAlign: "right" }}>
-          <div>가용 좌석</div>
-          <div style={{ color: cfg.color, fontWeight: 600 }}>
-            {Math.round((1 - cafe.popularity / 100) * 100)}% 비어있음
+      ) : (
+        <div style={{
+          marginTop: 16,
+          padding: "12px 14px",
+          borderRadius: 12,
+          background: cfg.bg,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}>
+          <div>
+            <span style={{ fontSize: 26, fontWeight: 800, color: cfg.color, lineHeight: 1 }}>
+              {cafe.available}
+            </span>
+            <span style={{ fontSize: 13, color: "#888", marginLeft: 4 }}>
+              / {cafe.totalSeats}석
+            </span>
+          </div>
+          <div style={{ fontSize: 12, color: "#aaa", textAlign: "right" }}>
+            <div>가용 좌석</div>
+            <div style={{ color: cfg.color, fontWeight: 600 }}>
+              {Math.round((1 - cafe.popularity / 100) * 100)}% 비어있음
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* 점유율 바 */}
       <OccupancyBar popularity={cafe.popularity} status={cafe.status} />
 
-      {/* 하단 버튼 */}
+      {/* 길찾기 버튼 */}
       <a
-        href={cafe.naverUrl}
+        href={getDirectionUrl(cafe)}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -233,61 +203,80 @@ function CafeCard({ cafe, index }) {
           textAlign: "center",
           padding: "9px 0",
           borderRadius: 10,
-          background: "#1a1a1a",
-          color: "#fff",
+          background: isClosed ? "transparent" : "#1a1a1a",
+          border: isClosed ? "1.5px solid #ddd" : "none",
+          color: isClosed ? "#bbb" : "#fff",
           fontSize: 13,
           fontWeight: 600,
           textDecoration: "none",
           transition: "background 0.15s",
         }}
-        onMouseEnter={e => e.currentTarget.style.background = "#333"}
-        onMouseLeave={e => e.currentTarget.style.background = "#1a1a1a"}
+        onMouseEnter={e => {
+          if (!isClosed) e.currentTarget.style.background = "#333";
+        }}
+        onMouseLeave={e => {
+          if (!isClosed) e.currentTarget.style.background = "#1a1a1a";
+        }}
       >
-        네이버 지도에서 보기 →
+        길찾기 →
       </a>
     </div>
   );
 }
 
-function SummaryBar({ cafes }) {
-  const counts = { 여유: 0, 보통: 0, 혼잡: 0 };
-  cafes.forEach(c => counts[c.status]++);
-  const total = cafes.length;
+// ── SummaryBar (클릭 → 필터) ──────────────────────────────────────────────
+function SummaryBar({ cafes, activeFilter, onFilter }) {
+  const openCafes   = cafes.filter(c => c.status !== "영업종료");
+  const closedCount = cafes.length - openCafes.length;
+  const counts      = { 여유: 0, 보통: 0, 혼잡: 0 };
+  openCafes.forEach(c => { if (counts[c.status] !== undefined) counts[c.status]++; });
 
   return (
-    <div style={{
-      display: "flex",
-      gap: 10,
-      marginBottom: 20,
-      flexWrap: "wrap",
-    }}>
-      {Object.entries(counts).map(([status, count]) => {
-        const cfg = STATUS_CONFIG[status];
-        return (
-          <div key={status} style={{
-            flex: 1, minWidth: 80,
-            padding: "10px 14px",
-            borderRadius: 14,
-            background: cfg.bg,
-            border: `1px solid ${cfg.color}30`,
-            textAlign: "center",
-          }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: cfg.color }}>{count}</div>
-            <div style={{ fontSize: 11, color: "#888", marginTop: 1 }}>{status} / {total}개</div>
-          </div>
-        );
-      })}
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        {Object.entries(counts).map(([status, count]) => {
+          const cfg      = STATUS_CONFIG[status];
+          const isActive = activeFilter === status;
+          return (
+            <div
+              key={status}
+              onClick={() => onFilter(isActive ? "전체" : status)}
+              style={{
+                flex: 1, minWidth: 80,
+                padding: "10px 14px",
+                borderRadius: 14,
+                background: isActive ? cfg.color + "25" : cfg.bg,
+                border: `1.5px solid ${isActive ? cfg.color : cfg.color + "30"}`,
+                textAlign: "center",
+                cursor: "pointer",
+                transition: "all 0.15s",
+                transform: isActive ? "scale(1.03)" : "scale(1)",
+              }}
+            >
+              <div style={{ fontSize: 22, fontWeight: 800, color: cfg.color }}>{count}</div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 1 }}>
+                {status} / {cafes.length}개
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {closedCount > 0 && (
+        <div style={{ marginTop: 8, fontSize: 11, color: "#bbb", textAlign: "right" }}>
+          영업종료 {closedCount}곳 포함
+        </div>
+      )}
     </div>
   );
 }
 
 // ── 메인 앱 ───────────────────────────────────────────────────────────────
 export default function App() {
-  const [filter, setFilter] = useState("전체");
-  const [cafes, setCafes] = useState([]);
+  const [filter,      setFilter]      = useState("전체");
+  const [cafes,       setCafes]       = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [loading,     setLoading]     = useState(true);
+  const [refreshing,  setRefreshing]  = useState(false);
 
   // Firebase 실시간 구독
   useEffect(() => {
@@ -295,14 +284,17 @@ export default function App() {
       const enriched = rawCafes
         .filter(c => c.name)
         .map(c => {
-          const pop = c.current_popularity ?? 50;
+          const pop = c.current_popularity ?? 0;
           return enrichCafe({
-            id:         c.id,
-            name:       c.name,
-            totalSeats: c.total_seats ?? 50,
-            walkMin:    c.walkMin ?? 10,
-            naverUrl:   c.naver_url ?? "",
-            popularity: pop,
+            id:                 c.id,
+            name:               c.name,
+            totalSeats:         c.total_seats ?? 50,
+            walkMin:            c.walkMin ?? 10,
+            naverUrl:           c.naver_url ?? "",
+            naverDirectionUrl:  c.naver_direction_url ?? null,  // optional override
+            lat:                c.lat ?? 0,
+            lng:                c.lng ?? 0,
+            popularity:         pop,
           });
         });
       setCafes(enriched);
@@ -317,11 +309,20 @@ export default function App() {
     setTimeout(() => setRefreshing(false), 700);
   }
 
-  const filtered = filter === "전체"
-    ? cafes
-    : cafes.filter(c => c.status === filter);
+  // 필터링: 영업종료는 "전체"에서만 (맨 아래)
+  const openCafes   = cafes.filter(c => c.status !== "영업종료");
+  const closedCafes = cafes.filter(c => c.status === "영업종료");
 
-  const sortedCafes = [...filtered].sort((a, b) => a.walkMin - b.walkMin);
+  const filteredOpen = filter === "전체"
+    ? openCafes
+    : openCafes.filter(c => c.status === filter);
+
+  // 가나다순 정렬
+  const sortByName = arr => [...arr].sort((a, b) => a.name.localeCompare(b.name, "ko"));
+
+  const sortedOpen   = sortByName(filteredOpen);
+  const sortedClosed = filter === "전체" ? sortByName(closedCafes) : [];
+  const displayList  = [...sortedOpen, ...sortedClosed];
 
   const timeStr = lastUpdated.toLocaleTimeString("ko-KR", {
     hour: "2-digit", minute: "2-digit",
@@ -349,21 +350,19 @@ export default function App() {
         body { font-family: 'Pretendard', -apple-system, sans-serif; background: #f5f4f0; }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
+          to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.3); }
+          50%       { opacity: 0.5; transform: scale(1.3); }
         }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { width: 0; }
       `}</style>
 
       <div style={{ minHeight: "100vh", background: "#f5f4f0" }}>
 
-        {/* 헤더 */}
+        {/* ── 헤더 ── */}
         <div style={{
           background: "#1a1a1a",
           padding: "20px 20px 0",
@@ -392,7 +391,10 @@ export default function App() {
                   display: "flex", alignItems: "center", gap: 5,
                 }}
               >
-                <span style={{ animation: refreshing ? "spin 0.7s linear infinite" : "none", display: "inline-block" }}>↻</span>
+                <span style={{
+                  animation: refreshing ? "spin 0.7s linear infinite" : "none",
+                  display: "inline-block",
+                }}>↻</span>
                 새로고침
               </button>
             </div>
@@ -402,55 +404,62 @@ export default function App() {
               {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
             </div>
 
-            {/* 필터 탭 */}
-            <div style={{
-              display: "flex", gap: 0,
-              borderBottom: "none",
-              marginTop: 4,
-            }}>
-              {FILTERS.map(f => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  style={{
-                    flex: 1,
-                    padding: "10px 0",
-                    background: "none",
-                    border: "none",
-                    borderBottom: filter === f ? "2.5px solid #fff" : "2.5px solid transparent",
-                    color: filter === f ? "#fff" : "#555",
-                    fontSize: 13,
-                    fontWeight: filter === f ? 700 : 500,
-                    cursor: "pointer",
-                    transition: "all 0.15s",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  {f}
-                  {f !== "전체" && (
-                    <span style={{
-                      marginLeft: 4,
-                      fontSize: 10,
-                      color: filter === f ? STATUS_CONFIG[f].color : "#444",
-                      fontWeight: 700,
-                    }}>
-                      {cafes.filter(c => c.status === f).length}
-                    </span>
-                  )}
-                </button>
-              ))}
+            {/* ── 필터 탭 ── */}
+            <div style={{ display: "flex", gap: 0, marginTop: 4 }}>
+              {OPEN_FILTERS.map(f => {
+                const count = f !== "전체"
+                  ? openCafes.filter(c => c.status === f).length
+                  : null;
+                return (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    style={{
+                      flex: 1,
+                      padding: "10px 0",
+                      background: "none",
+                      border: "none",
+                      borderBottom: filter === f ? "2.5px solid #fff" : "2.5px solid transparent",
+                      color: filter === f ? "#fff" : "#555",
+                      fontSize: 13,
+                      fontWeight: filter === f ? 700 : 500,
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    {f}
+                    {f !== "전체" && (
+                      <span style={{
+                        marginLeft: 4,
+                        fontSize: 10,
+                        color: filter === f ? STATUS_CONFIG[f].color : "#444",
+                        fontWeight: 700,
+                      }}>
+                        {count}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* 본문 */}
+        {/* ── 본문 ── */}
         <div style={{ maxWidth: 480, margin: "0 auto", padding: "20px 16px 40px" }}>
 
-          {/* 요약 바 */}
-          {filter === "전체" && <SummaryBar cafes={cafes} />}
+          {/* 요약 바 (전체 탭에서만 + 클릭 가능) */}
+          {filter === "전체" && (
+            <SummaryBar
+              cafes={cafes}
+              activeFilter={filter}
+              onFilter={setFilter}
+            />
+          )}
 
           {/* 결과 없음 */}
-          {sortedCafes.length === 0 && (
+          {displayList.length === 0 && (
             <div style={{
               textAlign: "center", padding: "60px 0",
               color: "#aaa", fontSize: 14,
@@ -459,12 +468,45 @@ export default function App() {
             </div>
           )}
 
-          {/* 카드 그리드 */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {sortedCafes.map((cafe, i) => (
-              <CafeCard key={cafe.id} cafe={cafe} index={i} />
-            ))}
-          </div>
+          {/* 영업종료 구분선 */}
+          {filter === "전체" && sortedClosed.length > 0 && sortedOpen.length > 0 && (
+            <>
+              {/* open 카드 */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {sortedOpen.map((cafe, i) => (
+                  <CafeCard key={cafe.id} cafe={cafe} index={i} />
+                ))}
+              </div>
+
+              {/* 구분선 */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: 10,
+                margin: "20px 0 14px",
+              }}>
+                <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
+                <span style={{ fontSize: 11, color: "#bbb", whiteSpace: "nowrap" }}>
+                  영업종료
+                </span>
+                <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
+              </div>
+
+              {/* closed 카드 */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {sortedClosed.map((cafe, i) => (
+                  <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* 필터된 뷰 (여유/보통/혼잡 탭) 또는 영업종료만 있는 경우 */}
+          {(filter !== "전체" || sortedOpen.length === 0) && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {displayList.map((cafe, i) => (
+                <CafeCard key={cafe.id} cafe={cafe} index={i} />
+              ))}
+            </div>
+          )}
 
           {/* 데이터 안내 */}
           <div style={{
