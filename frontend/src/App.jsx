@@ -518,7 +518,7 @@ export default function App() {
           }}>
             <div style={{ fontSize: 11, color: "#999", lineHeight: 1.6 }}>
               ⚠️ 이 서비스는 Google Maps Popular Times 기반의 <strong>예측 데이터</strong>를 제공합니다.
-              실제 좌석 상황과 다를 수 있으며, 30분 주기로 업데이트됩니다.
+              실제 좌석 상황과 다를 수 있으며, 1시간 주기로 업데이트됩니다.
             </div>
           </div>
         </div>
