@@ -54,13 +54,6 @@ CAFES = [
         "naver_url": "https://map.naver.com/p/entry/place/11593558",
     },
     {
-        "id": "cafe_place",
-        "name": "카페 플레이스",
-        "total_seats": 60,
-        # ⚠️ 네이버 지도 URL 미확인 — 정확한 URL 확인 후 업데이트 필요
-        "naver_url": "https://map.naver.com/v5/search/카페 플레이스 신촌",
-    },
-    {
         "id": "mahogany_yonsei",
         "name": "마호가니 연세대점",
         "total_seats": 40,
@@ -76,7 +69,7 @@ CAFES = [
     {
         "id": "elpis_sinchon",
         "name": "엘피스카페 신촌점",
-        "total_seats": 50,         # TODO: 현장 조사 후 정확한 좌석 수로 수정
+        "total_seats": 80,         # 현장 조사 완료
         "naver_url": "https://map.naver.com/p/entry/place/38275926",
         "place_id": "",            # TODO: Google Maps Place ID 확인 후 입력
         "lat": 37.5584,            # TODO: 구글맵에서 정확한 위도 확인 후 수정
@@ -88,6 +81,11 @@ CAFES = [
 print("🗑️  스타벅스 연대동문점 삭제 중...")
 db.collection("cafes").document("starbucks_dongmun").delete()
 db.collection("occupancy").document("starbucks_dongmun").delete()
+print("✅ 삭제 완료")
+
+print("🗑️  카페 플레이스 삭제 중...")
+db.collection("cafes").document("cafe_place").delete()
+db.collection("occupancy").document("cafe_place").delete()
 print("✅ 삭제 완료\n")
 
 # ── 2) 카페 정보 업데이트 ─────────────────────────────────────────────────
@@ -106,7 +104,5 @@ for cafe in CAFES:
 
 print(f"\n총 {len(CAFES)}개 카페 처리 완료")
 print("\n⚠️  TODO 체크리스트:")
-print("  - 엘피스카페 신촌점 좌석 수 현장 확인")
 print("  - 엘피스카페 신촌점 lat/lng 구글맵에서 확인 후 Firebase 직접 수정")
-print("  - 엘피스카페 신촌점 Google Maps Place ID 확인")
-print("  - 카페 플레이스 네이버 지도 정확한 URL 확인")
+print("  - 엘피스카페 신촌점 Google Maps Place ID 확인 후 Firebase 직접 수정")
