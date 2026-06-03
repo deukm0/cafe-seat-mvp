@@ -5,41 +5,186 @@ import { subscribeCafes } from "./firebase";
 // schedule: 요일별 { open: "HH:MM", close: "HH:MM" } or null(휴무)
 // 요일: 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토
 const CAFE_HOURS = {
-  cafe_ann: {
-    // 24시간 영업 → 모든 요일 00:00~23:59
-    default: { open: "00:00", close: "23:59" },
+  // 스타벅스 신촌명물거리점 — 매일 9시~21시
+  starbucks_myeongmul: {
+    mon: { open: 9, close: 21 },
+    tue: { open: 9, close: 21 },
+    wed: { open: 9, close: 21 },
+    thu: { open: 9, close: 21 },
+    fri: { open: 9, close: 21 },
+    sat: { open: 9, close: 21 },
+    sun: { open: 9, close: 21 },
   },
-  eagle_dabang: {
-    default: { open: "11:00", close: "23:30" },
+  // 스타벅스 신촌점 — 평일 : 7시~22시 주말 : 8시~22시
+  starbucks_sinchon: {
+    mon: { open: 7, close: 22 },
+    tue: { open: 7, close: 22 },
+    wed: { open: 7, close: 22 },
+    thu: { open: 7, close: 22 },
+    fri: { open: 7, close: 22 },
+    sat: { open: 8, close: 22 },
+    sun: { open: 8, close: 22 },
   },
-  letmealone: {
-    default: { open: "08:00", close: "23:00" },
+  // 투썸플레이스 신촌기차역점 — 매일 10시30분~23시30분
+  twosome_sinchon_station: {
+    mon: { open: 10.5, close: 23.5 },
+    tue: { open: 10.5, close: 23.5 },
+    wed: { open: 10.5, close: 23.5 },
+    thu: { open: 10.5, close: 23.5 },
+    fri: { open: 10.5, close: 23.5 },
+    sat: { open: 10.5, close: 23.5 },
+    sun: { open: 10.5, close: 23.5 },
   },
-  mahogany_yonsei: {
-    // 평일만 영업, 주말(0=일, 6=토) 휴무
-    default: { open: "08:00", close: "20:00" },
-    0: null, // 일
-    6: null, // 토
+  // 할리스 신촌역점 — 매일 10시~21시
+  hollys_sinchon_station: {
+    mon: { open: 10, close: 21 },
+    tue: { open: 10, close: 21 },
+    wed: { open: 10, close: 21 },
+    thu: { open: 10, close: 21 },
+    fri: { open: 10, close: 21 },
+    sat: { open: 10, close: 21 },
+    sun: { open: 10, close: 21 },
   },
-  starbucks_yonsei: {
-    // 평일 08~20, 주말 09~20
-    default: { open: "08:00", close: "20:00" },
-    0: { open: "09:00", close: "20:00" }, // 일
-    6: { open: "09:00", close: "20:00" }, // 토
+  // 커피빈 신촌점 — 평일 : 7시~22시 주말 : 8시~22시
+  coffeebean_sinchon: {
+    mon: { open: 7, close: 22 },
+    tue: { open: 7, close: 22 },
+    wed: { open: 7, close: 22 },
+    thu: { open: 7, close: 22 },
+    fri: { open: 7, close: 22 },
+    sat: { open: 8, close: 22 },
+    sun: { open: 8, close: 22 },
   },
-  elpis_sinchon: {
-    // 월~목 11~21, 금·토 10~21, 일 09~18
-    default: { open: "11:00", close: "21:00" }, // 월~목
-    5: { open: "10:00", close: "21:00" }, // 금
-    6: { open: "10:00", close: "21:00" }, // 토
-    0: { open: "09:00", close: "18:00" }, // 일
+  // 포티드 — 매일 11시30분~22시30분
+  fortyd: {
+    mon: { open: 11.5, close: 22.5 },
+    tue: { open: 11.5, close: 22.5 },
+    wed: { open: 11.5, close: 22.5 },
+    thu: { open: 11.5, close: 22.5 },
+    fri: { open: 11.5, close: 22.5 },
+    sat: { open: 11.5, close: 22.5 },
+    sun: { open: 11.5, close: 22.5 },
   },
+  // 플릭온커피 — 평일 9시~18시 주말 11시~18시
+  flickon_coffee: {
+    mon: { open: 9, close: 18 },
+    tue: { open: 9, close: 18 },
+    wed: { open: 9, close: 18 },
+    thu: { open: 9, close: 18 },
+    fri: { open: 9, close: 18 },
+    sat: { open: 11, close: 18 },
+    sun: { open: 11, close: 18 },
+  },
+  // 설빙 신촌점 — 매일 11시30분~23시30분
+  sulbing_sinchon: {
+    mon: { open: 11.5, close: 23.5 },
+    tue: { open: 11.5, close: 23.5 },
+    wed: { open: 11.5, close: 23.5 },
+    thu: { open: 11.5, close: 23.5 },
+    fri: { open: 11.5, close: 23.5 },
+    sat: { open: 11.5, close: 23.5 },
+    sun: { open: 11.5, close: 23.5 },
+  },
+  // 클로리스 신촌본점 — 월~토 : 11시~23시 일 : 13시~23시
+  chloris_sinchon: {
+    mon: { open: 11, close: 23 },
+    tue: { open: 11, close: 23 },
+    wed: { open: 11, close: 23 },
+    thu: { open: 11, close: 23 },
+    fri: { open: 11, close: 23 },
+    sat: { open: 11, close: 23 },
+    sun: { open: 13, close: 23 },
+  },
+  // 투썸플레이스 신촌연세로점 — 매일 8시~24시
   twosome_yonsei: {
-    default: { open: "08:00", close: "24:00" },
+    mon: { open: 8, close: 24 },
+    tue: { open: 8, close: 24 },
+    wed: { open: 8, close: 24 },
+    thu: { open: 8, close: 24 },
+    fri: { open: 8, close: 24 },
+    sat: { open: 8, close: 24 },
+    sun: { open: 8, close: 24 },
   },
+  // 스타벅스 연대점 — 매일 9시~20시
+  starbucks_yonsei: {
+    mon: { open: 9, close: 20 },
+    tue: { open: 9, close: 20 },
+    wed: { open: 9, close: 20 },
+    thu: { open: 9, close: 20 },
+    fri: { open: 9, close: 20 },
+    sat: { open: 9, close: 20 },
+    sun: { open: 9, close: 20 },
+  },
+  // 할리스 신촌점 — 매일 9시~23시
   hollys_sinchon: {
-    default: { open: "09:00", close: "23:00" },
+    mon: { open: 9, close: 23 },
+    tue: { open: 9, close: 23 },
+    wed: { open: 9, close: 23 },
+    thu: { open: 9, close: 23 },
+    fri: { open: 9, close: 23 },
+    sat: { open: 9, close: 23 },
+    sun: { open: 9, close: 23 },
   },
+  // 렛미얼론 — 매일 8시~23시
+  letmealone: {
+    mon: { open: 8, close: 23 },
+    tue: { open: 8, close: 23 },
+    wed: { open: 8, close: 23 },
+    thu: { open: 8, close: 23 },
+    fri: { open: 8, close: 23 },
+    sat: { open: 8, close: 23 },
+    sun: { open: 8, close: 23 },
+  },
+  // 앨피스카페 신촌점 — 월~목 11시~21시 금요일 10시~21시 공휴일,토요일 11시~21시 일요일 9시~18시
+  elpis_sinchon: {
+    mon: { open: 11, close: 21 },
+    tue: { open: 11, close: 21 },
+    wed: { open: 11, close: 21 },
+    thu: { open: 11, close: 21 },
+    fri: { open: 10, close: 21 },
+    sat: { open: 11, close: 21 },
+    sun: { open: 9, close: 18 },
+  },
+  // 카페앤 신촌점 — 24시
+  cafe_ann: {
+    mon: { open: 0, close: 24 },
+    tue: { open: 0, close: 24 },
+    wed: { open: 0, close: 24 },
+    thu: { open: 0, close: 24 },
+    fri: { open: 0, close: 24 },
+    sat: { open: 0, close: 24 },
+    sun: { open: 0, close: 24 },
+  },
+  // 독수리다방 — 매일 11시~23시30분
+  eagle_dabang: {
+    mon: { open: 11, close: 23.5 },
+    tue: { open: 11, close: 23.5 },
+    wed: { open: 11, close: 23.5 },
+    thu: { open: 11, close: 23.5 },
+    fri: { open: 11, close: 23.5 },
+    sat: { open: 11, close: 23.5 },
+    sun: { open: 11, close: 23.5 },
+  },
+  // 마호가니 연세대점 — 월~토 8시~20시 공휴일, 일요일 휴무
+  mahogany_yonsei: {
+    mon: { open: 8, close: 20 },
+    tue: { open: 8, close: 20 },
+    wed: { open: 8, close: 20 },
+    thu: { open: 8, close: 20 },
+    fri: { open: 8, close: 20 },
+    sat: { open: 8, close: 20 },
+    sun: null, // 휴무
+  },
+};
+
+// CBTI 유형별 추천 카페 매핑
+const CBTI_CAFE_MAP = {
+  "카페 노마드": ["starbucks_myeongmul", "starbucks_sinchon", "starbucks_yonsei", "mahogany_yonsei"],
+  "디저트 의존러": ["twosome_sinchon_station", "sulbing_sinchon", "twosome_yonsei"],
+  "장기 체류러": ["hollys_sinchon_station", "hollys_sinchon", "elpis_sinchon", "cafe_ann"],
+  "사교 공부러": ["coffeebean_sinchon", "eagle_dabang"],
+  "감성 사냥꾼": ["fortyd", "flickon_coffee", "chloris_sinchon"],
+  "커피 본질러": ["letmealone"],
 };
 
 // 현재 요일의 영업시간 반환 ({ open, close } or null=휴무)
