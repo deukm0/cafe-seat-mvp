@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CBTI — 카공 빌런 유형 테스트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f6ede0;--cream-2:#efe2cf;--paper:#fffaf2;
+  --ink:#3a2c20;--ink-soft:#6b5743;
+  --brown:#9a5b34;--brown-deep:#7a3f1d;--accent:#c8662f;
+  --line:#2a1d12;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Noto Sans KR',sans-serif;color:var(--ink);
+  background:radial-gradient(120% 80% at 50% -10%,#fdf4e6 0%,var(--cream) 45%,var(--cream-2) 100%);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:18px;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
+  background-image:radial-gradient(var(--line) .5px,transparent .5px);background-size:7px 7px;
+}
+.frame{
+  position:relative;z-index:1;width:100%;max-width:430px;background:var(--paper);
+  border:2.5px solid var(--line);border-radius:30px;
+  box-shadow:10px 12px 0 var(--line);overflow:hidden;
+  height:min(860px,calc(100vh - 36px));display:flex;flex-direction:column;
+}
+/* version toggle 제거됨 */
+.topbar{
+  display:flex;align-items:center;gap:10px;padding:16px 20px 6px;flex:0 0 auto;
+}
+.topbar .ttl{font-weight:900;font-size:15px;letter-spacing:-.3px}
+.topbar .x{margin-left:auto;font-size:18px;color:var(--ink-soft);cursor:pointer}
+.stage{
+  flex:1;display:flex;flex-direction:column;padding:6px 22px 26px;
+  position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+.stage::-webkit-scrollbar{width:0}
+
+/* ── INTRO ── */
+.intro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-top:8px;animation:rise .5s ease}
+.badge{
+  border:2px solid var(--line);border-radius:30px;padding:7px 18px;
+  font-weight:700;font-size:12px;letter-spacing:1.5px;
+  background:var(--paper);box-shadow:3px 3px 0 var(--line);
+}
+.logo{font-family:'Gaegu';font-weight:700;font-size:88px;line-height:.9;color:var(--accent);text-shadow:3px 3px 0 #00000012;margin-top:4px}
+.sub{font-weight:900;font-size:19px}
+.hero-illo{margin:6px 0 2px}
+.pitch{
+  width:100%;border:2px solid var(--line);border-radius:22px;background:var(--cream);
+  box-shadow:4px 5px 0 var(--line);padding:20px 18px;margin-top:4px;
+}
+.pitch h2{font-size:18px;line-height:1.45;font-weight:900}
+.pitch h2 b{color:var(--accent)}
+.pitch p{margin-top:10px;font-size:13.5px;color:var(--ink-soft);line-height:1.7}
+.cta{
+  width:100%;margin-top:14px;border:2.5px solid var(--line);
+  background:var(--accent);color:#fff;font-family:'Noto Sans KR';font-weight:900;
+  font-size:17px;padding:16px;border-radius:20px;cursor:pointer;
+  box-shadow:4px 5px 0 var(--line);transition:transform .08s,box-shadow .08s;
+}
+.cta:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--line)}
+.cta.ghost{background:var(--paper);color:var(--ink)}
+
+/* ── QUIZ ── */
+.quiz{display:none;flex-direction:column;animation:rise .35s ease}
+.qhead{display:flex;align-items:center;gap:12px;margin:4px 0 18px}
+.qback{
+  width:42px;height:42px;border:2px solid var(--line);border-radius:50%;
+  background:var(--paper);display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;box-shadow:2px 2px 0 var(--line);flex:0 0 auto;
+}
+.qname{font-family:'Gaegu';font-weight:700;font-size:22px}
+.qnum{margin-left:auto;font-weight:700;color:var(--ink-soft);font-size:14px}
+.track{height:14px;border:2px solid var(--line);border-radius:20px;background:var(--paper);overflow:hidden;margin-bottom:22px}
+.fill{height:100%;background:var(--accent);width:10%;transition:width .35s ease;border-radius:20px}
+.qcard{
+  border:2px solid var(--line);border-radius:22px;background:var(--cream);
+  box-shadow:4px 5px 0 var(--line);padding:26px 22px;margin-bottom:22px;
+}
+.qtext{font-family:'Gaegu';font-weight:700;font-size:26px;line-height:1.3}
+.opts{display:flex;flex-direction:column;gap:13px}
+.opt{
+  text-align:left;border:2px solid var(--line);border-radius:18px;background:var(--paper);
+  box-shadow:3px 4px 0 var(--line);padding:17px 19px;font-size:15px;line-height:1.55;
+  font-family:'Noto Sans KR';font-weight:500;color:var(--ink);cursor:pointer;
+  display:flex;gap:12px;align-items:flex-start;transition:transform .07s,box-shadow .07s,background .12s;
+}
+.opt .ab{color:var(--accent);font-weight:900;flex:0 0 auto;font-size:16px}
+.opt:hover{background:#fff}
+.opt:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--line)}
+
+/* ── RESULT ── */
+.result{display:none;flex-direction:column;animation:rise .45s ease}
+.rcard{
+  border:2.5px solid var(--line);border-radius:24px;background:var(--paper);
+  box-shadow:6px 7px 0 var(--line);overflow:hidden;
+}
+.rcard .rtop{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 16px;border-bottom:2px solid var(--line);
+  font-family:'Gaegu';font-weight:700;font-size:15px;color:var(--ink-soft);background:var(--cream-2);
+}
+.rillo{display:flex;align-items:center;justify-content:center;padding:18px 0 6px;background:#fff}
+.rname{font-family:'Gaegu';font-weight:700;font-size:48px;text-align:center;letter-spacing:1px;margin-top:6px}
+.rko{text-align:center;font-weight:900;font-size:20px;margin-top:-2px}
+.rko::before,.rko::after{content:"—";color:var(--ink-soft);margin:0 8px;font-weight:400}
+.rquote{text-align:center;font-style:italic;color:var(--ink-soft);font-size:14px;padding:10px 22px 4px;line-height:1.5}
+/* axis indicator */
+.axes{display:flex;gap:8px;justify-content:center;padding:12px 16px 4px;flex-wrap:wrap}
+.ax-tag{
+  font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;
+  border:1.5px solid var(--line);background:var(--cream);color:var(--ink-soft);
+}
+.stats{padding:16px 22px 22px}
+.stats h4{font-family:'Gaegu';font-weight:700;font-size:18px;margin-bottom:12px}
+.stat{margin-bottom:13px}
+.stat .lab{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:5px}
+.stat .bar{height:13px;border:2px solid var(--line);border-radius:20px;background:var(--paper);overflow:hidden}
+.stat .bv{height:100%;width:0;background:var(--brown);border-radius:20px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.rconnect{
+  margin-top:18px;border:2px dashed var(--line);border-radius:20px;background:var(--cream);padding:18px;text-align:center;
+}
+.rconnect .reco{font-size:14px;color:var(--ink-soft);line-height:1.6}
+.rconnect .reco b{color:var(--brown-deep);font-weight:900}
+.rconnect .ask{font-family:'Gaegu';font-weight:700;font-size:21px;margin:8px 0 2px;color:var(--ink)}
+.rbtns{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.small{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;opacity:.7;line-height:1.5}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pulse{
+  0%,100%{transform:scale(1);box-shadow:4px 5px 0 var(--line)}
+  50%{transform:scale(1.04);box-shadow:6px 7px 0 var(--line)}
+}
+.cta.pulse{animation:pulse 1.8s ease-in-out infinite}
+/* 스크롤 힌트 화살표 */
+@keyframes bounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(6px)}
+}
+.scroll-hint{
+  position:sticky;bottom:10px;left:50%;
+  width:36px;height:36px;margin:8px auto 0;
+  background:var(--paper);border:2px solid var(--line);border-radius:50%;
+  box-shadow:2px 3px 0 var(--line);
+  display:none;align-items:center;justify-content:center;
+  font-size:15px;cursor:pointer;
+  animation:bounce 1.1s ease-in-out infinite;
+  z-index:10;
+  /* sticky가 작동하려면 부모가 overflow scroll이어야 함 — .stage가 그렇게 돼있음 */
+}
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:12px 20px;border-radius:30px;font-size:13px;font-weight:700;
+  opacity:0;transition:.25s;z-index:50;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="topbar">
+    <div class="ttl">CBTI — 카공 빌런 유형 테스트</div>
+    <div class="x">✕</div>
+  </div>
+  <div class="stage">
+    <!-- INTRO -->
+    <section class="intro" id="intro">
+      <div class="badge">CAFE VILLAIN TYPE INDICATOR</div>
+      <div class="logo">CBTI</div>
+      <div class="sub">카공 빌런 유형 테스트</div>
+      <div class="hero-illo" id="heroIllo"></div>
+      <div class="pitch">
+        <h2>카페에서 공부할 때<br>드러나는 당신의 <b>본색</b>은?</h2>
+        <p>자리 지박령, 카페 메뚜기, 당 충전 좀비까지.<br>10개 질문으로 카공 빌런 유형을 진단합니다.</p>
+      </div>
+      <button class="cta" onclick="startQuiz()">내 카공 빌런 확인하기 →</button>
+    </section>
+    <!-- QUIZ -->
+    <section class="quiz" id="quiz">
+      <div class="qhead">
+        <div class="qback" onclick="prevQ()">‹</div>
+        <div class="qname">CBTI</div>
+        <div class="qnum"><span id="cur">1</span> / <span id="tot">10</span></div>
+      </div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="qcard"><div class="qtext" id="qtext"></div></div>
+      <div class="opts" id="opts"></div>
+    </section>
+    <!-- RESULT -->
+    <section class="result" id="result">
+      <div class="rcard">
+        <div class="rtop"><span id="rno">No.000</span><span>CBTI · 카공 빌런 도감</span></div>
+        <div class="rillo" id="rillo"></div>
+        <div class="rname" id="rname"></div>
+        <div class="rko" id="rko"></div>
+        <div class="rquote" id="rquote"></div>
+        <div class="axes" id="axes"></div>
+        <div class="stats">
+          <h4>능력치</h4>
+          <div id="statList"></div>
+        </div>
+      </div>
+      <!-- 스크롤 힌트 화살표 (A) -->
+      <div class="scroll-hint" id="scrollHint" onclick="scrollToConnect()">↓</div>
+      <div class="rconnect">
+        <div class="reco" id="reco"></div>
+        <div class="ask" id="askLine"></div>
+        <div class="rbtns">
+          <button class="cta" id="ctaService" onclick="goService()">실시간 자리 확인하러 가기 →</button>
+          <button class="cta ghost" onclick="shareResult()">결과 공유하기</button>
+          <button class="cta ghost" onclick="restart()" style="font-size:14px;padding:12px">다시 하기</button>
+        </div>
+      </div>
+      <div class="small">※ 본 테스트는 재미로 보는 콘텐츠입니다.<br>실패없는 카페 선택 — 신촌 카공러를 위한 실시간 자리 서비스</div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast">링크가 복사됐어요!</div>
+
+<script>
+/* ===== 설정 ===== */
+const LANDING_URL = "https://cafe-seat-mpv.netlify.app/";
+const DEPLOY_VERSION = "A";
+let VERSION = "A";
+
+/* ===== 3축 질문 (10문항 × 2지선다) =====
+   축: settle(정착↔이동), taste(맛↔분위기), social(혼자↔같이)
+   각 선택지: [축, 방향(+1 or -1)] → +1이면 정착/맛/같이, -1이면 이동/분위기/혼자
+*/
+const QS = [
+  // ── 체류성 (settle): 4문항 ──
+  { q:"과제 마감이 내일인데 아직 반도 못 했다. 카페 간다면?",
+    a:[{txt:"한 곳에 자리 잡고 끝날 때까지 안 움직인다.", axis:"settle", dir:1},
+       {txt:"집중 안 되면 바로 짐 싸고 다른 데로 간다.", axis:"settle", dir:-1}]},
+  { q:"수업 끝나고 공강 2시간. 카페 어디 가?",
+    a:[{txt:"맨날 가던 그 자리. 고민할 시간이 아까워.", axis:"settle", dir:1},
+       {txt:"오늘은 안 가본 데 한번 가볼까? 새로운 데 탐험이 재밌어.", axis:"settle", dir:-1}]},
+  { q:"토요일 오후, 카페에서 공부 중이다. 벌써 3시간째.",
+    a:[{txt:"아직 갈 생각 없음. 자리 좋은데 왜 나가?", axis:"settle", dir:1},
+       {txt:"슬슬 답답해짐. 한 번 나갔다 올까.", axis:"settle", dir:-1}]},
+  { q:"내일 하루종일 카페에서 공부할 예정. 가방 싸는 중.",
+    a:[{txt:"충전기, 마우스, 거치대까지 풀장비. 짐 무거워도 괜찮아.", axis:"settle", dir:1},
+       {txt:"노트북이랑 이어폰만. 가볍게 가야 마음도 가벼워.", axis:"settle", dir:-1}]},
+
+  // ── 감각 동기 (taste): 3문항 ──
+  { q:"인스타에서 신촌 새 카페 발견. 검색해보는데 뭘 먼저 봐?",
+    a:[{txt:"시그니처 메뉴 뭔지, 디저트 리뷰부터.", axis:"taste", dir:1},
+       {txt:"내부 사진, 좌석 배치, 조명 분위기부터.", axis:"taste", dir:-1}]},
+  { q:"오늘 카페에서 만 원 썼다. '잘 썼다' 싶은 건?",
+    a:[{txt:"음료랑 디저트가 진짜 맛있었을 때.", axis:"taste", dir:1},
+       {txt:"공간이 쾌적하고 자리가 편했을 때.", axis:"taste", dir:-1}]},
+  { q:"친구가 '카페 어디 좋아?' 물어봤다. 내 대답은?",
+    a:[{txt:"\"거기 ○○ 진짜 맛있어, 꼭 먹어봐.\"", axis:"taste", dir:1},
+       {txt:"\"거기 분위기 진짜 좋아, 가면 알아.\"", axis:"taste", dir:-1}]},
+
+  // ── 사교성 (social): 3문항 ──
+  { q:"중간고사 일주일 전. 카페에서 공부하려는데 친구가 '나도 갈까?' 한다.",
+    a:[{txt:"고맙지만 오늘은 혼자 집중할래.", axis:"social", dir:-1},
+       {txt:"오 같이 가자, 옆에 있으면 더 잘 돼.", axis:"social", dir:1}]},
+  { q:"카페에서 공부 중인데 같은 과 친구가 들어와서 눈이 마주쳤다.",
+    a:[{txt:"가볍게 손 흔들고 다시 화면 본다.", axis:"social", dir:-1},
+       {txt:"\"야 여기 앉아!\" 합석 제안.", axis:"social", dir:1}]},
+  { q:"카페에서 2시간째 같은 페이지만 보고 있다. 집중이 안 된다.",
+    a:[{txt:"이어폰 끼고 자리 옮기거나 밖에 나갔다 온다.", axis:"social", dir:-1},
+       {txt:"옆에 친구한테 카톡한다. 누가 와주면 다시 할 수 있을 것 같아.", axis:"social", dir:1}]},
+];
+
+/* ===== 축 → 유형 매핑 =====
+   1차: social ≥ 2 → 같이파
+     → taste ≥ 2 → 디저트의존러 / else → 사교공부러
+   2차: social < 2 → 혼자파
+     → settle × taste 조합
+*/
+function getType(sc){
+  const isSocial = sc.social >= 2;
+  const isSettle = sc.settle >= 3;  // 4문항이라 3 이상이면 정착
+  const isTaste  = sc.taste >= 2;
+
+  if(isSocial){
+    return isTaste ? "dessert" : "social";
+  } else {
+    if(isSettle && !isTaste) return "stay";
+    if(isSettle && isTaste)  return "bean";
+    if(!isSettle && !isTaste) return "vibe";
+    if(!isSettle && isTaste) return "nomad";
+  }
+  return "stay"; // fallback
+}
+
+/* ===== 유형 데이터 ===== */
+const TYPES = {
+  stay:{ no:"No.001", color:"#7a3f1d", cafe:"hollys_sinchon", cafeName:"할리스 신촌점", cbtiType:"장기 체류러",
+    reco:"1인 바테이블에서 조용히 장기전 가능한",
+    tags:["정착형","분위기파","혼자파"],
+    A:{en:"SEAT-LORD", ko:"카페 자리 지박령", quote:"아메리카노 한 잔으로 반나절 버티는 좌석 점거 빌런",
+       stats:[["체류력",95],["양심",12],["회전율 기여도",3]]},
+    B:{en:"LONG-STAYER", ko:"몰입형 장기 체류러", quote:"한번 자리 잡으면 깊게 몰입하는 진성 카공러",
+       stats:[["집중 지속력",95],["환경 의존도",70],["자리 애착도",88]]}},
+
+  nomad:{ no:"No.002", color:"#b07a2e", cafe:"starbucks_yonsei", cafeName:"스타벅스 연대점", cbtiType:"카페 노마드",
+    reco:"어디에나 있어서 메뚜기 뛰기 좋은",
+    tags:["이동형","맛파","혼자파"],
+    A:{en:"CAFE-NOMAD", ko:"떠돌이 메뚜기족", quote:"집중 안 되면 1초 만에 짐 싸는 카페 메뚜기",
+       stats:[["이동 본능",92],["엉덩이 무게",8],["자리 정착력",15]]},
+    B:{en:"THE-NOMAD", ko:"환경 탐색형 노마드", quote:"최적의 집중 환경을 찾아 끊임없이 움직이는 탐색러",
+       stats:[["환경 민감도",90],["집중 지속력",45],["적응 유연성",80]]}},
+
+  dessert:{ no:"No.003", color:"#c8662f", cafe:"twosome_yonsei", cafeName:"투썸플레이스", cbtiType:"디저트 의존러",
+    reco:"케이크 1위, 당 충전 최적화된",
+    tags:["맛파","같이파"],
+    A:{en:"SUGAR-ZOMBIE", ko:"당 떨어지면 죽는 좀비", quote:"당 충전 없이는 한 글자도 못 읽는 케이크 중독러",
+       stats:[["당 의존도",96],["공부 진척도",20],["통장 잔고",11]]},
+    B:{en:"SWEET-FUEL", ko:"보상형 디저트 충전러", quote:"작은 보상으로 동기부여하며 공부하는 셀프 리워드러",
+       stats:[["동기부여력",85],["집중 지속력",55],["환경 의존도",75]]}},
+
+  vibe:{ no:"No.004", color:"#a8743f", cafe:"eagle_dabang", cafeName:"독수리다방", cbtiType:"감성 사냥꾼",
+    reco:"신촌 감성의 정수,",
+    tags:["이동형","분위기파","혼자파"],
+    A:{en:"VIBE-HUNTER", ko:"공부 안 하는 사진작가", quote:"공부는 안 하고 카페 사진만 30장 찍는 감성 빌런",
+       stats:[["감성 충만도",97],["실제 공부량",9],["인스타 갱신력",94]]},
+    B:{en:"AESTHE-TIC", ko:"감성 중시 분위기파", quote:"공간의 분위기에서 집중 에너지를 얻는 감성 몰입러",
+       stats:[["감성 지수",92],["집중 지속력",50],["공간 안목",88]]}},
+
+  bean:{ no:"No.005", color:"#6e4a2a", cafe:"letmealone", cafeName:"렛미얼론", cbtiType:"커피 본질러",
+    reco:"조용히 커피에 집중할 수 있는",
+    tags:["정착형","맛파","혼자파"],
+    A:{en:"BEAN-SNOB", ko:"원두 따지는 까탈러", quote:"공부보다 오늘 원두 산지가 더 중요한 커피 부심러",
+       stats:[["커피 부심",95],["자리 신경도",25],["공부 집중도",40]]},
+    B:{en:"BREW-PURIST", ko:"커피 본질 탐구러", quote:"공간보다 한 잔의 퀄리티를 중시하는 진성 커피러",
+       stats:[["커피 미각",95],["집중 지속력",60],["환경 의존도",35]]}},
+
+  social:{ no:"No.006", color:"#9a5b34", cafe:"coffeebean_sinchon", cafeName:"커피빈 신촌점", cbtiType:"사교 공부러",
+    reco:"테이블 넓고 떠들기 관대한",
+    tags:["분위기파","같이파"],
+    A:{en:"CHAT-DEMIC", ko:"공부는 핑계 수다러", quote:"공부하자며 모였는데 3시간째 떠들고만 있는 빌런",
+       stats:[["수다력",96],["실제 공부량",18],["모임 출석률",99]]},
+    B:{en:"TEAM-STUDY", ko:"함께해야 힘나는 사교형", quote:"혼자보다 함께일 때 더 잘되는 협력형 공부러",
+       stats:[["사교성",95],["집중 지속력",48],["동기 시너지",82]]}},
+};
+
+/* ===== SVG 캐릭터 ===== */
+function shade(hex,p){
+  const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  r=Math.max(0,Math.min(255,r+r*p/100));g=Math.max(0,Math.min(255,g+g*p/100));b=Math.max(0,Math.min(255,b+b*p/100));
+  return "#"+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");
+}
+function svgChar(key,size){
+  const c=TYPES[key].color, dark=shade(c,-22), light=shade(c,30), skin="#f0d2b4", skinD="#d9b289";
+  const base=`<ellipse cx="100" cy="182" rx="46" ry="9" fill="#00000014"/>`;
+  const face=(eyes)=>`<rect x="74" y="58" width="52" height="50" rx="14" fill="${skin}"/>
+    <rect x="74" y="92" width="52" height="16" rx="8" fill="${skinD}" opacity=".5"/>${eyes}`;
+  const hat=`<path d="M72 58 Q100 44 128 58 L124 53 Q100 47 76 53 Z" fill="${dark}"/>`;
+  let body="";
+  switch(key){
+    case "stay": body=base+`<rect x="50" y="120" width="100" height="14" rx="4" fill="${dark}"/>
+      <rect x="58" y="134" width="10" height="40" fill="${dark}"/><rect x="132" y="134" width="10" height="40" fill="${dark}"/>
+      <rect x="62" y="108" width="76" height="20" rx="8" fill="${c}"/>
+      ${face(`<rect x="86" y="80" width="7" height="4" rx="2" fill="${dark}"/><rect x="108" y="80" width="7" height="4" rx="2" fill="${dark}"/>`)}
+      <rect x="80" y="50" width="40" height="14" rx="7" fill="${dark}"/>
+      <rect x="120" y="112" width="22" height="7" rx="3" fill="${light}"/>`; break;
+    case "nomad": body=base+`<rect x="64" y="108" width="60" height="46" rx="14" fill="${c}"/>
+      <rect x="118" y="120" width="28" height="20" rx="9" fill="${dark}" transform="rotate(18 132 130)"/>
+      ${face(`<rect x="86" y="80" width="8" height="3" rx="1.5" fill="${dark}" transform="rotate(-12 90 81)"/>
+      <rect x="106" y="80" width="8" height="3" rx="1.5" fill="${dark}" transform="rotate(-12 110 81)"/>`)}
+      ${hat}<rect x="60" y="150" width="14" height="26" rx="6" fill="${skinD}" transform="rotate(20 67 163)"/>
+      <rect x="118" y="150" width="14" height="26" rx="6" fill="${skinD}" transform="rotate(-14 125 163)"/>`; break;
+    case "dessert": body=base+`<rect x="66" y="110" width="68" height="44" rx="14" fill="${c}"/>
+      ${face(`<circle cx="89" cy="82" r="4.5" fill="${dark}"/><circle cx="111" cy="82" r="4.5" fill="${dark}"/>
+      <path d="M90 99 Q100 104 110 99" stroke="${dark}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`)}
+      ${hat}<path d="M126 116 l18 -6 6 16 -18 6 Z" fill="${light}"/>
+      <rect x="142" y="96" width="4" height="22" rx="2" fill="${dark}"/>
+      <circle cx="134" cy="112" r="4" fill="#e7536b"/>`; break;
+    case "vibe": body=base+`<rect x="66" y="110" width="68" height="44" rx="14" fill="${c}"/>
+      ${face(`<path d="M84 81 l8 -2" stroke="${dark}" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="111" cy="82" r="4.5" fill="${dark}"/>`)}
+      <path d="M70 58 Q100 40 130 58 Q118 48 100 48 Q82 48 70 58 Z" fill="${dark}"/>
+      <rect x="62" y="46" width="20" height="20" rx="5" fill="${dark}" transform="rotate(-18 72 56)"/>
+      <rect x="116" y="104" width="26" height="38" rx="5" fill="${dark}"/>
+      <rect x="120" y="108" width="18" height="26" rx="2" fill="${light}"/>`; break;
+    case "bean": body=base+`<rect x="66" y="110" width="68" height="44" rx="14" fill="${c}"/>
+      ${face(`<path d="M85 82 q4 -3 8 0" stroke="${dark}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M107 82 q4 -3 8 0" stroke="${dark}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`)}
+      ${hat}<path d="M118 112 h22 l-3 26 h-16 Z" fill="#fff" stroke="${dark}" stroke-width="2"/>
+      <path d="M124 100 q3 -8 0 -14 M132 100 q3 -8 0 -14" stroke="${skinD}" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>`; break;
+    case "social": body=base+`<rect x="66" y="110" width="68" height="44" rx="14" fill="${c}"/>
+      ${face(`<circle cx="89" cy="82" r="4.5" fill="${dark}"/><circle cx="111" cy="82" r="4.5" fill="${dark}"/>
+      <path d="M88 98 Q100 108 112 98" stroke="${dark}" stroke-width="2.8" fill="none" stroke-linecap="round"/>`)}
+      ${hat}<rect x="128" y="56" width="34" height="22" rx="9" fill="${light}"/>
+      <path d="M134 76 l-3 8 9 -6 Z" fill="${light}"/>
+      <rect x="40" y="70" width="28" height="18" rx="8" fill="${dark}"/>
+      <path d="M58 86 l3 7 -8 -5 Z" fill="${dark}"/>`; break;
+  }
+  return `<svg width="${size}" height="${size}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="6" width="188" height="188" rx="20" fill="#fff" stroke="#2a1d12" stroke-width="2.5"/>${body}</svg>`;
+}
+function svgMystery(size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="6" width="188" height="188" rx="20" fill="#fff" stroke="#2a1d12" stroke-width="2.5"/>
+    <ellipse cx="100" cy="178" rx="44" ry="9" fill="#00000014"/>
+    <rect x="66" y="108" width="68" height="48" rx="16" fill="#5d4631"/>
+    <rect x="74" y="58" width="52" height="52" rx="16" fill="#5d4631"/>
+    <path d="M70 64 Q100 40 130 64 L130 78 Q100 60 70 78 Z" fill="#3a2c20"/>
+    <circle cx="89" cy="86" r="5" fill="#f6ede0"/><circle cx="111" cy="86" r="5" fill="#f6ede0"/>
+    <text x="100" y="138" font-size="34" font-family="Gaegu" font-weight="700" fill="#f6ede0" text-anchor="middle">?</text></svg>`;
+}
+
+/* ===== 로직 ===== */
+let idx=0, scores={}, history=[], currentResultKey="stay";
+const $=id=>document.getElementById(id);
+function scrollTop(){const s=document.querySelector(".stage");if(s)s.scrollTop=0;}
+function setVersion(v){
+  VERSION=v;$("vA").classList.toggle("on",v==="A");$("vB").classList.toggle("on",v==="B");
+  if($("result").style.display==="flex"&&history.length) renderResult(currentResultKey);
+}
+function startQuiz(){
+  idx=0; scores={settle:0,taste:0,social:0}; history=[];
+  $("intro").style.display="none";$("result").style.display="none";
+  $("quiz").style.display="flex";$("tot").textContent=QS.length;
+  renderQ();scrollTop();
+}
+function renderQ(){
+  const Q=QS[idx];
+  $("cur").textContent=idx+1;
+  $("fill").style.width=((idx+1)/QS.length*100)+"%";
+  $("qtext").textContent="Q"+(idx+1)+". "+Q.q;
+  const box=$("opts");box.innerHTML="";
+  const labels=["A","B"];
+  // 선택지 순서 유지 (A/B)
+  Q.a.forEach((o,i)=>{
+    const b=document.createElement("button");b.className="opt";
+    b.innerHTML=`<span class="ab">${labels[i]}.</span><span>${o.txt}</span>`;
+    b.onclick=()=>choose(o.axis,o.dir);
+    box.appendChild(b);
+  });
+}
+function choose(axis,dir){
+  if(dir>0) scores[axis]++;
+  history.push({axis,dir});
+  if(idx<QS.length-1){idx++;renderQ();scrollTop();}
+  else finish();
+}
+function prevQ(){
+  if(idx>0){
+    const last=history.pop();
+    if(last.dir>0) scores[last.axis]--;
+    idx--;renderQ();scrollTop();
+  } else {
+    $("quiz").style.display="none";$("intro").style.display="flex";scrollTop();
+  }
+}
+function finish(){
+  const key=getType(scores);
+  try{location.hash="result="+key;}catch(e){}
+  $("quiz").style.display="none";$("result").style.display="flex";
+  renderResult(key);
+  // 맨 위로 먼저 리셋 후 peek 적용
+  const stage=document.querySelector(".stage");
+  stage.scrollTop=0;
+  // B: rconnect 상단이 살짝 걸쳐 보이도록 peek 스크롤
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      const rcard=$("result").querySelector(".rcard");
+      const peekPx=52; // rconnect에서 이만큼 보여줌
+      const target=rcard.offsetHeight - stage.clientHeight + peekPx + 6;
+      if(target>0) stage.scrollTo({top:target, behavior:"smooth"});
+    });
+  });
+}
+function renderResult(key){
+  currentResultKey=key;
+  const T=TYPES[key],V=T[VERSION];
+  $("rno").textContent=T.no;
+  $("rillo").innerHTML=svgChar(key,180);
+  $("rname").textContent=V.en;$("rname").style.color=T.color;
+  $("rko").textContent=V.ko;
+  $("rquote").textContent='"'+V.quote+'"';
+  // axis tags
+  const ax=$("axes");ax.innerHTML="";
+  T.tags.forEach(t=>{const s=document.createElement("span");s.className="ax-tag";s.textContent=t;ax.appendChild(s);});
+  // stats
+  const sl=$("statList");sl.innerHTML="";
+  V.stats.forEach(([lab,val])=>{
+    const d=document.createElement("div");d.className="stat";
+    d.innerHTML=`<div class="lab"><span>${lab}</span><span>${val}</span></div>
+      <div class="bar"><div class="bv" style="background:${T.color}"></div></div>`;
+    sl.appendChild(d);
+    requestAnimationFrame(()=>{setTimeout(()=>{d.querySelector(".bv").style.width=val+"%";},60);});
+  });
+  // connect
+  $("reco").innerHTML=`당신은 <b>${V.ko}</b>!<br>${T.reco} <b>${T.cafeName}</b>이(가) 딱이에요.`;
+  $("askLine").textContent=`근데… 지금 신촌 ${T.cafeName}, 자리 있을까요? 🤔`;
+  // A: 화살표 표시 (약간 딜레이 후)
+  const hint=$("scrollHint");
+  hint.style.display="none";
+  clearTimeout(hint._ht);
+  hint._ht=setTimeout(()=>{ hint.style.display="flex"; }, 600);
+  // 스크롤 감지 → 화살표 숨기기
+  const stage=document.querySelector(".stage");
+  stage.onscroll=()=>checkHint();
+  // CTA 펄스
+  const btn=$("ctaService");
+  btn.classList.remove("pulse");
+  clearTimeout(btn._pt);
+  btn._pt=setTimeout(()=>btn.classList.add("pulse"), 1800);
+}
+function checkHint(){
+  const connect=$("result").querySelector(".rconnect");
+  if(!connect) return;
+  const stage=document.querySelector(".stage");
+  const connectTop=connect.offsetTop - stage.scrollTop;
+  // rconnect가 스테이지 안에 충분히 보이면 화살표 숨김
+  if(connectTop < stage.clientHeight - 40){
+    $("scrollHint").style.display="none";
+  }
+}
+function scrollToConnect(){
+  const connect=$("result").querySelector(".rconnect");
+  const stage=document.querySelector(".stage");
+  stage.scrollTo({top:connect.offsetTop - 16, behavior:"smooth"});
+}
+function goService(){
+  $("ctaService").classList.remove("pulse");
+  const T=TYPES[currentResultKey];
+  const sep=LANDING_URL.includes("?")?"&":"?";
+  window.open(LANDING_URL+sep+"type="+encodeURIComponent(T.cbtiType)+"&from=cbti","_blank");
+}
+function restart(){
+  try{history.replaceState(null,"",location.pathname);}catch(e){try{location.hash="";}catch(e2){}}
+  $("result").style.display="none";$("intro").style.display="flex";scrollTop();
+}
+function shareResult(){
+  const V=TYPES[currentResultKey][VERSION];
+  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 `;
+  const base=location.href.split("#")[0];
+  const url=base+"#result="+currentResultKey;
+  if(navigator.share){navigator.share({title:"CBTI 카공 빌런 테스트",text,url}).catch(()=>{});}
+  else{navigator.clipboard.writeText(text+url).then(showToast).catch(showToast);}
+}
+let tt;function showToast(){const e=$("toast");e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1800);}
+
+/* init */
+$("heroIllo").innerHTML=svgMystery(170);
+
+// 공유 링크로 진입 시 결과 바로 표시
+(function checkHash(){
+  const hash=location.hash;
+  if(hash.startsWith("#result=")){
+    const key=hash.replace("#result=","");
+    if(TYPES[key]){
+      $("intro").style.display="none";
+      $("result").style.display="flex";
+      renderResult(key);
+    }
+  }
+})();
+</script>
+</body>
+</html>
