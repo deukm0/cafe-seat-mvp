@@ -277,23 +277,6 @@ function getDirectionUrl(cafe) {
   return cafe.naverUrl || "#";
 }
 
-// ── OccupancyBar ──────────────────────────────────────────────────────────
-function OccupancyBar({ popularity, status }) {
-  if (status === "영업종료") return null;
-  const cfg = STATUS_CONFIG[status];
-  return (
-    <div style={{ marginTop: 10 }}>
-      <div style={{ height: 6, borderRadius: 99, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
-        <div style={{
-          height: "100%", width: `${popularity}%`,
-          background: cfg.color, borderRadius: 99,
-          transition: "width 0.8s cubic-bezier(.4,0,.2,1)",
-        }} />
-      </div>
-    </div>
-  );
-}
-
 // ── StatusBadge ───────────────────────────────────────────────────────────
 function StatusBadge({ status }) {
   const cfg = STATUS_CONFIG[status];
@@ -335,7 +318,7 @@ function ClosingBadge({ minutes }) {
 }
 
 // ── CafeCard ──────────────────────────────────────────────────────────────
-function CafeCard({ cafe, index }) {
+function CafeCard({ cafe, index, isCbtiPick }) {
   const isClosed  = cafe.status === "영업종료";
   const isClosing = cafe.isClosing;
   const cfg = STATUS_CONFIG[cafe.status];
@@ -344,101 +327,101 @@ function CafeCard({ cafe, index }) {
     <div
       style={{
         background: "#fff",
-        borderRadius: 18,
-        padding: "20px 22px",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+        borderRadius: 14,
+        padding: isClosed ? "14px 18px" : "16px 18px",
+        boxShadow: "0 1px 8px rgba(0,0,0,0.06)",
         border: "1.5px solid",
-        borderColor: isClosing
-          ? "rgba(249,115,22,0.25)"
-          : !isClosed && cafe.status === "혼잡"
-            ? "rgba(239,68,68,0.18)"
-            : "rgba(0,0,0,0.06)",
-        display: "flex", flexDirection: "column", gap: 0,
+        borderColor: isCbtiPick
+          ? "rgba(99,102,241,0.3)"
+          : isClosing
+            ? "rgba(249,115,22,0.25)"
+            : !isClosed && cafe.status === "혼잡"
+              ? "rgba(239,68,68,0.18)"
+              : "rgba(0,0,0,0.06)",
         opacity: isClosed ? 0.5 : 1,
         animation: `fadeUp 0.4s ease both`,
-        animationDelay: `${index * 0.06}s`,
+        animationDelay: `${index * 0.04}s`,
         transition: "transform 0.18s ease, box-shadow 0.18s ease",
         cursor: "default",
       }}
       onMouseEnter={e => {
         if (isClosed) return;
-        e.currentTarget.style.transform = "translateY(-3px)";
-        e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,0.11)";
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.1)";
       }}
       onMouseLeave={e => {
         e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.07)";
+        e.currentTarget.style.boxShadow = "0 1px 8px rgba(0,0,0,0.06)";
       }}
     >
-      {/* 상단: 카페명 + 배지들 */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: isClosed ? "#aaa" : "#1a1a1a", lineHeight: 1.3 }}>
-            {cafe.name}
-          </div>
-          <div style={{ fontSize: 12, color: "#bbb", marginTop: 2 }}>
-            도보 {cafe.walkMin}분
+      {/* 1행: 카페명 + 상태 + 길찾기 */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <span style={{
+              fontSize: 14, fontWeight: 700,
+              color: isClosed ? "#aaa" : "#1a1a1a",
+              whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+            }}>
+              {cafe.name}
+            </span>
+            {isCbtiPick && (
+              <span style={{
+                fontSize: 9, fontWeight: 700, color: "#6366f1",
+                background: "rgba(99,102,241,0.1)", padding: "1px 6px",
+                borderRadius: 99, flexShrink: 0,
+              }}>추천</span>
+            )}
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0, marginLeft: 10 }}>
           <StatusBadge status={cafe.status} />
           {isClosing && <ClosingBadge minutes={cafe.closingMinutes} />}
+          <a
+            href={getDirectionUrl(cafe)}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: "5px 12px", borderRadius: 8,
+              background: isClosed ? "transparent" : "#1a1a1a",
+              border: isClosed ? "1px solid #ddd" : "none",
+              color: isClosed ? "#bbb" : "#fff",
+              fontSize: 11, fontWeight: 600, textDecoration: "none",
+              transition: "background 0.15s", whiteSpace: "nowrap",
+            }}
+            onMouseEnter={e => { if (!isClosed) e.currentTarget.style.background = "#333"; }}
+            onMouseLeave={e => { if (!isClosed) e.currentTarget.style.background = "#1a1a1a"; }}
+          >
+            길찾기
+          </a>
         </div>
       </div>
 
-      {/* 좌석 정보 or 영업종료 안내 */}
-      {isClosed ? (
-        <div style={{
-          marginTop: 16, padding: "14px", borderRadius: 12,
-          background: "rgba(0,0,0,0.03)", textAlign: "center",
-          color: "#bbb", fontSize: 13,
-        }}>
-          현재 영업 중이 아닙니다
-        </div>
-      ) : (
-        <div style={{
-          marginTop: 16, padding: "12px 14px", borderRadius: 12,
-          background: isClosing ? "rgba(249,115,22,0.07)" : cfg.bg,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-        }}>
-          <div>
-            <span style={{ fontSize: 26, fontWeight: 800, color: cfg.color, lineHeight: 1 }}>
+      {/* 2행: 좌석 + 점유율 바 (영업중일 때만) */}
+      {!isClosed && (
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 10 }}>
+          <div style={{ flexShrink: 0 }}>
+            <span style={{ fontSize: 20, fontWeight: 800, color: cfg.color }}>
               {cafe.available}
             </span>
-            <span style={{ fontSize: 13, color: "#888", marginLeft: 4 }}>
+            <span style={{ fontSize: 11, color: "#999", marginLeft: 3 }}>
               / {cafe.totalSeats}석
             </span>
           </div>
-          <div style={{ fontSize: 12, color: "#aaa", textAlign: "right" }}>
-            <div>가용 좌석</div>
-            <div style={{ color: cfg.color, fontWeight: 600 }}>
-              {Math.round((1 - cafe.popularity / 100) * 100)}% 비어있음
+          <div style={{ flex: 1 }}>
+            <div style={{ height: 6, borderRadius: 99, background: "rgba(0,0,0,0.06)", overflow: "hidden" }}>
+              <div style={{
+                height: "100%", width: `${cafe.popularity}%`,
+                background: cfg.color, borderRadius: 99,
+                transition: "width 0.8s cubic-bezier(.4,0,.2,1)",
+              }} />
             </div>
           </div>
+          <span style={{ fontSize: 11, color: cfg.color, fontWeight: 600, flexShrink: 0 }}>
+            {Math.round((1 - cafe.popularity / 100) * 100)}%
+          </span>
         </div>
       )}
-
-      <OccupancyBar popularity={cafe.popularity} status={cafe.status} />
-
-      {/* 길찾기 버튼 */}
-      <a
-        href={getDirectionUrl(cafe)}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          marginTop: 14, display: "block", textAlign: "center",
-          padding: "9px 0", borderRadius: 10,
-          background: isClosed ? "transparent" : "#1a1a1a",
-          border: isClosed ? "1.5px solid #ddd" : "none",
-          color: isClosed ? "#bbb" : "#fff",
-          fontSize: 13, fontWeight: 600, textDecoration: "none",
-          transition: "background 0.15s",
-        }}
-        onMouseEnter={e => { if (!isClosed) e.currentTarget.style.background = "#333"; }}
-        onMouseLeave={e => { if (!isClosed) e.currentTarget.style.background = "#1a1a1a"; }}
-      >
-        길찾기 →
-      </a>
     </div>
   );
 }
@@ -516,6 +499,13 @@ export default function App() {
     return () => unsub();
   }, []);
 
+  // CBTI 추천 타입 (URL ?type=감성 사냥꾼 등)
+  const [cbtiType] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("type") || null;
+  });
+  const cbtiCafeIds = cbtiType ? (CBTI_CAFE_MAP[cbtiType] || []) : [];
+
   const openCafes   = cafes.filter(c => c.status !== "영업종료");
   const closedCafes = cafes.filter(c => c.status === "영업종료");
 
@@ -523,9 +513,19 @@ export default function App() {
     ? openCafes
     : openCafes.filter(c => c.status === filter);
 
-  const sortByName   = arr => [...arr].sort((a, b) => a.name.localeCompare(b.name, "ko"));
-  const sortedOpen   = sortByName(filteredOpen);
-  const sortedClosed = filter === "전체" ? sortByName(closedCafes) : [];
+  // 여유로운 순 정렬 (popularity 낮은 순), CBTI 추천 카페는 최상단
+  const sortByAvailability = arr => [...arr].sort((a, b) => {
+    // CBTI 추천 카페 우선
+    if (cbtiCafeIds.length > 0) {
+      const aMatch = cbtiCafeIds.includes(a.id) ? 0 : 1;
+      const bMatch = cbtiCafeIds.includes(b.id) ? 0 : 1;
+      if (aMatch !== bMatch) return aMatch - bMatch;
+    }
+    // 여유로운 순 (popularity 낮은 순)
+    return a.popularity - b.popularity;
+  });
+  const sortedOpen   = sortByAvailability(filteredOpen);
+  const sortedClosed = filter === "전체" ? [...closedCafes].sort((a, b) => a.name.localeCompare(b.name, "ko")) : [];
   const displayList  = [...sortedOpen, ...sortedClosed];
 
   const timeStr = lastUpdated.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
@@ -616,6 +616,21 @@ export default function App() {
             <SummaryBar cafes={cafes} activeFilter={filter} onFilter={setFilter} />
           )}
 
+          {cbtiType && (
+            <div style={{
+              marginBottom: 16, padding: "12px 16px", borderRadius: 14,
+              background: "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1))",
+              border: "1.5px solid rgba(99,102,241,0.2)",
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#6366f1" }}>
+                ☕ {cbtiType} 추천 카페
+              </div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 3 }}>
+                CBTI 결과에 맞는 카페가 상단에 표시됩니다
+              </div>
+            </div>
+          )}
+
           {displayList.length === 0 && (
             <div style={{ textAlign: "center", padding: "60px 0", color: "#aaa", fontSize: 14 }}>
               해당 상태의 카페가 없어요
@@ -626,7 +641,7 @@ export default function App() {
           {filter === "전체" && sortedOpen.length > 0 && (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} />)}
+                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} />)}
               </div>
 
               {sortedClosed.length > 0 && (
@@ -637,7 +652,7 @@ export default function App() {
                     <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} />)}
+                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} />)}
                   </div>
                 </>
               )}
@@ -647,7 +662,7 @@ export default function App() {
           {/* 필터 탭 (여유/보통/혼잡) */}
           {filter !== "전체" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} />)}
+              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} />)}
             </div>
           )}
 
