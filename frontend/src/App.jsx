@@ -507,7 +507,7 @@ export default function App() {
           naverDirectionUrl: c.naver_direction_url ?? null,
           lat:               c.lat ?? 0,
           lng:               c.lng ?? 0,
-          popularity:        c.current_popularity ?? 0,
+          popularity:        c.popularity ?? 0,
         }));
       setCafes(enriched);
       setLastUpdated(new Date());
