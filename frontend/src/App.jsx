@@ -191,29 +191,21 @@ const CBTI_CAFE_MAP = {
 function getTodayHours(cafeId) {
   const schedule = CAFE_HOURS[cafeId];
   if (!schedule) return null;
-  const dow = new Date().getDay(); // 0=일~6=토
-  if (dow in schedule) return schedule[dow]; // 요일별 override
-  return schedule.default ?? null;
-}
-
-// "HH:MM" 문자열 → 오늘 기준 분(minutes) 변환
-function toMinutes(timeStr) {
-  if (!timeStr) return 0;
-  const [h, m] = timeStr.split(":").map(Number);
-  return h * 60 + m;
+  const dayKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const key = dayKeys[new Date().getDay()];
+  return schedule[key] ?? null;
 }
 
 // 영업 상태 계산
 // returns: "영업종료" | "마감임박" | "영업중"
-// closingMinutes: 마감까지 남은 분 (마감임박일 때만)
 function getBusinessStatus(cafeId) {
   const hours = getTodayHours(cafeId);
   if (!hours) return { type: "영업종료", closingMinutes: null };
 
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const openMin  = toMinutes(hours.open);
-  const closeMin = toMinutes(hours.close === "24:00" ? "23:59" : hours.close);
+  const openMin  = Math.round(hours.open * 60);
+  const closeMin = Math.round((hours.close >= 24 ? 23.99 : hours.close) * 60);
 
   if (nowMin < openMin || nowMin >= closeMin) {
     return { type: "영업종료", closingMinutes: null };
@@ -229,14 +221,23 @@ function getBusinessStatus(cafeId) {
 
 // ── MOCK 데이터 ───────────────────────────────────────────────────────────
 const MOCK_CAFES = [
-  { id: "letmealone",     name: "렛미얼론",                 totalSeats: 80, walkMin: 8,  naverUrl: "https://map.naver.com/p/entry/place/1618419604", popularity: 38 },
-  { id: "eagle_dabang",   name: "독수리다방",                totalSeats: 70, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/31608233",   popularity: 55 },
-  { id: "twosome_yonsei", name: "투썸플레이스 신촌연세로점",  totalSeats: 50, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/1935823121", popularity: 81 },
-  { id: "starbucks_yonsei",name: "스타벅스 연대점",          totalSeats: 60, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11807591",   popularity: 0  },
-  { id: "hollys_sinchon", name: "할리스 신촌점",             totalSeats: 50, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11593558",   popularity: 63 },
-  { id: "mahogany_yonsei",name: "마호가니 연세대점",          totalSeats: 40, walkMin: 5,  naverUrl: "https://map.naver.com/p/entry/place/1432206951", popularity: 30 },
-  { id: "cafe_ann",       name: "카페앤 신촌점",              totalSeats: 70, walkMin: 12, naverUrl: "https://map.naver.com/p/entry/place/1975933458", popularity: 75 },
-  { id: "elpis_sinchon",  name: "엘피스카페 신촌점",          totalSeats: 80, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/38275926",   popularity: 65 },
+  { id: "starbucks_myeongmul", name: "스타벅스 신촌명물거리점", totalSeats: 100, walkMin: 8,  naverUrl: "https://map.naver.com/p/entry/place/13570666", popularity: 40 },
+  { id: "starbucks_sinchon",   name: "스타벅스 신촌점",        totalSeats: 120, walkMin: 7,  naverUrl: "https://map.naver.com/p/entry/place/11689850", popularity: 50 },
+  { id: "twosome_sinchon_station", name: "투썸플레이스 신촌기차역점", totalSeats: 50, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/18231613", popularity: 65 },
+  { id: "hollys_sinchon_station", name: "할리스 신촌역점",     totalSeats: 100, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/1816577852", popularity: 35 },
+  { id: "coffeebean_sinchon",  name: "커피빈 신촌점",          totalSeats: 120, walkMin: 8,  naverUrl: "https://map.naver.com/p/entry/place/20561789", popularity: 55 },
+  { id: "fortyd",              name: "포티드",                  totalSeats: 30,  walkMin: 11, naverUrl: "https://map.naver.com/p/entry/place/1946991741", popularity: 45 },
+  { id: "flickon_coffee",      name: "플릭온커피",              totalSeats: 10,  walkMin: 12, naverUrl: "https://map.naver.com/p/entry/place/1937057390", popularity: 30 },
+  { id: "sulbing_sinchon",     name: "설빙 신촌점",             totalSeats: 70,  walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/35150556",  popularity: 50 },
+  { id: "chloris_sinchon",     name: "클로리스 신촌본점",       totalSeats: 20,  walkMin: 11, naverUrl: "https://map.naver.com/p/entry/place/13073862",  popularity: 60 },
+  { id: "twosome_yonsei",      name: "투썸플레이스 신촌연세로점", totalSeats: 120, walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/1935823121", popularity: 55 },
+  { id: "starbucks_yonsei",    name: "스타벅스 연대점",          totalSeats: 120, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11807591",  popularity: 45 },
+  { id: "hollys_sinchon",      name: "할리스 신촌점",            totalSeats: 120, walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/11593558",  popularity: 40 },
+  { id: "letmealone",          name: "렛미얼론",                 totalSeats: 120, walkMin: 8,  naverUrl: "https://map.naver.com/p/entry/place/1618419604", popularity: 38 },
+  { id: "elpis_sinchon",       name: "앨피스카페 신촌점",        totalSeats: 80,  walkMin: 10, naverUrl: "https://map.naver.com/p/entry/place/38275926",  popularity: 65 },
+  { id: "cafe_ann",            name: "카페앤 신촌점",            totalSeats: 80,  walkMin: 12, naverUrl: "https://map.naver.com/p/entry/place/1975933458", popularity: 25 },
+  { id: "eagle_dabang",        name: "독수리다방",               totalSeats: 80,  walkMin: 9,  naverUrl: "https://map.naver.com/p/entry/place/31608233",  popularity: 75 },
+  { id: "mahogany_yonsei",     name: "마호가니 연세대점",        totalSeats: 50,  walkMin: 5,  naverUrl: "https://map.naver.com/p/entry/place/1432206951", popularity: 30 },
 ];
 
 // ── 혼잡도 계산 ───────────────────────────────────────────────────────────
