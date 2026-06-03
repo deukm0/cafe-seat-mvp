@@ -2,8 +2,16 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
 import pytz
+import os, json, base64
 
-cred = credentials.Certificate("firebase_credentials.json")
+# GitHub Actions → 환경변수에서 읽기 / 로컬 → 파일에서 읽기
+encoded = os.environ.get("FIREBASE_CREDENTIALS")
+if encoded:
+    cred_dict = json.loads(base64.b64decode(encoded))
+    cred = credentials.Certificate(cred_dict)
+else:
+    cred = credentials.Certificate("firebase_credentials.json")
+
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
