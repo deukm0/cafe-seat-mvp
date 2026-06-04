@@ -1,3 +1,12 @@
+"""
+⚠️  카페 추가 시 필수 체크리스트:
+  1. id, name, total_seats, naver_url, type, popular_times — 기존 항목
+  2. lat, lng — ★ 반드시 입력! 없으면 지도에 핀이 표시되지 않음
+     → 구글맵에서 카페 검색 → 핀 클릭 → URL의 @37.XXXX,126.XXXX 에서 확인
+  3. 등록 후 add_latlng.py 실행하면 자동 조회도 가능 (단, 수동 확인 권장)
+
+⚠️  이 스크립트는 최초 1회만 실행. 이후 수정은 Firebase Console에서 직접.
+"""
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -12,6 +21,8 @@ CAFES = [
         "name": "스타벅스 신촌명물거리점",
         "total_seats": 150,
         "naver_url": "https://map.naver.com/p/entry/place/13570666",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "카페 노마드",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 16, 22, 37, 56, 71, 77, 76, 72, 68, 54, 35, 0, 0, 0],
@@ -28,6 +39,8 @@ CAFES = [
         "name": "스타벅스 신촌점",
         "total_seats": 120,
         "naver_url": "https://map.naver.com/p/entry/place/11689850",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "카페 노마드",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 6, 12, 18, 26, 37, 50, 65, 74, 74, 73, 68, 0, 0, 0, 0, 0],
@@ -44,6 +57,8 @@ CAFES = [
         "name": "투썸플레이스 신촌기차역점",
         "total_seats": 50,
         "naver_url": "https://map.naver.com/p/entry/place/18231613",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "디저트 의존러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 21, 45, 73, 87, 80, 67, 62, 68, 85, 96, 86, 56, 29, 12],
@@ -60,6 +75,8 @@ CAFES = [
         "name": "할리스 신촌역점",
         "total_seats": 100,
         "naver_url": "https://map.naver.com/p/entry/place/1816577852",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "장기 체류러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 20, 30, 48, 59, 67, 69, 77, 86, 84, 70, 60, 0, 0, 0],
@@ -76,6 +93,8 @@ CAFES = [
         "name": "커피빈 신촌점",
         "total_seats": 120,
         "naver_url": "https://map.naver.com/p/entry/place/20561789",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "사교 공부러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 6, 14, 25, 38, 47, 61, 72, 76, 72, 61, 54, 51, 49, 36, 0, 0],
@@ -92,6 +111,8 @@ CAFES = [
         "name": "포티드",
         "total_seats": 40,
         "naver_url": "https://map.naver.com/p/entry/place/1946991741",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "감성 사냥꾼",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 32, 50, 64, 68, 66, 67, 73, 81, 74, 53, 25, 0],
@@ -108,6 +129,8 @@ CAFES = [
         "name": "플릭온커피",
         "total_seats": 10,
         "naver_url": "https://map.naver.com/p/entry/place/1937057390",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "감성 사냥꾼",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 28, 25, 25, 20, 11, 8, 0, 0, 0, 0, 0, 0],
@@ -124,6 +147,8 @@ CAFES = [
         "name": "설빙 신촌점",
         "total_seats": 80,
         "naver_url": "https://map.naver.com/p/entry/place/35150556",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "디저트 의존러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 29, 40, 48, 52, 56, 59, 73, 83, 82, 72, 50, 28],
@@ -140,6 +165,8 @@ CAFES = [
         "name": "클로리스 신촌본점",
         "total_seats": 20,
         "naver_url": "https://map.naver.com/p/entry/place/13073862",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "감성 사냥꾼",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 65, 80, 82, 80, 81, 86, 81, 68, 47, 0],
@@ -156,6 +183,8 @@ CAFES = [
         "name": "투썸플레이스 신촌연세로점",
         "total_seats": 120,
         "naver_url": "https://map.naver.com/p/entry/place/1935823121",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "디저트 의존러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 9, 11, 14, 20, 28, 38, 45, 52, 53, 59, 58, 59, 59, 53, 43, 0],
@@ -172,6 +201,8 @@ CAFES = [
         "name": "스타벅스 연대점",
         "total_seats": 120,
         "naver_url": "https://map.naver.com/p/entry/place/11807591",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "카페 노마드",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 22, 30, 36, 42, 39, 39, 39, 45, 47, 42, 30, 21, 0, 0],
@@ -188,6 +219,8 @@ CAFES = [
         "name": "할리스 신촌점",
         "total_seats": 120,
         "naver_url": "https://map.naver.com/p/entry/place/11593558",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "장기 체류러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 13, 26, 26, 33, 20, 33, 46, 53, 40, 33, 33, 53, 46, 0],
@@ -204,6 +237,8 @@ CAFES = [
         "name": "렛미얼론",
         "total_seats": 150,
         "naver_url": "https://map.naver.com/p/entry/place/1618419604",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "커피 본질러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 23, 25, 33, 45, 54, 58, 54, 58, 58, 59, 55, 43, 0],
@@ -220,6 +255,8 @@ CAFES = [
         "name": "앨피스카페 신촌점",
         "total_seats": 80,
         "naver_url": "https://map.naver.com/p/entry/place/38275926",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "장기 체류러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 33, 47, 64, 72, 76, 65, 54, 48, 0, 0, 0, 0, 0, 0],
@@ -236,6 +273,8 @@ CAFES = [
         "name": "카페앤 신촌점",
         "total_seats": 80,
         "naver_url": "https://map.naver.com/p/entry/place/1975933458",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "장기 체류러",
         "popular_times": {
             "sun": [40, 30, 33, 30, 23, 16, 16, 23, 23, 30, 30, 33, 36, 43, 33, 33, 33, 56, 63, 100, 83, 60, 43, 36],
@@ -252,6 +291,8 @@ CAFES = [
         "name": "독수리다방",
         "total_seats": 80,
         "naver_url": "https://map.naver.com/p/entry/place/31608233",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "사교 공부러",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 32, 45, 59, 68, 69, 67, 66, 68, 67, 64, 58, 47],
@@ -268,6 +309,8 @@ CAFES = [
         "name": "마호가니 연세대점",
         "total_seats": 50,
         "naver_url": "https://map.naver.com/p/entry/place/1432206951",
+        "lat": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
+        "lng": 0.0,  # ← 필수: 구글맵 핀 URL에서 @위도,경도 확인
         "type": "카페 노마드",
         "popular_times": {
             "sun": [0, 0, 0, 0, 0, 0, 0, 0, 33, 33, 33, 53, 80, 80, 80, 53, 53, 40, 33, 33, 0, 0, 0, 0],
