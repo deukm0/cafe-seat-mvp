@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { subscribeCafes } from "./firebase";
 
 // ── 카페별 영업시간 (프론트에서 직접 관리) ─────────────────────────────────
@@ -476,6 +476,48 @@ export default function App() {
   const [cafes,       setCafes]       = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [loading,     setLoading]     = useState(true);
+  const [showShare,   setShowShare]   = useState(false);
+
+  // 카카오톡 공유
+  const handleKakaoShare = useCallback(() => {
+    const url = "https://cafe-seat-mpv.netlify.app";
+    const openCount = cafes.filter(c => c.status !== "영업종료");
+    const yeoyu = openCount.filter(c => c.status === "여유").length;
+    const botong = openCount.filter(c => c.status === "보통").length;
+    const honjab = openCount.filter(c => c.status === "혼잡").length;
+    const desc = `지금 여유 ${yeoyu}곳 · 보통 ${botong}곳 · 혼잡 ${honjab}곳`;
+
+    if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
+      try {
+        window.Kakao.Share.sendDefault({
+          objectType: "feed",
+          content: {
+            title: "실패없는 카페 선택 ☕",
+            description: `신촌 카페 ${desc}`,
+            imageUrl: "https://cafe-seat-mpv.netlify.app/og-image.png",
+            link: { mobileWebUrl: url, webUrl: url },
+          },
+          buttons: [{ title: "지금 확인하기", link: { mobileWebUrl: url, webUrl: url } }],
+        });
+        setShowShare(false);
+        return;
+      } catch (e) { console.log("Kakao share failed", e); }
+    }
+    // fallback: 네이티브 공유 → 클립보드
+    const text = `실패없는 카페 선택 ☕ 신촌 카페 ${desc}`;
+    if (navigator.share) {
+      navigator.share({ title: "실패없는 카페 선택", text, url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(`${text} 👉 ${url}`).then(() => alert("링크가 복사되었습니다!"));
+    }
+    setShowShare(false);
+  }, [cafes]);
+
+  const handleLinkCopy = useCallback(() => {
+    navigator.clipboard.writeText("https://cafe-seat-mpv.netlify.app")
+      .then(() => alert("링크가 복사되었습니다!"));
+    setShowShare(false);
+  }, []);
 
   useEffect(() => {
     const unsub = subscribeCafes((rawCafes) => {
@@ -497,6 +539,13 @@ export default function App() {
       setLoading(false);
     });
     return () => unsub();
+  }, []);
+
+  // 카카오 SDK 초기화
+  useEffect(() => {
+    if (typeof window.Kakao !== "undefined" && !window.Kakao.isInitialized()) {
+      window.Kakao.init("6064e1045ddfe7edf97edd266f75a283");
+    }
   }, []);
 
   // CBTI 추천 타입 (URL ?type=감성 사냥꾼 등)
@@ -557,6 +606,10 @@ export default function App() {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%       { opacity: 0.5; transform: scale(1.3); }
         }
+        @keyframes slideUp {
+          from { transform: translateY(100%); }
+          to   { transform: translateY(0); }
+        }
         ::-webkit-scrollbar { width: 0; }
       `}</style>
 
@@ -568,14 +621,33 @@ export default function App() {
           position: "sticky", top: 0, zIndex: 100,
         }}>
           <div style={{ maxWidth: 480, margin: "0 auto" }}>
-            <div style={{ fontSize: 11, color: "#666", letterSpacing: "0.1em", fontWeight: 600 }}>
-              SINCHON · 연세대학교
-            </div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginTop: 2 }}>
-              실패없는 카페 선택 ☕
-            </div>
-            <div style={{ fontSize: 11, color: "#555", marginTop: 8, paddingBottom: 12 }}>
-              {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <div style={{ fontSize: 11, color: "#666", letterSpacing: "0.1em", fontWeight: 600 }}>
+                  SINCHON · 연세대학교
+                </div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginTop: 2 }}>
+                  실패없는 카페 선택 ☕
+                </div>
+                <div style={{ fontSize: 11, color: "#555", marginTop: 8, paddingBottom: 12 }}>
+                  {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
+                </div>
+              </div>
+              <button
+                onClick={() => setShowShare(true)}
+                style={{
+                  background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: 10, width: 36, height: 36, cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 15, color: "#fff", marginTop: 2,
+                  transition: "background 0.15s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+                title="공유하기"
+              >
+                ↗
+              </button>
             </div>
 
             {/* 필터 탭 */}
@@ -678,6 +750,53 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* 공유 팝업 */}
+      {showShare && (
+        <div
+          onClick={() => setShowShare(false)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 1000,
+            display: "flex", alignItems: "flex-end", justifyContent: "center",
+            background: "rgba(0,0,0,0.45)", backdropFilter: "blur(2px)",
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: "100%", maxWidth: 480, background: "#fff",
+              borderRadius: "20px 20px 0 0", padding: "20px 24px 32px",
+              animation: "slideUp 0.25s ease-out",
+            }}
+          >
+            <div style={{ width: 36, height: 4, borderRadius: 2, background: "#d1d5db", margin: "0 auto 16px" }} />
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#111", marginBottom: 4 }}>
+              공유하기
+            </div>
+            <div style={{ fontSize: 13, color: "#6b7280", marginBottom: 20 }}>
+              신촌 카페 좌석 현황을 친구에게 공유하세요
+            </div>
+            <div style={{ display: "flex", gap: 20, justifyContent: "center" }}>
+              {[
+                { name: "카카오톡", icon: "💬", bg: "#FEE500", action: handleKakaoShare },
+                { name: "링크 복사", icon: "🔗", bg: "#e5e7eb", action: handleLinkCopy },
+              ].map(opt => (
+                <button key={opt.name} onClick={opt.action} style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+                  background: "none", border: "none", cursor: "pointer", fontFamily: "inherit",
+                }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: 16, background: opt.bg,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 24, boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+                  }}>{opt.icon}</div>
+                  <span style={{ fontSize: 12, color: "#374151", fontWeight: 500 }}>{opt.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

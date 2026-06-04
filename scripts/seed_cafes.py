@@ -10,7 +10,7 @@ CAFES = [
     {
         "id": "starbucks_myeongmul",
         "name": "스타벅스 신촌명물거리점",
-        "total_seats": 100,
+        "total_seats": 150,
         "naver_url": "https://map.naver.com/p/entry/place/13570666",
         "type": "카페 노마드",
         "popular_times": {
@@ -90,7 +90,7 @@ CAFES = [
     {
         "id": "fortyd",
         "name": "포티드",
-        "total_seats": 30,
+        "total_seats": 40,
         "naver_url": "https://map.naver.com/p/entry/place/1946991741",
         "type": "감성 사냥꾼",
         "popular_times": {
@@ -122,7 +122,7 @@ CAFES = [
     {
         "id": "sulbing_sinchon",
         "name": "설빙 신촌점",
-        "total_seats": 70,
+        "total_seats": 80,
         "naver_url": "https://map.naver.com/p/entry/place/35150556",
         "type": "디저트 의존러",
         "popular_times": {
@@ -202,7 +202,7 @@ CAFES = [
     {
         "id": "letmealone",
         "name": "렛미얼론",
-        "total_seats": 120,
+        "total_seats": 150,
         "naver_url": "https://map.naver.com/p/entry/place/1618419604",
         "type": "커피 본질러",
         "popular_times": {

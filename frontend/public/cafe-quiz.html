@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nk" crossorigin="anonymous"></script>
 <style>
 :root{
   --cream:#f6ede0;--cream-2:#efe2cf;--paper:#fffaf2;
@@ -539,15 +540,36 @@ function restart(){
 }
 function shareResult(){
   const V=TYPES[currentResultKey][VERSION];
-  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 `;
   const base=location.href.split("#")[0];
   const url=base+"#result="+currentResultKey;
+  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 `;
+
+  // 카카오톡 공유 시도 → 실패 시 네이티브 공유 → 클립보드 복사
+  if(typeof Kakao!=="undefined"&&Kakao.isInitialized()){
+    try{
+      Kakao.Share.sendDefault({
+        objectType:"feed",
+        content:{
+          title:"[CBTI] 나의 카공 유형: "+V.ko,
+          description:V.en+" — "+V.desc.substring(0,50)+"...",
+          imageUrl:"https://cafe-seat-mpv.netlify.app/og-cbti.png",
+          link:{mobileWebUrl:url,webUrl:url}
+        },
+        buttons:[{title:"나도 테스트하기",link:{mobileWebUrl:url,webUrl:url}}]
+      });
+      return;
+    }catch(e){console.log("Kakao share failed, falling back",e);}
+  }
   if(navigator.share){navigator.share({title:"CBTI 카공 빌런 테스트",text,url}).catch(()=>{});}
   else{navigator.clipboard.writeText(text+url).then(showToast).catch(showToast);}
 }
 let tt;function showToast(){const e=$("toast");e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1800);}
 
 /* init */
+// 카카오 SDK 초기화 — YOUR_KAKAO_JS_KEY를 실제 키로 교체
+if(typeof Kakao!=="undefined"&&!Kakao.isInitialized()){
+  Kakao.init("6064e1045ddfe7edf97edd266f75a283");
+}
 $("heroIllo").innerHTML=svgMystery(170);
 
 // 공유 링크로 진입 시 결과 바로 표시
