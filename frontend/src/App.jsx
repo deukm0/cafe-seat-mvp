@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { subscribeCafes } from "./firebase";
 
 // ── 카페별 영업시간 (프론트에서 직접 관리) ─────────────────────────────────
@@ -277,6 +277,182 @@ function getDirectionUrl(cafe) {
   return cafe.naverUrl || "#";
 }
 
+// ── CafeMap (네이버 지도) ─────────────────────────────────────────────────
+function CafeMap({ cafes, selectedId, onSelect, filter }) {
+  const mapEl = useRef(null);
+  const mapObj = useRef(null);
+  const markersRef = useRef([]);
+  const infoRef = useRef(null);
+
+  // 지도 초기화 (1회)
+  useEffect(() => {
+    if (!window.naver || !window.naver.maps || !mapEl.current) return;
+    if (mapObj.current) return; // 이미 생성됨
+
+    const map = new naver.maps.Map(mapEl.current, {
+      center: new naver.maps.LatLng(37.5580, 126.9362),
+      zoom: 16,
+      minZoom: 15,
+      maxZoom: 18,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.RIGHT_CENTER,
+        style: naver.maps.ZoomControlStyle.SMALL,
+      },
+      mapTypeControl: false,
+      logoControl: true,
+      logoControlOptions: { position: naver.maps.Position.BOTTOM_LEFT },
+      scaleControl: false,
+      mapDataControl: false,
+    });
+
+    mapObj.current = map;
+  }, []);
+
+  // 마커 업데이트
+  useEffect(() => {
+    const map = mapObj.current;
+    if (!map || !window.naver) return;
+
+    // 기존 마커 제거
+    markersRef.current.forEach(m => m.setMap(null));
+    markersRef.current = [];
+    if (infoRef.current) { infoRef.current.close(); infoRef.current = null; }
+
+    const visible = cafes.filter(c => {
+      if (!c.lat || !c.lng) return false;
+      if (c.status === "영업종료") return false;
+      if (filter !== "전체" && c.status !== filter) return false;
+      return true;
+    });
+
+    visible.forEach(cafe => {
+      const cfg = STATUS_CONFIG[cafe.status] || STATUS_CONFIG["보통"];
+      const isSelected = cafe.id === selectedId;
+      const size = isSelected ? 44 : 34;
+
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(cafe.lat, cafe.lng),
+        map,
+        icon: {
+          content: `
+            <div style="
+              position:relative;
+              width:${size}px; height:${size}px;
+              background:${cfg.color};
+              border:3px solid #fff;
+              border-radius:50%;
+              display:flex; align-items:center; justify-content:center;
+              color:#fff; font-weight:800; font-size:${isSelected ? 14 : 12}px;
+              box-shadow:0 2px 8px ${cfg.color}88, 0 1px 3px rgba(0,0,0,0.2);
+              cursor:pointer;
+              transition: all 0.2s;
+              ${isSelected ? `transform:scale(1.15); z-index:100; box-shadow:0 0 0 6px ${cfg.color}33, 0 2px 8px ${cfg.color}88;` : ""}
+              font-family:'Pretendard',-apple-system,sans-serif;
+            ">${cafe.available}</div>
+          `,
+          anchor: new naver.maps.Point(size / 2, size / 2),
+        },
+        zIndex: isSelected ? 100 : 10,
+      });
+
+      naver.maps.Event.addListener(marker, "click", () => {
+        onSelect(cafe.id);
+        // 인포윈도우 표시
+        if (infoRef.current) infoRef.current.close();
+        const iw = new naver.maps.InfoWindow({
+          content: `
+            <div style="
+              padding:10px 14px; min-width:140px;
+              font-family:'Pretendard',-apple-system,sans-serif;
+              border-radius:12px; background:#fff;
+              box-shadow:0 4px 16px rgba(0,0,0,0.15);
+              border:none;
+            ">
+              <div style="font-weight:700; font-size:14px; color:#1a1a1a; margin-bottom:4px;">
+                ${cafe.name}
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="
+                  font-size:11px; font-weight:600; color:${cfg.color};
+                  background:${cfg.bg}; padding:2px 8px; border-radius:20px;
+                ">● ${cafe.status}</span>
+                <span style="font-size:13px; font-weight:800; color:${cfg.color};">
+                  ${cafe.available}
+                </span>
+                <span style="font-size:11px; color:#999;">/ ${cafe.totalSeats}석</span>
+              </div>
+            </div>
+          `,
+          borderWidth: 0,
+          backgroundColor: "transparent",
+          disableAnchor: true,
+          pixelOffset: new naver.maps.Point(0, -size / 2 - 8),
+        });
+        iw.open(map, marker);
+        infoRef.current = iw;
+      });
+
+      markersRef.current.push(marker);
+    });
+
+    // 영업종료 카페는 회색 작은 마커로
+    cafes.filter(c => c.lat && c.lng && c.status === "영업종료" && filter === "전체").forEach(cafe => {
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(cafe.lat, cafe.lng),
+        map,
+        icon: {
+          content: `
+            <div style="
+              width:20px; height:20px;
+              background:#d1d5db;
+              border:2px solid #fff;
+              border-radius:50%;
+              opacity:0.5;
+              box-shadow:0 1px 2px rgba(0,0,0,0.1);
+            "></div>
+          `,
+          anchor: new naver.maps.Point(10, 10),
+        },
+        zIndex: 1,
+      });
+      markersRef.current.push(marker);
+    });
+  }, [cafes, selectedId, filter, onSelect]);
+
+  // 선택된 카페로 지도 이동
+  useEffect(() => {
+    const map = mapObj.current;
+    if (!map || !selectedId || !window.naver) return;
+    const cafe = cafes.find(c => c.id === selectedId);
+    if (cafe && cafe.lat && cafe.lng) {
+      map.panTo(new naver.maps.LatLng(cafe.lat, cafe.lng));
+    }
+  }, [selectedId, cafes]);
+
+  return (
+    <div style={{
+      margin: "0 0 0", borderBottom: "1px solid rgba(0,0,0,0.06)",
+      position: "relative",
+    }}>
+      <div ref={mapEl} style={{ width: "100%", height: 260 }} />
+      {/* 범례 */}
+      <div style={{
+        position: "absolute", bottom: 12, left: 12,
+        background: "rgba(255,255,255,0.95)", borderRadius: 10,
+        padding: "6px 12px", display: "flex", gap: 10,
+        fontSize: 10, fontWeight: 600, color: "#57534e",
+        backdropFilter: "blur(4px)",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
+      }}>
+        <span><span style={{ color: "#22c55e" }}>●</span> 여유</span>
+        <span><span style={{ color: "#f59e0b" }}>●</span> 보통</span>
+        <span><span style={{ color: "#ef4444" }}>●</span> 혼잡</span>
+      </div>
+    </div>
+  );
+}
+
 // ── StatusBadge ───────────────────────────────────────────────────────────
 function StatusBadge({ status }) {
   const cfg = STATUS_CONFIG[status];
@@ -318,31 +494,37 @@ function ClosingBadge({ minutes }) {
 }
 
 // ── CafeCard ──────────────────────────────────────────────────────────────
-function CafeCard({ cafe, index, isCbtiPick }) {
+function CafeCard({ cafe, index, isCbtiPick, isMapSelected, cardRef, onCardClick }) {
   const isClosed  = cafe.status === "영업종료";
   const isClosing = cafe.isClosing;
   const cfg = STATUS_CONFIG[cafe.status];
 
   return (
     <div
+      ref={cardRef}
+      onClick={onCardClick}
       style={{
         background: "#fff",
         borderRadius: 14,
         padding: isClosed ? "14px 18px" : "16px 18px",
-        boxShadow: "0 1px 8px rgba(0,0,0,0.06)",
+        boxShadow: isMapSelected
+          ? `0 0 0 3px ${cfg.color}30, 0 4px 16px rgba(0,0,0,0.1)`
+          : "0 1px 8px rgba(0,0,0,0.06)",
         border: "1.5px solid",
-        borderColor: isCbtiPick
-          ? "rgba(99,102,241,0.3)"
-          : isClosing
-            ? "rgba(249,115,22,0.25)"
-            : !isClosed && cafe.status === "혼잡"
-              ? "rgba(239,68,68,0.18)"
-              : "rgba(0,0,0,0.06)",
+        borderColor: isMapSelected
+          ? cfg.color
+          : isCbtiPick
+            ? "rgba(99,102,241,0.3)"
+            : isClosing
+              ? "rgba(249,115,22,0.25)"
+              : !isClosed && cafe.status === "혼잡"
+                ? "rgba(239,68,68,0.18)"
+                : "rgba(0,0,0,0.06)",
         opacity: isClosed ? 0.5 : 1,
         animation: `fadeUp 0.4s ease both`,
         animationDelay: `${index * 0.04}s`,
         transition: "transform 0.18s ease, box-shadow 0.18s ease",
-        cursor: "default",
+        cursor: isClosed ? "default" : "pointer",
       }}
       onMouseEnter={e => {
         if (isClosed) return;
@@ -477,6 +659,8 @@ export default function App() {
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [loading,     setLoading]     = useState(true);
   const [showShare,   setShowShare]   = useState(false);
+  const [selectedCafeId, setSelectedCafeId] = useState(null);
+  const cardRefs = useRef({});
 
   // 카카오톡 공유
   const handleKakaoShare = useCallback(() => {
@@ -547,6 +731,13 @@ export default function App() {
       window.Kakao.init("6064e1045ddfe7edf97edd266f75a283");
     }
   }, []);
+
+  // 지도에서 선택 시 카드로 스크롤
+  useEffect(() => {
+    if (selectedCafeId && cardRefs.current[selectedCafeId]) {
+      cardRefs.current[selectedCafeId].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [selectedCafeId]);
 
   // CBTI 추천 타입 (URL ?type=감성 사냥꾼 등)
   const [cbtiType] = useState(() => {
@@ -681,6 +872,16 @@ export default function App() {
           </div>
         </div>
 
+        {/* 지도 */}
+        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+          <CafeMap
+            cafes={cafes}
+            selectedId={selectedCafeId}
+            onSelect={setSelectedCafeId}
+            filter={filter}
+          />
+        </div>
+
         {/* 본문 */}
         <div style={{ maxWidth: 480, margin: "0 auto", padding: "20px 16px 40px" }}>
 
@@ -713,7 +914,7 @@ export default function App() {
           {filter === "전체" && sortedOpen.length > 0 && (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} />)}
+                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id)} />)}
               </div>
 
               {sortedClosed.length > 0 && (
@@ -724,7 +925,7 @@ export default function App() {
                     <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} />)}
+                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} isMapSelected={false} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => {}} />)}
                   </div>
                 </>
               )}
@@ -734,7 +935,7 @@ export default function App() {
           {/* 필터 탭 (여유/보통/혼잡) */}
           {filter !== "전체" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} />)}
+              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id)} />)}
             </div>
           )}
 
