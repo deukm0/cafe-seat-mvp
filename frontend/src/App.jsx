@@ -664,7 +664,7 @@ export default function App() {
 
   // 카카오톡 공유
   const handleKakaoShare = useCallback(() => {
-    const url = "https://cafe-seat-mpv.netlify.app";
+    const url = "https://cafe-seat-mvp.vercel.app/";
     const openCount = cafes.filter(c => c.status !== "영업종료");
     const yeoyu = openCount.filter(c => c.status === "여유").length;
     const botong = openCount.filter(c => c.status === "보통").length;
@@ -698,7 +698,7 @@ export default function App() {
   }, [cafes]);
 
   const handleLinkCopy = useCallback(() => {
-    navigator.clipboard.writeText("https://cafe-seat-mpv.netlify.app")
+    navigator.clipboard.writeText("https://cafe-seat-mvp.vercel.app/")
       .then(() => alert("링크가 복사되었습니다!"));
     setShowShare(false);
   }, []);
