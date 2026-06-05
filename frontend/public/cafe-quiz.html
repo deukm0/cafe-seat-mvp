@@ -438,6 +438,7 @@ function setVersion(v){
 }
 function startQuiz(){
   idx=0; scores={settle:0,taste:0,social:0}; history=[];
+  _cbtiCreateSession();
   $("intro").style.display="none";$("result").style.display="none";
   $("quiz").style.display="flex";$("tot").textContent=QS.length;
   renderQ();scrollTop();
@@ -595,19 +596,29 @@ const _fb=firebase.initializeApp({
   appId:"1:906275154448:web:1ee76e2883b7b78735f895"
 });
 const _db=firebase.firestore();
+// 재방문 추적용 persistent ID (localStorage)
+let _uid;
+try{_uid=localStorage.getItem("cafe_uid");if(!_uid){_uid=crypto.randomUUID();localStorage.setItem("cafe_uid",_uid);}}catch(e){_uid=crypto.randomUUID();}
 const _sid=crypto.randomUUID();
 const _utm=new URLSearchParams(location.search).get("utm")||null;
-try{
-  _db.collection("cbti_sessions").doc(_sid).set({
-    utm:_utm,
-    device:window.innerWidth<=768?"mobile":"desktop",
-    created_at:firebase.firestore.FieldValue.serverTimestamp(),
-    finished:false,
-    result_type:null,
-    clicked_service:false
-  });
-}catch(e){}
-function _cbtiTrack(updates){try{_db.collection("cbti_sessions").doc(_sid).update(updates);}catch(e){}}
+let _sessionCreated=false;
+// 세션 생성은 퀴즈 시작 시에만 (공유링크 열람은 세션 아님)
+function _cbtiCreateSession(){
+  if(_sessionCreated) return;
+  _sessionCreated=true;
+  try{
+    _db.collection("cbti_sessions").doc(_sid).set({
+      uid:_uid,
+      utm:_utm,
+      device:window.innerWidth<=768?"mobile":"desktop",
+      created_at:firebase.firestore.FieldValue.serverTimestamp(),
+      finished:false,
+      result_type:null,
+      clicked_service:false
+    });
+  }catch(e){}
+}
+function _cbtiTrack(updates){if(!_sessionCreated) return;try{_db.collection("cbti_sessions").doc(_sid).update(updates);}catch(e){}}
 
 if(typeof Kakao!=="undefined"&&!Kakao.isInitialized()){
   Kakao.init("6064e1045ddfe7edf97edd266f75a283");
