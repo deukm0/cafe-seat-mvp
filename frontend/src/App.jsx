@@ -698,7 +698,7 @@ export default function App() {
           content: {
             title: "실패없는 카페 선택 ☕",
             description: `신촌 카페 ${desc}`,
-            imageUrl: "https://cafe-seat-mpv.netlify.app/og-image.png",
+            imageUrl: "https://cafe-seat-mvp.vercel.app/og-image.png",
             link: { mobileWebUrl: url, webUrl: url },
           },
           buttons: [{ title: "지금 확인하기", link: { mobileWebUrl: url, webUrl: url } }],

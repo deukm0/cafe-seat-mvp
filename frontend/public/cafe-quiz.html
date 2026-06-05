@@ -531,8 +531,10 @@ function scrollToConnect(){
 function goService(){
   $("ctaService").classList.remove("pulse");
   const T=TYPES[currentResultKey];
-  const sep=LANDING_URL.includes("?")?"&":"?";
-  window.open(LANDING_URL+sep+"type="+encodeURIComponent(T.cbtiType)+"&from=cbti","_blank");
+  const utm=new URLSearchParams(location.search).get("utm");
+  let url=LANDING_URL+"?type="+encodeURIComponent(T.cbtiType)+"&from=cbti";
+  if(utm) url+="&utm="+encodeURIComponent(utm);
+  window.open(url,"_blank");
 }
 function restart(){
   try{history.replaceState(null,"",location.pathname);}catch(e){try{location.hash="";}catch(e2){}}
@@ -552,7 +554,7 @@ function shareResult(){
         content:{
           title:"[CBTI] 나의 카공 유형: "+V.ko,
           description:V.en+" — "+V.desc.substring(0,50)+"...",
-          imageUrl:"https://cafe-seat-mpv.netlify.app/og-cbti.png",
+          imageUrl:"https://cafe-seat-mvp.vercel.app/og-cbti.png",
           link:{mobileWebUrl:url,webUrl:url}
         },
         buttons:[{title:"나도 테스트하기",link:{mobileWebUrl:url,webUrl:url}}]
