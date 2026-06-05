@@ -178,6 +178,31 @@ body::before{
   opacity:0;transition:.25s;z-index:50;pointer-events:none;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ── SHARE SHEET ── */
+.share-overlay{
+  position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);
+}
+.share-overlay.open{display:flex}
+.share-sheet{
+  width:100%;max-width:430px;background:var(--paper);
+  border-radius:20px 20px 0 0;padding:20px 24px 32px;
+  animation:slideUp .25s ease-out;
+}
+.share-handle{width:36px;height:4px;border-radius:2px;background:#d1d5db;margin:0 auto 16px}
+.share-title{font-size:15px;font-weight:900;color:var(--ink);margin-bottom:4px}
+.share-desc{font-size:13px;color:var(--ink-soft);margin-bottom:20px}
+.share-btns{display:flex;gap:20px;justify-content:center}
+.share-opt{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:none;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;
+}
+.share-icon{
+  width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:24px;box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+.share-opt span{font-size:12px;color:var(--ink);font-weight:500}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -240,6 +265,25 @@ body::before{
   </div>
 </div>
 <div class="toast" id="toast">링크가 복사됐어요!</div>
+
+<!-- 공유 바텀시트 -->
+<div class="share-overlay" id="shareOverlay" onclick="closeShare()">
+  <div class="share-sheet" onclick="event.stopPropagation()">
+    <div class="share-handle"></div>
+    <div class="share-title">공유하기</div>
+    <div class="share-desc">내 카공 빌런 유형을 친구에게 공유하세요</div>
+    <div class="share-btns">
+      <button class="share-opt" onclick="shareKakao()">
+        <div class="share-icon" style="background:#FEE500">💬</div>
+        <span>카카오톡</span>
+      </button>
+      <button class="share-opt" onclick="shareCopyLink()">
+        <div class="share-icon" style="background:#e5e7eb">🔗</div>
+        <span>링크 복사</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ===== 설정 ===== */
@@ -558,29 +602,42 @@ function restart(){
   $("result").style.display="none";$("intro").style.display="flex";scrollTop();
 }
 function shareResult(){
-  const V=TYPES[currentResultKey][VERSION];
+  $("shareOverlay").classList.add("open");
+}
+function closeShare(){$("shareOverlay").classList.remove("open");}
+function _getShareUrl(){
   const base=location.href.split("#")[0];
-  const url=base+"#result="+currentResultKey;
-  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 `;
-
-  // 카카오톡 공유 시도 → 실패 시 네이티브 공유 → 클립보드 복사
+  return base+"#result="+currentResultKey;
+}
+function shareKakao(){
+  closeShare();
+  const V=TYPES[currentResultKey][VERSION];
+  const url=_getShareUrl();
   if(typeof Kakao!=="undefined"&&Kakao.isInitialized()){
     try{
       Kakao.Share.sendDefault({
         objectType:"feed",
         content:{
           title:"[CBTI] 나의 카공 유형: "+V.ko,
-          description:V.en+" — "+V.desc.substring(0,50)+"...",
+          description:V.en+" — "+V.quote.substring(0,50)+"...",
           imageUrl:"https://cafe-seat-mvp.vercel.app/og-cbti.png",
           link:{mobileWebUrl:url,webUrl:url}
         },
         buttons:[{title:"나도 테스트하기",link:{mobileWebUrl:url,webUrl:url}}]
       });
       return;
-    }catch(e){console.log("Kakao share failed, falling back",e);}
+    }catch(e){console.log("Kakao share failed",e);}
   }
-  if(navigator.share){navigator.share({title:"CBTI 카공 빌런 테스트",text,url}).catch(()=>{});}
-  else{navigator.clipboard.writeText(text+url).then(showToast).catch(showToast);}
+  // 카카오 실패 시 클립보드 fallback
+  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 ${url}`;
+  navigator.clipboard.writeText(text).then(showToast).catch(showToast);
+}
+function shareCopyLink(){
+  closeShare();
+  const V=TYPES[currentResultKey][VERSION];
+  const url=_getShareUrl();
+  const text=`[CBTI] 나의 카공 빌런은 '${V.ko}'(${V.en})! 너도 해봐 👉 ${url}`;
+  navigator.clipboard.writeText(text).then(showToast).catch(showToast);
 }
 let tt;function showToast(){const e=$("toast");e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1800);}
 
