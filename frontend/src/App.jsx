@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { subscribeCafes } from "./firebase";
+import { subscribeCafes, logEvent } from "./firebase";
 
 // ── 카페별 영업시간 (프론트에서 직접 관리) ─────────────────────────────────
 // schedule: 요일별 { open: "HH:MM", close: "HH:MM" } or null(휴무)
@@ -494,7 +494,7 @@ function ClosingBadge({ minutes }) {
 }
 
 // ── CafeCard ──────────────────────────────────────────────────────────────
-function CafeCard({ cafe, index, isCbtiPick, isMapSelected, cardRef, onCardClick }) {
+function CafeCard({ cafe, index, isCbtiPick, isMapSelected, cardRef, onCardClick, onDirection }) {
   const isClosed  = cafe.status === "영업종료";
   const isClosing = cafe.isClosing;
   const cfg = STATUS_CONFIG[cafe.status];
@@ -563,6 +563,7 @@ function CafeCard({ cafe, index, isCbtiPick, isMapSelected, cardRef, onCardClick
             href={getDirectionUrl(cafe)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); onDirection && onDirection(cafe.id, cafe.status); }}
             style={{
               padding: "5px 12px", borderRadius: 8,
               background: isClosed ? "transparent" : "#1a1a1a",
@@ -662,8 +663,27 @@ export default function App() {
   const [selectedCafeId, setSelectedCafeId] = useState(null);
   const cardRefs = useRef({});
 
+  // ── 이벤트 트래킹: 세션 컨텍스트 (1회 생성) ──────────────────────────────
+  const sessionCtx = useRef(null);
+  if (!sessionCtx.current) {
+    const params = new URLSearchParams(window.location.search);
+    sessionCtx.current = {
+      session_id:  crypto.randomUUID(),
+      source:      params.get("from") || (params.get("type") ? "cbti" : "direct"),
+      cbti_type:   params.get("type") || null,
+      utm:         params.get("utm") || null,
+      referer:     document.referrer || null,
+      device:      window.innerWidth <= 768 ? "mobile" : "desktop",
+      landing_url: window.location.href,
+    };
+  }
+  const track = useCallback((eventType, extra = {}) => {
+    logEvent(eventType, sessionCtx.current, extra);
+  }, []);
+
   // 카카오톡 공유
   const handleKakaoShare = useCallback(() => {
+    track("share_click", { share_type: "kakao" });
     const url = "https://cafe-seat-mvp.vercel.app/";
     const openCount = cafes.filter(c => c.status !== "영업종료");
     const yeoyu = openCount.filter(c => c.status === "여유").length;
@@ -698,6 +718,7 @@ export default function App() {
   }, [cafes]);
 
   const handleLinkCopy = useCallback(() => {
+    track("share_click", { share_type: "link_copy" });
     navigator.clipboard.writeText("https://cafe-seat-mvp.vercel.app/")
       .then(() => alert("링크가 복사되었습니다!"));
     setShowShare(false);
@@ -731,6 +752,9 @@ export default function App() {
       window.Kakao.init("6064e1045ddfe7edf97edd266f75a283");
     }
   }, []);
+
+  // 페이지뷰 로깅 (1회)
+  useEffect(() => { track("page_view"); }, [track]);
 
   // 지도에서 선택 시 카드로 스크롤
   useEffect(() => {
@@ -846,7 +870,7 @@ export default function App() {
               {OPEN_FILTERS.map(f => (
                 <button
                   key={f}
-                  onClick={() => setFilter(f)}
+                  onClick={() => { setFilter(f); track("filter_click", { filter_value: f }); }}
                   style={{
                     flex: 1, padding: "10px 0",
                     background: "none", border: "none",
@@ -877,7 +901,7 @@ export default function App() {
           <CafeMap
             cafes={cafes}
             selectedId={selectedCafeId}
-            onSelect={setSelectedCafeId}
+            onSelect={(id) => { setSelectedCafeId(id); track("map_marker_click", { cafe_id: id }); }}
             filter={filter}
           />
         </div>
@@ -886,7 +910,7 @@ export default function App() {
         <div style={{ maxWidth: 480, margin: "0 auto", padding: "20px 16px 40px" }}>
 
           {filter === "전체" && (
-            <SummaryBar cafes={cafes} activeFilter={filter} onFilter={setFilter} />
+            <SummaryBar cafes={cafes} activeFilter={filter} onFilter={(f) => { setFilter(f); track("filter_click", { filter_value: f }); }} />
           )}
 
           {cbtiType && (
@@ -914,7 +938,7 @@ export default function App() {
           {filter === "전체" && sortedOpen.length > 0 && (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id)} />)}
+                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_click", { cafe_id: cafe.id, cafe_status: cafe.status }); }} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
               </div>
 
               {sortedClosed.length > 0 && (
@@ -925,7 +949,7 @@ export default function App() {
                     <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} isMapSelected={false} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => {}} />)}
+                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} isMapSelected={false} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => {}} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
                   </div>
                 </>
               )}
@@ -935,7 +959,7 @@ export default function App() {
           {/* 필터 탭 (여유/보통/혼잡) */}
           {filter !== "전체" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id)} />)}
+              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_click", { cafe_id: cafe.id, cafe_status: cafe.status }); }} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
             </div>
           )}
 

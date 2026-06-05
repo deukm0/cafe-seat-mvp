@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
 
 // ────────────────────────────────────────────────────────────
 // Firebase 콘솔 → 프로젝트 설정 → 내 앱 → SDK 설정에서 복사
@@ -59,4 +59,21 @@ export function subscribeCafes(onData) {
     unsubCafes();
     unsubOccupancy();
   };
+}
+
+// ────────────────────────────────────────────────────────────
+// 이벤트 로깅 (events 컬렉션에 기록)
+// ────────────────────────────────────────────────────────────
+export function logEvent(eventType, sessionContext, extra = {}) {
+  try {
+    addDoc(collection(db, "events"), {
+      event_type: eventType,
+      ...sessionContext,
+      ...extra,
+      timestamp: serverTimestamp(),
+    });
+  } catch (e) {
+    // 로깅 실패해도 앱 동작에 영향 없도록
+    console.warn("logEvent failed:", e);
+  }
 }
