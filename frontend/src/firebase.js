@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
 
 // ────────────────────────────────────────────────────────────
 // Firebase 콘솔 → 프로젝트 설정 → 내 앱 → SDK 설정에서 복사
@@ -62,18 +62,31 @@ export function subscribeCafes(onData) {
 }
 
 // ────────────────────────────────────────────────────────────
-// 이벤트 로깅 (events 컬렉션에 기록)
+// 세션 기반 이벤트 트래킹
 // ────────────────────────────────────────────────────────────
-export function logEvent(eventType, sessionContext, extra = {}) {
+
+// 세션 문서 생성 (접속 시 1회)
+export function createSession(sessionId, context) {
   try {
-    addDoc(collection(db, "events"), {
-      event_type: eventType,
-      ...sessionContext,
-      ...extra,
-      timestamp: serverTimestamp(),
+    setDoc(doc(db, "sessions", sessionId), {
+      ...context,
+      cafe_clicks: [],
+      direction_clicks: [],
+      filter_clicks: [],
+      map_clicks: [],
+      shared: false,
+      created_at: serverTimestamp(),
     });
   } catch (e) {
-    // 로깅 실패해도 앱 동작에 영향 없도록
-    console.warn("logEvent failed:", e);
+    console.warn("createSession failed:", e);
+  }
+}
+
+// 세션 문서 업데이트 (행동 누적)
+export function updateSession(sessionId, updates) {
+  try {
+    updateDoc(doc(db, "sessions", sessionId), updates);
+  } catch (e) {
+    console.warn("updateSession failed:", e);
   }
 }
