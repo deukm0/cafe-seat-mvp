@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nk" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --cream:#f6ede0;--cream-2:#efe2cf;--paper:#fffaf2;
@@ -465,6 +467,7 @@ function finish(){
   try{location.hash="result="+key;}catch(e){}
   $("quiz").style.display="none";$("result").style.display="flex";
   renderResult(key);
+  _cbtiTrack({finished:true, result_type:TYPES[key][VERSION].ko});
   // 맨 위로 먼저 리셋 후 peek 적용
   const stage=document.querySelector(".stage");
   stage.scrollTop=0;
@@ -532,6 +535,7 @@ function scrollToConnect(){
 }
 function goService(){
   $("ctaService").classList.remove("pulse");
+  _cbtiTrack({clicked_service:true});
   const T=TYPES[currentResultKey];
   const utm=new URLSearchParams(location.search).get("utm");
   let url=LANDING_URL+"?type="+encodeURIComponent(T.cbtiType)+"&from=cbti";
@@ -571,6 +575,30 @@ let tt;function showToast(){const e=$("toast");e.classList.add("show");clearTime
 
 /* init */
 // 카카오 SDK 초기화 — YOUR_KAKAO_JS_KEY를 실제 키로 교체
+// ── CBTI 세션 트래킹 ──────────────────────────────────────
+const _fb=firebase.initializeApp({
+  apiKey:"AIzaSyD5cGZCsFzhfp4Ry5RXBIMPht24K7SLKEA",
+  authDomain:"cafe-seat-55df7.firebaseapp.com",
+  projectId:"cafe-seat-55df7",
+  storageBucket:"cafe-seat-55df7.firebasestorage.app",
+  messagingSenderId:"906275154448",
+  appId:"1:906275154448:web:1ee76e2883b7b78735f895"
+});
+const _db=firebase.firestore();
+const _sid=crypto.randomUUID();
+const _utm=new URLSearchParams(location.search).get("utm")||null;
+try{
+  _db.collection("cbti_sessions").doc(_sid).set({
+    utm:_utm,
+    device:window.innerWidth<=768?"mobile":"desktop",
+    created_at:firebase.firestore.FieldValue.serverTimestamp(),
+    finished:false,
+    result_type:null,
+    clicked_service:false
+  });
+}catch(e){}
+function _cbtiTrack(updates){try{_db.collection("cbti_sessions").doc(_sid).update(updates);}catch(e){}}
+
 if(typeof Kakao!=="undefined"&&!Kakao.isInitialized()){
   Kakao.init("6064e1045ddfe7edf97edd266f75a283");
 }
