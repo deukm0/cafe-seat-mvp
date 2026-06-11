@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { subscribeCafes, createSession, updateSession } from "./firebase";
-import { arrayUnion } from "firebase/firestore";
+import { subscribeCafes, logEvent, updateSession, saveFeedback } from "./firebase";
 
 // ── 카페별 영업시간 (프론트에서 직접 관리) ─────────────────────────────────
 // schedule: 요일별 { open: "HH:MM", close: "HH:MM" } or null(휴무)
@@ -564,7 +563,7 @@ function CafeCard({ cafe, index, isCbtiPick, isMapSelected, cardRef, onCardClick
             href={getDirectionUrl(cafe)}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); onDirection && onDirection(cafe.id); }}
+            onClick={(e) => { e.stopPropagation(); onDirection && onDirection(cafe.id, cafe.status); }}
             style={{
               padding: "5px 12px", borderRadius: 8,
               background: isClosed ? "transparent" : "#1a1a1a",
@@ -663,27 +662,37 @@ export default function App() {
   const [showShare,   setShowShare]   = useState(false);
   const [selectedCafeId, setSelectedCafeId] = useState(null);
   const cardRefs = useRef({});
+  const feedbackRef = useRef(null);
 
-  // ── 세션 트래킹 ──────────────────────────────────────────────────────────
-  const sessionId = useRef(null);
-  if (!sessionId.current) {
+  // ── 피드백 상태 ──────────────────────────────────────────────────────────
+  const [feedbackRating, setFeedbackRating] = useState(null); // "up" | "down"
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackSent, setFeedbackSent] = useState(false);
+
+  // ── 참여도 트래킹 (체류시간 + 스크롤 깊이) ──────────────────────────────
+  const engagementRef = useRef({ dwellSeconds: 0, maxScrollPercent: 0, engaged: false });
+
+  // ── 이벤트 트래킹: 세션 컨텍스트 (1회 생성) ──────────────────────────────
+  const sessionCtx = useRef(null);
+  if (!sessionCtx.current) {
     const params = new URLSearchParams(window.location.search);
-    sessionId.current = crypto.randomUUID();
-    createSession(sessionId.current, {
-      source:    params.get("from") || (params.get("type") ? "cbti" : "direct"),
-      cbti_type: params.get("type") || null,
-      utm:       params.get("utm") || null,
-      device:    window.innerWidth <= 768 ? "mobile" : "desktop",
-    });
+    sessionCtx.current = {
+      session_id:  crypto.randomUUID(),
+      source:      params.get("from") || (params.get("type") ? "cbti" : "direct"),
+      cbti_type:   params.get("type") || null,
+      utm:         params.get("utm") || null,
+      referer:     document.referrer || null,
+      device:      window.innerWidth <= 768 ? "mobile" : "desktop",
+      landing_url: window.location.href,
+    };
   }
-  const track = useCallback((field, value) => {
-    if (!sessionId.current) return;
-    updateSession(sessionId.current, { [field]: value });
+  const track = useCallback((eventType, extra = {}) => {
+    logEvent(eventType, sessionCtx.current, extra);
   }, []);
 
   // 카카오톡 공유
   const handleKakaoShare = useCallback(() => {
-    track("shared", true);
+    track("share_click", { share_type: "kakao" });
     const url = "https://cafe-seat-mvp.vercel.app/";
     const openCount = cafes.filter(c => c.status !== "영업종료");
     const yeoyu = openCount.filter(c => c.status === "여유").length;
@@ -698,7 +707,7 @@ export default function App() {
           content: {
             title: "실패없는 카페 선택 ☕",
             description: `신촌 카페 ${desc}`,
-            imageUrl: "https://cafe-seat-mvp.vercel.app/og-image.png",
+            imageUrl: "https://cafe-seat-mpv.netlify.app/og-image.png",
             link: { mobileWebUrl: url, webUrl: url },
           },
           buttons: [{ title: "지금 확인하기", link: { mobileWebUrl: url, webUrl: url } }],
@@ -718,10 +727,30 @@ export default function App() {
   }, [cafes]);
 
   const handleLinkCopy = useCallback(() => {
-    track("shared", true);
+    track("share_click", { share_type: "link_copy" });
     navigator.clipboard.writeText("https://cafe-seat-mvp.vercel.app/")
       .then(() => alert("링크가 복사되었습니다!"));
     setShowShare(false);
+  }, []);
+
+  // ── 피드백 제출 ──────────────────────────────────────────────────────────
+  const handleFeedbackSubmit = useCallback(() => {
+    if (!feedbackRating) return;
+    const uid = localStorage.getItem("cafe_uid") || "anon";
+    saveFeedback({
+      cafe_uid: uid,
+      session_id: sessionCtx.current?.session_id || null,
+      rating: feedbackRating,
+      comment: feedbackText.trim() || null,
+      source: sessionCtx.current?.source || null,
+      device: sessionCtx.current?.device || null,
+    });
+    track("feedback_submit", { rating: feedbackRating, has_comment: !!feedbackText.trim() });
+    setFeedbackSent(true);
+  }, [feedbackRating, feedbackText, track]);
+
+  const scrollToFeedback = useCallback(() => {
+    feedbackRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, []);
 
   useEffect(() => {
@@ -751,6 +780,59 @@ export default function App() {
     if (typeof window.Kakao !== "undefined" && !window.Kakao.isInitialized()) {
       window.Kakao.init("6064e1045ddfe7edf97edd266f75a283");
     }
+  }, []);
+
+  // 페이지뷰 로깅 (1회)
+  useEffect(() => { track("page_view"); }, [track]);
+
+  // ── 참여도 측정: 체류시간 + 스크롤 깊이 ─────────────────────────────────
+  useEffect(() => {
+    const eng = engagementRef.current;
+    const sid = sessionCtx.current?.session_id;
+
+    // 1) 체류시간: 1초 간격 카운트
+    const timer = setInterval(() => {
+      eng.dwellSeconds += 1;
+      // 5초 도달 시 "engaged" 마킹
+      if (eng.dwellSeconds === 5) {
+        eng.engaged = true;
+      }
+    }, 1000);
+
+    // 2) 스크롤 깊이
+    const onScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) {
+        const percent = Math.round((scrollTop / docHeight) * 100);
+        if (percent > eng.maxScrollPercent) eng.maxScrollPercent = percent;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // 3) 이탈 시 1회 flush
+    const flush = () => {
+      if (!sid) return;
+      updateSession(sid, {
+        dwell_seconds: eng.dwellSeconds,
+        max_scroll_percent: eng.maxScrollPercent,
+        engaged: eng.engaged, // 5초 이상 체류 여부
+      });
+    };
+
+    // visibilitychange가 모바일에서 더 신뢰성 높음
+    const onVisChange = () => {
+      if (document.visibilityState === "hidden") flush();
+    };
+    document.addEventListener("visibilitychange", onVisChange);
+    window.addEventListener("beforeunload", flush);
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("visibilitychange", onVisChange);
+      window.removeEventListener("beforeunload", flush);
+    };
   }, []);
 
   // 지도에서 선택 시 카드로 스크롤
@@ -845,13 +927,29 @@ export default function App() {
                   {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
                 </div>
               </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
+              <button
+                onClick={scrollToFeedback}
+                style={{
+                  background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: 10, width: 36, height: 36, cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 14, color: "#fff",
+                  transition: "background 0.15s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+                title="피드백"
+              >
+                💬
+              </button>
               <button
                 onClick={() => setShowShare(true)}
                 style={{
                   background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
                   borderRadius: 10, width: 36, height: 36, cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 15, color: "#fff", marginTop: 2,
+                  fontSize: 15, color: "#fff",
                   transition: "background 0.15s",
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
@@ -860,6 +958,7 @@ export default function App() {
               >
                 ↗
               </button>
+              </div>
             </div>
 
             {/* 필터 탭 */}
@@ -867,7 +966,7 @@ export default function App() {
               {OPEN_FILTERS.map(f => (
                 <button
                   key={f}
-                  onClick={() => { setFilter(f); if (f !== "전체") track("filter_clicks", arrayUnion(f)); }}
+                  onClick={() => { setFilter(f); track("filter_click", { filter_value: f }); }}
                   style={{
                     flex: 1, padding: "10px 0",
                     background: "none", border: "none",
@@ -898,7 +997,7 @@ export default function App() {
           <CafeMap
             cafes={cafes}
             selectedId={selectedCafeId}
-            onSelect={(id) => { setSelectedCafeId(id); track("map_clicks", arrayUnion(id)); }}
+            onSelect={(id) => { setSelectedCafeId(id); track("map_marker_click", { cafe_id: id }); }}
             filter={filter}
           />
         </div>
@@ -907,7 +1006,7 @@ export default function App() {
         <div style={{ maxWidth: 480, margin: "0 auto", padding: "20px 16px 40px" }}>
 
           {filter === "전체" && (
-            <SummaryBar cafes={cafes} activeFilter={filter} onFilter={(f) => { setFilter(f); if (f !== "전체") track("filter_clicks", arrayUnion(f)); }} />
+            <SummaryBar cafes={cafes} activeFilter={filter} onFilter={(f) => { setFilter(f); track("filter_click", { filter_value: f }); }} />
           )}
 
           {cbtiType && (
@@ -935,7 +1034,7 @@ export default function App() {
           {filter === "전체" && sortedOpen.length > 0 && (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_clicks", arrayUnion(cafe.id)); }} onDirection={(id) => track("direction_clicks", arrayUnion(id))} />)}
+                {sortedOpen.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_click", { cafe_id: cafe.id, cafe_status: cafe.status }); }} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
               </div>
 
               {sortedClosed.length > 0 && (
@@ -946,7 +1045,7 @@ export default function App() {
                     <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} isMapSelected={false} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => {}} onDirection={(id) => track("direction_clicks", arrayUnion(id))} />)}
+                    {sortedClosed.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={sortedOpen.length + i} isCbtiPick={false} isMapSelected={false} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => {}} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
                   </div>
                 </>
               )}
@@ -956,7 +1055,7 @@ export default function App() {
           {/* 필터 탭 (여유/보통/혼잡) */}
           {filter !== "전체" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_clicks", arrayUnion(cafe.id)); }} onDirection={(id) => track("direction_clicks", arrayUnion(id))} />)}
+              {displayList.map((cafe, i) => <CafeCard key={cafe.id} cafe={cafe} index={i} isCbtiPick={cbtiCafeIds.includes(cafe.id)} isMapSelected={selectedCafeId === cafe.id} cardRef={el => { cardRefs.current[cafe.id] = el; }} onCardClick={() => { setSelectedCafeId(selectedCafeId === cafe.id ? null : cafe.id); track("cafe_click", { cafe_id: cafe.id, cafe_status: cafe.status }); }} onDirection={(id, status) => track("direction_click", { cafe_id: id, cafe_status: status })} />)}
             </div>
           )}
 
@@ -969,6 +1068,124 @@ export default function App() {
               ⚠️ 이 서비스는 Google Maps Popular Times 기반의 <strong>예측 데이터</strong>를 제공합니다.
               실제 좌석 상황과 다를 수 있으며, 1시간 주기로 업데이트됩니다.
             </div>
+          </div>
+
+          {/* 피드백 섹션 */}
+          <div
+            ref={feedbackRef}
+            style={{
+              marginTop: 16, padding: "20px 18px", borderRadius: 14,
+              background: "#fff", border: "1.5px solid rgba(0,0,0,0.06)",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+            }}
+          >
+            {feedbackSent ? (
+              <div style={{ textAlign: "center", padding: "8px 0" }}>
+                <div style={{ fontSize: 24, marginBottom: 6 }}>🙏</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>
+                  피드백 감사합니다!
+                </div>
+                <div style={{ fontSize: 12, color: "#999", marginTop: 4 }}>
+                  더 나은 서비스를 만드는 데 큰 도움이 됩니다
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
+                  이 정보가 도움이 됐나요?
+                </div>
+                <div style={{ fontSize: 11, color: "#999", marginBottom: 14 }}>
+                  여러분의 피드백이 서비스 개선에 도움이 됩니다
+                </div>
+
+                {/* 👍👎 버튼 */}
+                <div style={{ display: "flex", gap: 12, marginBottom: feedbackRating === "down" ? 14 : 0 }}>
+                  {[
+                    { key: "up",   emoji: "👍", label: "도움됐어요" },
+                    { key: "down", emoji: "👎", label: "아쉬워요" },
+                  ].map(opt => {
+                    const isSelected = feedbackRating === opt.key;
+                    return (
+                      <button
+                        key={opt.key}
+                        onClick={() => {
+                          setFeedbackRating(isSelected ? null : opt.key);
+                          // 👍은 바로 제출 가능하게
+                          if (opt.key === "up" && !isSelected) {
+                            const uid = localStorage.getItem("cafe_uid") || "anon";
+                            saveFeedback({
+                              cafe_uid: uid,
+                              session_id: sessionCtx.current?.session_id || null,
+                              rating: "up",
+                              comment: null,
+                              source: sessionCtx.current?.source || null,
+                              device: sessionCtx.current?.device || null,
+                            });
+                            track("feedback_submit", { rating: "up", has_comment: false });
+                            setFeedbackSent(true);
+                          }
+                        }}
+                        style={{
+                          flex: 1, padding: "10px 0", borderRadius: 10,
+                          border: `1.5px solid ${isSelected
+                            ? (opt.key === "up" ? "#22c55e" : "#ef4444")
+                            : "rgba(0,0,0,0.1)"}`,
+                          background: isSelected
+                            ? (opt.key === "up" ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)")
+                            : "#fff",
+                          cursor: "pointer", fontFamily: "inherit",
+                          display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                          transition: "all 0.15s",
+                        }}
+                      >
+                        <span style={{ fontSize: 18 }}>{opt.emoji}</span>
+                        <span style={{
+                          fontSize: 13, fontWeight: 600,
+                          color: isSelected
+                            ? (opt.key === "up" ? "#16a34a" : "#dc2626")
+                            : "#666",
+                        }}>{opt.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* 👎 선택 시 텍스트 입력 */}
+                {feedbackRating === "down" && (
+                  <div style={{ animation: "fadeUp 0.25s ease" }}>
+                    <textarea
+                      value={feedbackText}
+                      onChange={e => setFeedbackText(e.target.value)}
+                      placeholder="어떤 점이 아쉬웠나요? (선택사항)"
+                      maxLength={500}
+                      style={{
+                        width: "100%", minHeight: 72, padding: "10px 14px",
+                        borderRadius: 10, border: "1.5px solid rgba(0,0,0,0.1)",
+                        background: "#fafafa", fontSize: 13, fontFamily: "inherit",
+                        color: "#333", resize: "vertical", outline: "none",
+                        transition: "border-color 0.15s",
+                      }}
+                      onFocus={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.25)"}
+                      onBlur={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
+                    />
+                    <button
+                      onClick={handleFeedbackSubmit}
+                      style={{
+                        marginTop: 8, width: "100%", padding: "10px 0",
+                        borderRadius: 10, border: "none",
+                        background: "#1a1a1a", color: "#fff",
+                        fontSize: 13, fontWeight: 600, cursor: "pointer",
+                        fontFamily: "inherit", transition: "background 0.15s",
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = "#333"}
+                      onMouseLeave={e => e.currentTarget.style.background = "#1a1a1a"}
+                    >
+                      보내기
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

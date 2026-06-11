@@ -90,3 +90,18 @@ export function updateSession(sessionId, updates) {
     console.warn("updateSession failed:", e);
   }
 }
+
+// ────────────────────────────────────────────────────────────
+// 피드백 저장
+// ────────────────────────────────────────────────────────────
+export function saveFeedback(feedbackData) {
+  try {
+    const feedbackId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    setDoc(doc(db, "feedback", feedbackId), {
+      ...feedbackData,
+      created_at: serverTimestamp(),
+    });
+  } catch (e) {
+    console.warn("saveFeedback failed:", e);
+  }
+}
