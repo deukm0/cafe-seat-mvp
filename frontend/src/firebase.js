@@ -105,3 +105,44 @@ export function saveFeedback(feedbackData) {
     console.warn("saveFeedback failed:", e);
   }
 }
+
+// firebase.js 맨 아래, saveFeedback 뒤에 추가
+
+export function logEvent(eventType, sessionCtx, extra = {}) {
+  if (!sessionCtx?.session_id) return;
+  try {
+    const sid = sessionCtx.session_id;
+    const payload = { event: eventType, timestamp: new Date().toISOString(), ...extra };
+
+    // 이벤트 타입별로 세션 문서에 누적
+    const fieldMap = {
+      cafe_click:      "cafe_clicks",
+      direction_click: "direction_clicks",
+      filter_click:    "filter_clicks",
+      map_marker_click:"map_clicks",
+      share_click:     "share_clicks",
+      feedback_submit: "feedback_events",
+    };
+
+    const field = fieldMap[eventType];
+    if (field) {
+      updateDoc(doc(db, "sessions", sid), {
+        [field]: arrayUnion(payload),
+      });
+    } else if (eventType === "page_view") {
+      // 세션 문서 생성
+      setDoc(doc(db, "sessions", sid), {
+        ...sessionCtx,
+        created_at: serverTimestamp(),
+        cafe_clicks: [],
+        direction_clicks: [],
+        filter_clicks: [],
+        map_clicks: [],
+        share_clicks: [],
+        feedback_events: [],
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.warn("logEvent failed:", e);
+  }
+}
