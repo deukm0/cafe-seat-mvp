@@ -307,12 +307,21 @@ function SearchModal({ cafes, onEnterList, loading }) {
     const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_save";
     if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
       try {
-        window.Kakao.Share.sendScrap({ requestUrl: url });
+        window.Kakao.Share.sendDefault({
+          objectType:"feed",
+          content:{
+            title:`☕ ${cafe.name} 지금 자리 있어요!`,
+            description:`${cafe.status} · 여유석 ${cafe.available}석`,
+            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
+            link:{ mobileWebUrl:url, webUrl:url },
+          },
+          buttons:[{ title:"실시간 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
+        });
         return;
       } catch(e) { /* fallthrough */ }
     }
     navigator.clipboard?.writeText(`☕ ${cafe.name} 지금 자리 있어요! 👉 ${url}`)
-      .then(() => alert("링크가 복사되었습니다!"));
+      .then(() => alert("링크가 복사되었습니다!\n카톡에 붙여넣기하세요 📋"));
   };
 
   const resetSearch = () => {
@@ -1091,11 +1100,21 @@ export default function App() {
     const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_self";
     if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
       try {
-        window.Kakao.Share.sendScrap({ requestUrl: url });
+        window.Kakao.Share.sendDefault({
+          objectType:"feed",
+          content:{
+            title:"실패없는 카페 선택 ☕",
+            description:"신촌 카페 지금 자리 있는지 미리 확인하세요",
+            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
+            link:{ mobileWebUrl:url, webUrl:url },
+          },
+          buttons:[{ title:"지금 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
+        });
         return;
       } catch(e) { /* fallthrough */ }
     }
-    navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!"));
+    // fallback: 클립보드 복사
+    navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!\n카톡에 붙여넣기하세요 📋"));
   }, [track]);
 
   // ── 리스트 계산 ───────────────────────────────────────────────────────────
