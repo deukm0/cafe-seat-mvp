@@ -1,0 +1,162 @@
+{
+  "10f752ee-38fb-4932-b1a5-5b5d8c69b3ea": {
+    "uid": "569ad55a-6243-4d3c-a894-3f5a42fc9840",
+    "created_at": "2026-06-08 10:08:08.094000+00:00",
+    "utm": null,
+    "clicked_service": true,
+    "finished": true,
+    "result_type": "공부는 핑계 수다러",
+    "device": "desktop"
+  },
+  "3208d345-e423-40db-bf7b-359d7520f8a6": {
+    "uid": "0868c34c-ea30-4a2b-8742-d892cee0bbf2",
+    "created_at": "2026-06-10 08:53:43.578000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "공부 안 하는 사진작가",
+    "device": "mobile"
+  },
+  "3478023f-f4b6-40fb-b682-cb1bc1d86d71": {
+    "uid": "2f49051a-4172-475d-a1dc-dd2b856e3d97",
+    "created_at": "2026-06-08 06:07:38.989000+00:00",
+    "utm": "everytime",
+    "clicked_service": true,
+    "finished": true,
+    "result_type": "공부는 핑계 수다러",
+    "device": "mobile"
+  },
+  "362c23ef-cad8-4250-9087-009d4192a416": {
+    "uid": "4cda48b9-26d1-4fce-be18-c34cdfb22c2f",
+    "created_at": "2026-06-11 02:54:09.095000+00:00",
+    "utm": "kakaotalk",
+    "clicked_service": true,
+    "result_type": "공부 안 하는 사진작가",
+    "finished": true,
+    "device": "desktop"
+  },
+  "37ee7174-2e7d-41f5-b3fe-b83a0ed76b4d": {
+    "uid": "6bc4c8f6-3da5-4580-9f5d-1345db713f7b",
+    "created_at": "2026-06-08 05:35:46.868000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "카페 자리 지박령",
+    "device": "mobile"
+  },
+  "42ebcdbe-8ea8-4006-8a54-948ccbf9d4d7": {
+    "uid": "9006bf0c-7e45-4a73-8767-b86eb4262110",
+    "created_at": "2026-06-11 02:00:43.832000+00:00",
+    "utm": "kakaotalk",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "카페 자리 지박령",
+    "device": "mobile"
+  },
+  "4640ec9c-d8ca-4d71-a73e-e64bbab4ac23": {
+    "uid": "fa8b237f-91bd-412f-ba7d-4dec3a7a98b8",
+    "created_at": "2026-06-08 05:35:39.645000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "원두 따지는 까탈러",
+    "device": "mobile"
+  },
+  "4b88b3b4-ae9f-4af5-b096-437ddd0f4347": {
+    "uid": "754e429a-7c63-4056-b714-efc2cf6e2216",
+    "created_at": "2026-06-08 05:34:04.367000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "공부는 핑계 수다러",
+    "device": "mobile"
+  },
+  "4ede5739-4676-4e45-b82a-25ae12b46fde": {
+    "finished": true,
+    "created_at": "2026-06-05 07:53:24.516000+00:00",
+    "utm": null,
+    "clicked_service": false,
+    "result_type": "공부 안 하는 사진작가",
+    "device": "mobile"
+  },
+  "541ea502-a7d7-42bd-a510-a50f05b52b93": {
+    "uid": "84285506-2c76-4f57-a929-1facf8b52c18",
+    "created_at": "2026-06-11 00:38:18.711000+00:00",
+    "utm": "kakaotalk",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "떠돌이 메뚜기족",
+    "device": "mobile"
+  },
+  "5cec69f3-fea8-4654-8cf0-d7d2802fa394": {
+    "uid": "0f7c6bc2-ffd1-4794-a795-e36822344fd0",
+    "created_at": "2026-06-07 12:54:25.022000+00:00",
+    "utm": null,
+    "clicked_service": true,
+    "finished": true,
+    "result_type": "공부 안 하는 사진작가",
+    "device": "mobile"
+  },
+  "74300943-c04c-46e8-824b-2449412cee58": {
+    "uid": "26b2839b-22ec-4842-bc9c-ce9c57a755c9",
+    "created_at": "2026-06-11 01:03:28.523000+00:00",
+    "utm": "kakaotalk",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "카페 자리 지박령",
+    "device": "mobile"
+  },
+  "88920c06-d114-457b-a5b1-04f35dcefb13": {
+    "uid": "ade2535b-472f-47a3-a86b-68e422132aa9",
+    "created_at": "2026-06-11 02:54:02.708000+00:00",
+    "utm": "kakaotalk",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "떠돌이 메뚜기족",
+    "device": "mobile"
+  },
+  "8b7c6ed3-989f-4498-baf2-83b4f99e5b38": {
+    "uid": "c1a72b42-0f19-460c-a683-43c852158312",
+    "created_at": "2026-06-08 05:33:54.642000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "result_type": "카페 자리 지박령",
+    "finished": true,
+    "device": "mobile"
+  },
+  "9628b42c-e835-4879-ac2c-f0d7f41fa441": {
+    "uid": "44730766-47c4-4f83-879d-b49f7151938e",
+    "created_at": "2026-06-08 06:01:35.690000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "떠돌이 메뚜기족",
+    "device": "mobile"
+  },
+  "ad0a2dd9-0e8d-4599-a7e6-029de8bd143a": {
+    "finished": true,
+    "created_at": "2026-06-05 07:51:39.422000+00:00",
+    "utm": null,
+    "clicked_service": false,
+    "result_type": "카페 자리 지박령",
+    "device": "mobile"
+  },
+  "ada5d470-77b1-44ce-8f06-7ef22fa1a4e1": {
+    "uid": "c1a72b42-0f19-460c-a683-43c852158312",
+    "created_at": "2026-06-08 05:34:58.795000+00:00",
+    "utm": "everytime",
+    "clicked_service": false,
+    "finished": true,
+    "result_type": "카페 자리 지박령",
+    "device": "mobile"
+  },
+  "f906c669-6077-4f03-8f28-c009e35cd07b": {
+    "uid": "d96d797e-20e9-4afe-bb19-47d3462bfd9c",
+    "created_at": "2026-06-08 05:44:52.623000+00:00",
+    "utm": "everytime",
+    "clicked_service": true,
+    "finished": true,
+    "result_type": "원두 따지는 까탈러",
+    "device": "mobile"
+  }
+}

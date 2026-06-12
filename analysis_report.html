@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>실패없는 카페 선택 — PMF 분석 리포트</title>
+<style>
+  body { font-family: -apple-system, 'Pretendard', sans-serif; background: #f5f5f5; margin: 0; padding: 20px; color: #1a1a1a; }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .card { background: #fff; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .card-big { background: #fff; border-radius: 14px; padding: 22px 24px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .metric { font-size: 32px; font-weight: 800; line-height: 1; }
+  .metric-label { font-size: 12px; color: #888; margin-top: 6px; }
+  .metric-sub { font-size: 12px; color: #aaa; margin-top: 2px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 0 0 16px; color: #1a1a1a; }
+  table { border-collapse: collapse; width: 100%; }
+  .funnel { display: flex; gap: 0; margin-bottom: 8px; }
+  .funnel-step { flex: 1; text-align: center; padding: 12px 8px; font-size: 13px; }
+  .funnel-step .num { font-size: 24px; font-weight: 800; }
+  .funnel-step .lbl { font-size: 11px; color: #888; margin-top: 3px; }
+  .arrow { display: flex; align-items: center; font-size: 18px; color: #ccc; padding: 0 4px; }
+  .pmf-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .pmf-row:last-child { border-bottom: none; }
+  .pmf-label { font-size: 14px; color: #444; }
+  .pmf-val { font-size: 18px; font-weight: 800; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>☕ 실패없는 카페 선택 — PMF 분석 리포트</h1>
+  <div class="subtitle">기준: 2026-06-12 12:37 KST &nbsp;|&nbsp; sessions: 49개, cbti_sessions: 18개</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="metric" style="color:#6366f1">49</div>
+      <div class="metric-label">총 방문 세션</div>
+    </div>
+    <div class="card">
+      <div class="metric" style="color:#22c55e">3</div>
+      <div class="metric-label">길찾기 세션</div>
+      <div class="metric-sub">실사용 의도 ⭐</div>
+    </div>
+    <div class="card">
+      <div class="metric" style="color:#f59e0b">24.5%</div>
+      <div class="metric-label">탐색율</div>
+      <div class="metric-sub">카드를 누른 비율</div>
+    </div>
+    <div class="card">
+      <div class="metric" style="color:#ef4444">18</div>
+      <div class="metric-label">CBTI 테스트</div>
+    </div>
+  </div>
+
+  <div class="card-big">
+    <h2>🎯 PMF 핵심 지표</h2>
+    <div class="pmf-row">
+      <div>
+        <div class="pmf-label">길찾기 클릭율 <span class="tag" style="background:#f0fdf4;color:#22c55e">실사용 의도</span></div>
+        <div style="font-size:11px;color:#aaa;margin-top:2px">카페에 실제로 가려는 행동</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pmf-val" style="color:#22c55e">6.1%</div>
+        <div><span style="color:#ef4444;font-weight:700">❌ 부족</span></div>
+      </div>
+    </div>
+    <div class="pmf-row">
+      <div>
+        <div class="pmf-label">필터 사용율 <span class="tag" style="background:#eff6ff;color:#6366f1">능동 탐색</span></div>
+        <div style="font-size:11px;color:#aaa;margin-top:2px">여유/보통/혼잡 필터링</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pmf-val" style="color:#6366f1">24.5%</div>
+        <div><span style="color:#f59e0b;font-weight:700">⚠️ 보통</span></div>
+      </div>
+    </div>
+    <div class="pmf-row">
+      <div>
+        <div class="pmf-label">공유율 <span class="tag" style="background:#f0f9ff;color:#0ea5e9">바이럴</span></div>
+        <div style="font-size:11px;color:#aaa;margin-top:2px">카카오톡/링크 공유</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pmf-val" style="color:#0ea5e9">0.0%</div>
+        <div><span style="color:#ef4444;font-weight:700">❌ 부족</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-big">
+    <h2>🧠 CBTI 퍼널 (독립 추이)</h2>
+    <div class="funnel">
+      <div class="funnel-step" style="background:#fdf4ff;border-radius:12px 0 0 12px">
+        <div class="num" style="color:#8b5cf6">18</div>
+        <div class="lbl">CBTI 시작</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="funnel-step" style="background:#ede9fe">
+        <div class="num" style="color:#7c3aed">18</div>
+        <div class="lbl">완료 (100%)</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="funnel-step" style="background:#e0e7ff">
+        <div class="num" style="color:#6366f1">0</div>
+        <div class="lbl">공유 (0%)</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="funnel-step" style="background:#eff6ff;border-radius:0 12px 12px 0">
+        <div class="num" style="color:#3b82f6">8</div>
+        <div class="lbl">메인 전환 유입</div>
+      </div>
+    </div>
+    <table style='margin-top:16px'><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">카페 자리 지박령</td><td style="padding:5px 0"><div style="height:18px;width:120px;background:#8b5cf6;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#8b5cf6">6</td></tr><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">공부 안 하는 사진작가</td><td style="padding:5px 0"><div style="height:18px;width:80px;background:#8b5cf6;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#8b5cf6">4</td></tr><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">공부는 핑계 수다러</td><td style="padding:5px 0"><div style="height:18px;width:60px;background:#8b5cf6;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#8b5cf6">3</td></tr><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">떠돌이 메뚜기족</td><td style="padding:5px 0"><div style="height:18px;width:60px;background:#8b5cf6;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#8b5cf6">3</td></tr><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">원두 따지는 까탈러</td><td style="padding:5px 0"><div style="height:18px;width:40px;background:#8b5cf6;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#8b5cf6">2</td></tr></table>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="card-big">
+      <h2>📍 길찾기 클릭 TOP 10 <span style="font-size:11px;color:#aaa;font-weight:400">실사용 의도</span></h2>
+      <table><tr><td style="padding:5px 10px 5px 0;font-size:13px;color:#444;white-space:nowrap">cafe_ann</td><td style="padding:5px 0"><div style="height:18px;width:120px;background:#22c55e;border-radius:3px;min-width:2px"></div></td><td style="padding:5px 0 5px 10px;font-size:13px;font-weight:700;color:#22c55e">1</td></tr></table>
+    </div>
+
+    <div class="card-big">
+      <h2>🚦 유입 소스</h2>
+      <table>
+      <tr><td style='padding:5px 10px 5px 0;font-size:13px;color:#444'>direct</td><td style='padding:5px 0;font-size:13px;font-weight:700'>41</td><td style='padding:5px 0 5px 8px;font-size:12px;color:#888'>83.7%</td></tr><tr><td style='padding:5px 10px 5px 0;font-size:13px;color:#444'>cbti</td><td style='padding:5px 0;font-size:13px;font-weight:700'>8</td><td style='padding:5px 0 5px 8px;font-size:12px;color:#888'>16.3%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-big">
+    <h2>⏰ 시간대별 이용 패턴 (세션 생성 기준)</h2>
+    <table><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">07시</td><td style="padding:3px 0"><div style="height:16px;width:0px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">0</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">08시</td><td style="padding:3px 0"><div style="height:16px;width:0px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">0</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">09시</td><td style="padding:3px 0"><div style="height:16px;width:53px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">4</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">10시</td><td style="padding:3px 0"><div style="height:16px;width:40px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">3</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">11시</td><td style="padding:3px 0"><div style="height:16px;width:53px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">4</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">12시</td><td style="padding:3px 0"><div style="height:16px;width:0px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">0</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">13시</td><td style="padding:3px 0"><div style="height:16px;width:0px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">0</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">14시</td><td style="padding:3px 0"><div style="height:16px;width:40px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">3</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">15시</td><td style="padding:3px 0"><div style="height:16px;width:66px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">5</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">16시</td><td style="padding:3px 0"><div style="height:16px;width:120px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">9</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">17시</td><td style="padding:3px 0"><div style="height:16px;width:13px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">1</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">18시</td><td style="padding:3px 0"><div style="height:16px;width:26px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">2</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">19시</td><td style="padding:3px 0"><div style="height:16px;width:53px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">4</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">20시</td><td style="padding:3px 0"><div style="height:16px;width:40px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">3</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">21시</td><td style="padding:3px 0"><div style="height:16px;width:40px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">3</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">22시</td><td style="padding:3px 0"><div style="height:16px;width:66px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">5</td></tr><tr><td style="padding:3px 10px 3px 0;color:#666;font-size:12px;white-space:nowrap">23시</td><td style="padding:3px 0"><div style="height:16px;width:26px;background:#f59e0b;border-radius:3px;min-width:2px"></div></td><td style="padding:3px 0 3px 10px;color:#333;font-size:12px;font-weight:600">2</td></tr></table>
+  </div>
+
+  <div style="margin-top:16px;font-size:11px;color:#ccc;text-align:center">
+    실패없는 카페 선택 PMF 분석 | 2026-06-12 12:37 KST
+  </div>
+</div>
+</body>
+</html>
