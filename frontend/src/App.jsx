@@ -269,9 +269,9 @@ function MiniCafeCard({ cafe }) {
 
 // ── SearchModal ────────────────────────────────────────────────────────────
 function SearchModal({ cafes, onEnterList, loading }) {
-  const [query, setQuery]           = useState("");
+  const [query, setQuery]             = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [result, setResult]         = useState(null);
+  const [result, setResult]           = useState(null);
   const inputRef = useRef(null);
 
   useEffect(() => { setTimeout(() => inputRef.current?.focus(), 300); }, []);
@@ -304,19 +304,10 @@ function SearchModal({ cafes, onEnterList, loading }) {
   };
 
   const handleKakaoSave = (cafe) => {
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_share";
+    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_save";
     if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
       try {
-        window.Kakao.Share.sendDefault({
-          objectType:"feed",
-          content:{
-            title:`☕ ${cafe.name} 지금 자리 있어요!`,
-            description:`${cafe.status} · 여유석 ${cafe.available}석`,
-            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
-            link:{ mobileWebUrl:url, webUrl:url },
-          },
-          buttons:[{ title:"실시간 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
-        });
+        window.Kakao.Share.sendScrap({ requestUrl: url });
         return;
       } catch(e) { /* fallthrough */ }
     }
@@ -331,7 +322,6 @@ function SearchModal({ cafes, onEnterList, loading }) {
     setTimeout(() => inputRef.current?.focus(), 100);
   };
 
-  // ── 공통 버튼 스타일 헬퍼 ──
   const primaryBtn = (extra={}) => ({
     width:"100%", padding:"13px", borderRadius:12,
     background:"#1a1a1a", color:"#fff",
@@ -346,22 +336,28 @@ function SearchModal({ cafes, onEnterList, loading }) {
   });
 
   return (
-    <div style={{
-      position:"fixed", inset:0, zIndex:200,
-      display:"flex", alignItems:"center", justifyContent:"center",
-      padding:"0 20px",
-      background:"rgba(0,0,0,0.55)",
-      backdropFilter:"blur(10px)",
-      WebkitBackdropFilter:"blur(10px)",
-    }}>
-      <div style={{
-        width:"100%", maxWidth:420,
-        background:"#fff", borderRadius:24,
-        padding:"28px 24px 24px",
-        boxShadow:"0 24px 60px rgba(0,0,0,0.25)",
-        animation:"fadeUp 0.3s ease",
-        maxHeight:"88vh", overflowY:"auto",
-      }}>
+    <div
+      onClick={onEnterList}
+      style={{
+        position:"fixed", inset:0, zIndex:200,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        padding:"24px 20px",
+        background:"rgba(0,0,0,0.55)",
+        backdropFilter:"blur(10px)",
+        WebkitBackdropFilter:"blur(10px)",
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          width:"100%", maxWidth:420,
+          background:"#fff", borderRadius:24,
+          padding:"32px 24px 28px",
+          boxShadow:"0 24px 60px rgba(0,0,0,0.25)",
+          animation:"modalEnter 0.25s ease",
+          transformOrigin:"center center",
+        }}
+      >
 
         {/* 헤더 */}
         <div style={{ textAlign:"center", marginBottom:22 }}>
@@ -374,10 +370,10 @@ function SearchModal({ cafes, onEnterList, loading }) {
 
         {/* ── 검색창 (결과 없을 때) ── */}
         {!result && (
-          <div style={{ position:"relative" }}>
+          <div>
             <div style={{
-              display:"flex", gap:0,
-              border:"2px solid #e5e7eb", borderRadius:14, overflow:"visible",
+              display:"flex",
+              border:"2px solid #e5e7eb", borderRadius:14, overflow:"hidden",
               transition:"border-color 0.15s",
             }}
               onFocusCapture={e => e.currentTarget.style.borderColor="#1a1a1a"}
@@ -392,7 +388,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
                 disabled={loading}
                 style={{
                   flex:1, border:"none", outline:"none",
-                  padding:"13px 16px", fontSize:15, borderRadius:"12px 0 0 12px",
+                  padding:"13px 16px", fontSize:15,
                   fontFamily:"'Pretendard',-apple-system,sans-serif",
                   background:"transparent",
                 }}
@@ -406,21 +402,19 @@ function SearchModal({ cafes, onEnterList, loading }) {
                   border:"none",
                   cursor:query.trim() ? "pointer" : "default",
                   color:query.trim() ? "#fff" : "#bbb",
-                  fontSize:16, borderRadius:"0 12px 12px 0",
-                  transition:"all 0.15s", fontFamily:"inherit",
+                  fontSize:16, transition:"all 0.15s", fontFamily:"inherit",
                 }}
               >
                 🔍
               </button>
             </div>
 
-            {/* 자동완성 */}
+            {/* 자동완성 — inline으로 렌더링 (잘림 방지) */}
             {suggestions.length > 0 && (
               <div style={{
-                position:"absolute", top:"calc(100% + 6px)", left:0, right:0, zIndex:10,
-                background:"#fff", borderRadius:12,
-                boxShadow:"0 8px 24px rgba(0,0,0,0.12)",
-                border:"1px solid rgba(0,0,0,0.07)", overflow:"hidden",
+                marginTop:6, borderRadius:12, overflow:"hidden",
+                boxShadow:"0 4px 16px rgba(0,0,0,0.1)",
+                border:"1px solid rgba(0,0,0,0.07)",
               }}>
                 {suggestions.map((cafe, i) => (
                   <div
@@ -430,7 +424,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
                       padding:"12px 16px", cursor:"pointer",
                       display:"flex", alignItems:"center", justifyContent:"space-between", gap:8,
                       borderBottom: i < suggestions.length-1 ? "1px solid rgba(0,0,0,0.04)" : "none",
-                      transition:"background 0.1s",
+                      background:"#fff", transition:"background 0.1s",
                     }}
                     onMouseEnter={e => e.currentTarget.style.background="#f9f9f9"}
                     onMouseLeave={e => e.currentTarget.style.background="#fff"}
@@ -458,9 +452,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
               더 많은 카페를 추가할 예정이에요.<br/>지금 여유로운 카페를 먼저 확인해볼까요?
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-              <button onClick={onEnterList} style={primaryBtn()}>
-                지금 여유로운 카페 보기 →
-              </button>
+              <button onClick={onEnterList} style={primaryBtn()}>지금 여유로운 카페 보기 →</button>
               <button onClick={resetSearch} style={ghostBtn()}>다시 검색하기</button>
             </div>
           </div>
@@ -477,9 +469,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
               오늘 영업이 끝났거나 정기 휴무예요.<br/>지금 열려있는 카페를 찾아볼게요.
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-              <button onClick={onEnterList} style={primaryBtn()}>
-                지금 열려있는 여유 카페 보기 →
-              </button>
+              <button onClick={onEnterList} style={primaryBtn()}>지금 열려있는 여유 카페 보기 →</button>
               <button onClick={resetSearch} style={ghostBtn()}>다시 검색하기</button>
             </div>
           </div>
@@ -501,7 +491,6 @@ function SearchModal({ cafes, onEnterList, loading }) {
                 혼잡 · 여유석 {result.cafe.available}석 추정
               </div>
             </div>
-
             {result.alternatives.length > 0 && (
               <>
                 <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:10 }}>
@@ -512,11 +501,8 @@ function SearchModal({ cafes, onEnterList, loading }) {
                 </div>
               </>
             )}
-
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-              <button onClick={onEnterList} style={primaryBtn()}>
-                지금 다른 카페는 어떨까요? →
-              </button>
+              <button onClick={onEnterList} style={primaryBtn()}>지금 다른 카페는 어떨까요? →</button>
               <button onClick={resetSearch} style={ghostBtn()}>다시 검색하기</button>
             </div>
           </div>
@@ -541,11 +527,9 @@ function SearchModal({ cafes, onEnterList, loading }) {
                 ({result.cafe.status} · 총 {result.cafe.totalSeats}석)
               </div>
             </div>
-
             <div style={{ fontSize:12, color:"#666", textAlign:"center", marginBottom:14, lineHeight:1.6 }}>
-              헛걸음 방지를 위해<br/>출발 전 카톡에 저장해두세요 👇
+              다음에도 헛걸음 방지하려면<br/>지금 카톡에 저장해두세요 👇
             </div>
-
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
               <button
                 onClick={() => handleKakaoSave(result.cafe)}
@@ -559,10 +543,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
               >
                 <span>💬</span> 카카오에 저장해두기
               </button>
-              <button onClick={onEnterList} style={{
-                ...ghostBtn(), color:"#555", fontSize:13,
-                background:"rgba(0,0,0,0.04)",
-              }}>
+              <button onClick={onEnterList} style={{ ...ghostBtn(), color:"#555", fontSize:13, background:"rgba(0,0,0,0.04)" }}>
                 서비스 더보기 →
               </button>
               <button onClick={resetSearch} style={ghostBtn()}>다시 검색하기</button>
@@ -570,7 +551,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
           </div>
         )}
 
-        {/* ── 목록 보기 (결과 없을 때) ── */}
+        {/* ── 목록 바로 보기 (결과 없을 때) ── */}
         {!result && (
           <button
             onClick={onEnterList}
@@ -1033,7 +1014,6 @@ export default function App() {
   const [cafes,       setCafes]       = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [loading,     setLoading]     = useState(true);
-  const [showShare,   setShowShare]   = useState(false);
   const [selectedId,  setSelectedId]  = useState(null); // 지도 핀 선택 + BottomSheet
   const [expanded,    setExpanded]    = useState(false);
   const cardRefs = useRef({});
@@ -1096,37 +1076,26 @@ export default function App() {
   }, [selectedId]);
 
   // ── 공유 핸들러 ───────────────────────────────────────────────────────────
-  const handleKakaoShare = useCallback(() => {
-    track("share_click", { share_type:"kakao" });
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_share";
-    const open = cafes.filter(c => c.status !== "영업종료");
-    const desc = `여유 ${open.filter(c=>c.status==="여유").length}곳 · 보통 ${open.filter(c=>c.status==="보통").length}곳 · 혼잡 ${open.filter(c=>c.status==="혼잡").length}곳`;
+  const handleShareGeneral = useCallback(() => {
+    track("share_general");
+    const url = "https://cafe-seat-mvp.vercel.app/?utm=general_share";
+    if (navigator.share) {
+      navigator.share({ title:"실패없는 카페 선택 ☕", url }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!"));
+    }
+  }, [track]);
+
+  const handleKakaoToSelf = useCallback(() => {
+    track("kakao_self");
+    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_self";
     if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
       try {
-        window.Kakao.Share.sendDefault({
-          objectType:"feed",
-          content:{
-            title:"실패없는 카페 선택 ☕",
-            description:`신촌 카페 ${desc}`,
-            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
-            link:{ mobileWebUrl:url, webUrl:url },
-          },
-          buttons:[{ title:"지금 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
-        });
-        setShowShare(false); return;
+        window.Kakao.Share.sendScrap({ requestUrl: url });
+        return;
       } catch(e) { /* fallthrough */ }
     }
-    navigator.clipboard?.writeText(`실패없는 카페 선택 ☕ 신촌 카페 ${desc} 👉 ${url}`)
-      .then(() => alert("링크가 복사되었습니다!"));
-    setShowShare(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cafes, track]);
-
-  const handleLinkCopy = useCallback(() => {
-    track("share_click", { share_type:"link_copy" });
-    navigator.clipboard.writeText("https://cafe-seat-mvp.vercel.app/?utm=link_copy")
-      .then(() => alert("링크가 복사되었습니다!"));
-    setShowShare(false);
+    navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!"));
   }, [track]);
 
   // ── 리스트 계산 ───────────────────────────────────────────────────────────
@@ -1174,6 +1143,10 @@ export default function App() {
           from { opacity:0; transform:translateY(16px); }
           to   { opacity:1; transform:translateY(0); }
         }
+        @keyframes modalEnter {
+          from { opacity:0; transform:scale(0.97) translateY(6px); }
+          to   { opacity:1; transform:scale(1) translateY(0); }
+        }
         @keyframes pulse {
           0%,100% { opacity:1; transform:scale(1); }
           50%      { opacity:0.5; transform:scale(1.3); }
@@ -1205,36 +1178,33 @@ export default function App() {
                   {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
                 </div>
               </div>
-              <div style={{ display:"flex", gap:8, marginTop:2 }}>
-                {/* 검색 재오픈 버튼 */}
+              <div style={{ display:"flex", gap:6, marginTop:4, alignItems:"center" }}>
+                {/* 공유하기 */}
                 <button
-                  onClick={() => { setShowSearchModal(true); track("search_reopen"); }}
+                  onClick={handleShareGeneral}
                   style={{
-                    background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.15)",
-                    borderRadius:10, width:36, height:36, cursor:"pointer",
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                    fontSize:15, color:"#fff", transition:"background 0.15s",
+                    padding:"7px 11px", borderRadius:8,
+                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
+                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
+                    fontFamily:"inherit", transition:"background 0.15s", whiteSpace:"nowrap",
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.2)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.1)"}
-                  title="카페 검색"
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
                 >
-                  🔍
+                  공유하기
                 </button>
-                {/* 공유 버튼 */}
+                {/* 카카오 나에게 보내기 */}
                 <button
-                  onClick={() => setShowShare(true)}
+                  onClick={handleKakaoToSelf}
                   style={{
-                    background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.15)",
-                    borderRadius:10, width:36, height:36, cursor:"pointer",
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                    fontSize:15, color:"#fff", transition:"background 0.15s",
+                    padding:"7px 11px", borderRadius:8,
+                    background:"#FEE500", border:"none",
+                    color:"#191919", fontSize:11, fontWeight:700, cursor:"pointer",
+                    fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
+                    whiteSpace:"nowrap",
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.2)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.1)"}
-                  title="공유하기"
                 >
-                  ↗
+                  💬 나에게 보내기
                 </button>
               </div>
             </div>
@@ -1258,8 +1228,7 @@ export default function App() {
         <div style={{ maxWidth:480, margin:"0 auto", padding:"20px 16px 40px" }}>
 
           {/* 요약 바 (전체 영업중 기준) */}
-          <SummaryBar allOpenCafes={openCafes}/>
-
+          
           {/* CBTI 진입 배너 */}
           {cbtiType && (
             <div style={{
@@ -1312,12 +1281,12 @@ export default function App() {
             </div>
           )}
 
-          {/* 더보기 버튼 */}
-          {!expanded && moreCount > 0 && (
+          {/* 더보기 / 접기 토글 */}
+          {moreCount > 0 && (
             <button
               onClick={() => {
-                setExpanded(true);
-                track("expand_click", { is_cbti:!!cbtiType });
+                setExpanded(v => !v);
+                track("expand_click", { is_cbti:!!cbtiType, expanded:!expanded });
               }}
               style={{
                 width:"100%", marginTop:16, padding:"13px",
@@ -1331,8 +1300,13 @@ export default function App() {
               onMouseEnter={e => e.currentTarget.style.background="#f9f9f9"}
               onMouseLeave={e => e.currentTarget.style.background="#fff"}
             >
-              <span style={{ fontSize:16 }}>⬇️</span>
-              {cbtiType ? `다른 유형의 카페 보기 (${moreCount}곳)` : `카페 더보기 (${moreCount}곳)`}
+              <span style={{ fontSize:16 }}>{expanded ? "⬆️" : "⬇️"}</span>
+              {expanded
+                ? "접기"
+                : cbtiType
+                  ? `다른 유형의 카페 보기 (${moreCount}곳)`
+                  : `카페 더보기 (${moreCount}곳)`
+              }
             </button>
           )}
 
@@ -1368,51 +1342,6 @@ export default function App() {
           onClose={() => setSelectedId(null)}
           onTrack={track}
         />
-      )}
-
-      {/* ── 공유 팝업 ── */}
-      {showShare && (
-        <div
-          onClick={() => setShowShare(false)}
-          style={{
-            position:"fixed", inset:0, zIndex:400,
-            display:"flex", alignItems:"flex-end", justifyContent:"center",
-            background:"rgba(0,0,0,0.45)", backdropFilter:"blur(2px)",
-          }}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{
-              width:"100%", maxWidth:480, background:"#fff",
-              borderRadius:"20px 20px 0 0", padding:"20px 24px 32px",
-              animation:"slideUp 0.25s ease-out",
-            }}
-          >
-            <div style={{ width:36, height:4, borderRadius:2, background:"#d1d5db", margin:"0 auto 16px" }}/>
-            <div style={{ fontSize:15, fontWeight:700, color:"#111", marginBottom:4 }}>공유하기</div>
-            <div style={{ fontSize:13, color:"#6b7280", marginBottom:20 }}>
-              신촌 카페 좌석 현황을 친구에게 공유하세요
-            </div>
-            <div style={{ display:"flex", gap:20, justifyContent:"center" }}>
-              {[
-                { name:"카카오톡", icon:"💬", bg:"#FEE500", action:handleKakaoShare },
-                { name:"링크 복사", icon:"🔗", bg:"#e5e7eb", action:handleLinkCopy },
-              ].map(opt => (
-                <button key={opt.name} onClick={opt.action} style={{
-                  display:"flex", flexDirection:"column", alignItems:"center", gap:8,
-                  background:"none", border:"none", cursor:"pointer", fontFamily:"inherit",
-                }}>
-                  <div style={{
-                    width:52, height:52, borderRadius:16, background:opt.bg,
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                    fontSize:24, boxShadow:"0 1px 3px rgba(0,0,0,0.08)",
-                  }}>{opt.icon}</div>
-                  <span style={{ fontSize:12, color:"#374151", fontWeight:500 }}>{opt.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
       )}
     </>
   );
