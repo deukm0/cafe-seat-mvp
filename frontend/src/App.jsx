@@ -815,7 +815,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
         background:"rgba(0,0,0,0.4)", backdropFilter:"blur(2px)",
       }}/>
       <div style={{
-        position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)",
+        position:"fixed", bottom:0, left:"50%",
         width:"100%", maxWidth:480, zIndex:301,
         background:"#fff", borderRadius:"20px 20px 0 0",
         animation:"slideUp 0.25s ease-out",
@@ -1130,8 +1130,8 @@ export default function App() {
           50%      { opacity:0.5; transform:scale(1.3); }
         }
         @keyframes slideUp {
-          from { transform:translateY(100%); }
-          to   { transform:translateY(0); }
+          from { transform:translateX(-50%) translateY(100%); }
+          to   { transform:translateX(-50%) translateY(0); }
         }
         ::-webkit-scrollbar { width:0; }
       `}</style>
