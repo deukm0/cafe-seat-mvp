@@ -305,23 +305,9 @@ function SearchModal({ cafes, onEnterList, loading }) {
 
   const handleKakaoSave = (cafe) => {
     const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_save";
-    if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
-      try {
-        window.Kakao.Share.sendDefault({
-          objectType:"feed",
-          content:{
-            title:`☕ ${cafe.name} 지금 자리 있어요!`,
-            description:`${cafe.status} · 여유석 ${cafe.available}석`,
-            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
-            link:{ mobileWebUrl:url, webUrl:url },
-          },
-          buttons:[{ title:"실시간 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
-        });
-        return;
-      } catch(e) { /* fallthrough */ }
-    }
-    navigator.clipboard?.writeText(`☕ ${cafe.name} 지금 자리 있어요! 👉 ${url}`)
-      .then(() => alert("링크가 복사되었습니다!\n카톡에 붙여넣기하세요 📋"));
+    navigator.clipboard?.writeText(url)
+      .then(() => alert(`☕ ${cafe.name} 링크 복사됨!\n카톡 나와의 채팅에 붙여넣기하세요 📋`))
+      .catch(() => alert("링크: " + url));
   };
 
   const resetSearch = () => {
@@ -537,20 +523,20 @@ function SearchModal({ cafes, onEnterList, loading }) {
               </div>
             </div>
             <div style={{ fontSize:12, color:"#666", textAlign:"center", marginBottom:14, lineHeight:1.6 }}>
-              다음에도 헛걸음 방지하려면<br/>지금 카톡에 저장해두세요 👇
+              다음에도 헛걸음 방지하려면<br/>링크를 카톡에 저장해두세요 👇
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
               <button
                 onClick={() => handleKakaoSave(result.cafe)}
                 style={{
                   width:"100%", padding:"13px", borderRadius:12,
-                  background:"#FEE500", color:"#191919",
+                  background:"#1a1a1a", color:"#fff",
                   fontSize:14, fontWeight:700, border:"none", cursor:"pointer",
                   display:"flex", alignItems:"center", justifyContent:"center", gap:8,
                   fontFamily:"inherit",
                 }}
               >
-                <span>💬</span> 카카오에 저장해두기
+                <span>🔗</span> 링크 복사하기
               </button>
               <button onClick={onEnterList} style={{ ...ghostBtn(), color:"#555", fontSize:13, background:"rgba(0,0,0,0.04)" }}>
                 서비스 더보기 →
@@ -809,20 +795,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
   const handleKakaoAndDepart = () => {
     sessionStorage.setItem("kakao_prompt_shown", "1");
     const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_share";
-    if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
-      try {
-        window.Kakao.Share.sendDefault({
-          objectType:"feed",
-          content:{
-            title:"실패없는 카페 선택 ☕",
-            description:`${cafe.name} 지금 여유 ${cafe.available}석`,
-            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
-            link:{ mobileWebUrl:url, webUrl:url },
-          },
-          buttons:[{ title:"실시간 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
-        });
-      } catch(e) { /* fallthrough */ }
-    }
+    navigator.clipboard?.writeText(url).catch(() => {});
     window.open(getDirectionUrl(cafe), "_blank");
     onClose();
   };
@@ -943,7 +916,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
                   display:"flex", alignItems:"center", justifyContent:"center", gap:8,
                   fontFamily:"inherit",
                 }}>
-                  <span>💬</span> 카톡 저장하고 출발
+                  <span>🔗</span> 링크 복사하고 출발
                 </button>
                 <button onClick={handleJustDepart} style={{
                   padding:"11px", borderRadius:12, background:"transparent",
@@ -1096,25 +1069,11 @@ export default function App() {
   }, [track]);
 
   const handleKakaoToSelf = useCallback(() => {
-    track("kakao_self");
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_self";
-    if (typeof window.Kakao !== "undefined" && window.Kakao.isInitialized()) {
-      try {
-        window.Kakao.Share.sendDefault({
-          objectType:"feed",
-          content:{
-            title:"실패없는 카페 선택 ☕",
-            description:"신촌 카페 지금 자리 있는지 미리 확인하세요",
-            imageUrl:"https://cafe-seat-mvp.vercel.app/og-image.png",
-            link:{ mobileWebUrl:url, webUrl:url },
-          },
-          buttons:[{ title:"지금 확인하기", link:{ mobileWebUrl:url, webUrl:url } }],
-        });
-        return;
-      } catch(e) { /* fallthrough */ }
-    }
-    // fallback: 클립보드 복사
-    navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!\n카톡에 붙여넣기하세요 📋"));
+    track("link_copy");
+    const url = "https://cafe-seat-mvp.vercel.app/?utm=link_copy";
+    navigator.clipboard?.writeText(url)
+      .then(() => alert("링크가 복사되었습니다!\n카톡 나와의 채팅에 붙여넣기하세요 📋"))
+      .catch(() => alert("링크: " + url));
   }, [track]);
 
   // ── 리스트 계산 ───────────────────────────────────────────────────────────
@@ -1212,18 +1171,20 @@ export default function App() {
                 >
                   공유하기
                 </button>
-                {/* 카카오 나에게 보내기 */}
+                {/* 링크 복사 */}
                 <button
                   onClick={handleKakaoToSelf}
                   style={{
                     padding:"7px 11px", borderRadius:8,
-                    background:"#FEE500", border:"none",
-                    color:"#191919", fontSize:11, fontWeight:700, cursor:"pointer",
+                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
+                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
                     fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
-                    whiteSpace:"nowrap",
+                    whiteSpace:"nowrap", transition:"background 0.15s",
                   }}
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
                 >
-                  💬 나에게 보내기
+                  🔗 링크 복사
                 </button>
               </div>
             </div>
