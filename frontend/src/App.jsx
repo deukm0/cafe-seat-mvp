@@ -815,7 +815,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
         background:"rgba(0,0,0,0.4)", backdropFilter:"blur(2px)",
       }}/>
       <div style={{
-        position:"fixed", bottom:0, left:"50%",
+        position:"fixed", bottom:0, left:0, right:0, margin:"0 auto",
         width:"100%", maxWidth:480, zIndex:301,
         background:"#fff", borderRadius:"20px 20px 0 0",
         animation:"slideUp 0.25s ease-out",
@@ -1014,7 +1014,7 @@ export default function App() {
     };
   }
   const track = useCallback((eventType, extra={}) => {
-    logEvent(eventType, sessionCtx.current, extra);
+    logEvent(eventType, { ...sessionCtx.current, app_version:"v2", collection:"sessions_v2" }, extra);
   }, []);
 
   // ── Firebase 구독 ─────────────────────────────────────────────────────────
@@ -1066,14 +1066,6 @@ export default function App() {
     } else {
       navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!"));
     }
-  }, [track]);
-
-  const handleKakaoToSelf = useCallback(() => {
-    track("link_copy");
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=link_copy";
-    navigator.clipboard?.writeText(url)
-      .then(() => alert("링크가 복사되었습니다!\n카톡 나와의 채팅에 붙여넣기하세요 📋"))
-      .catch(() => alert("링크: " + url));
   }, [track]);
 
   // ── 리스트 계산 ───────────────────────────────────────────────────────────
@@ -1130,8 +1122,8 @@ export default function App() {
           50%      { opacity:0.5; transform:scale(1.3); }
         }
         @keyframes slideUp {
-          from { transform:translateX(-50%) translateY(100%); }
-          to   { transform:translateX(-50%) translateY(0); }
+          from { transform:translateY(100%); }
+          to   { transform:translateY(0); }
         }
         ::-webkit-scrollbar { width:0; }
       `}</style>
@@ -1146,17 +1138,32 @@ export default function App() {
           <div style={{ maxWidth:480, margin:"0 auto" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
               <div>
-                <div style={{ fontSize:11, color:"#666", letterSpacing:"0.1em", fontWeight:600 }}>
+                <div style={{ fontSize:11, color:"#aaa", letterSpacing:"0.1em", fontWeight:600 }}>
                   SINCHON · 연세대학교
                 </div>
                 <div style={{ fontSize:20, fontWeight:800, color:"#fff", marginTop:2 }}>
                   실패없는 카페 선택 ☕
                 </div>
-                <div style={{ fontSize:11, color:"#555", marginTop:8, paddingBottom:16 }}>
+                <div style={{ fontSize:11, color:"#888", marginTop:8, paddingBottom:16 }}>
                   {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
                 </div>
               </div>
               <div style={{ display:"flex", gap:6, marginTop:4, alignItems:"center" }}>
+                {/* 카페 검색 */}
+                <button
+                  onClick={() => { setShowSearchModal(true); track("search_reopen"); }}
+                  style={{
+                    padding:"7px 11px", borderRadius:8,
+                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
+                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
+                    fontFamily:"inherit", transition:"background 0.15s", whiteSpace:"nowrap",
+                    display:"flex", alignItems:"center", gap:4,
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
+                >
+                  🔍 카페 검색
+                </button>
                 {/* 공유하기 */}
                 <button
                   onClick={handleShareGeneral}
@@ -1170,21 +1177,6 @@ export default function App() {
                   onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
                 >
                   공유하기
-                </button>
-                {/* 링크 복사 */}
-                <button
-                  onClick={handleKakaoToSelf}
-                  style={{
-                    padding:"7px 11px", borderRadius:8,
-                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
-                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
-                    fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
-                    whiteSpace:"nowrap", transition:"background 0.15s",
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
-                >
-                  🔗 링크 복사
                 </button>
               </div>
             </div>
