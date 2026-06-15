@@ -112,6 +112,7 @@ export function logEvent(eventType, sessionCtx, extra = {}) {
   if (!sessionCtx?.session_id) return;
   try {
     const sid = sessionCtx.session_id;
+    const col = sessionCtx.collection || "sessions";
     const payload = { event: eventType, timestamp: new Date().toISOString(), ...extra };
 
     // 이벤트 타입별로 세션 문서에 누적
@@ -122,16 +123,20 @@ export function logEvent(eventType, sessionCtx, extra = {}) {
       map_marker_click:"map_clicks",
       share_click:     "share_clicks",
       feedback_submit: "feedback_events",
+      search_query:    "search_queries",
+      search_reopen:   "interactions",
+      expand_click:    "interactions",
+      enter_list:      "interactions",
     };
 
     const field = fieldMap[eventType];
     if (field) {
-      updateDoc(doc(db, "sessions", sid), {
+      updateDoc(doc(db, col, sid), {
         [field]: arrayUnion(payload),
       });
     } else if (eventType === "page_view") {
       // 세션 문서 생성
-      setDoc(doc(db, "sessions", sid), {
+      setDoc(doc(db, col, sid), {
         ...sessionCtx,
         created_at: serverTimestamp(),
         cafe_clicks: [],
@@ -140,6 +145,8 @@ export function logEvent(eventType, sessionCtx, extra = {}) {
         map_clicks: [],
         share_clicks: [],
         feedback_events: [],
+        search_queries: [],
+        interactions: [],
       }, { merge: true });
     }
   } catch (e) {

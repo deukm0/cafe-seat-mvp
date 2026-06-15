@@ -268,7 +268,7 @@ function MiniCafeCard({ cafe }) {
 }
 
 // ── SearchModal ────────────────────────────────────────────────────────────
-function SearchModal({ cafes, onEnterList, loading }) {
+function SearchModal({ cafes, onEnterList, loading, onTrack }) {
   const [query, setQuery]             = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [result, setResult]           = useState(null);
@@ -290,9 +290,16 @@ function SearchModal({ cafes, onEnterList, loading }) {
     if (name !== undefined) setQuery(name);
 
     const found = cafes.find(c => c.name.includes(q));
-    if (!found) { setResult({ type:"not_found", query:q }); return; }
-    if (found.status === "영업종료") { setResult({ type:"closed", cafe:found }); return; }
+    if (!found) {
+      onTrack?.("search_query", { query:q, result_type:"not_found" });
+      setResult({ type:"not_found", query:q }); return;
+    }
+    if (found.status === "영업종료") {
+      onTrack?.("search_query", { query:q, result_type:"closed", cafe_id:found.id });
+      setResult({ type:"closed", cafe:found }); return;
+    }
     if (found.status === "혼잡") {
+      onTrack?.("search_query", { query:q, result_type:"congested", cafe_id:found.id });
       const alts = openCafes
         .filter(c => c.id !== found.id && c.status !== "혼잡")
         .sort((a,b) => a.popularity-b.popularity)
@@ -300,6 +307,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
       setResult({ type:"congested", cafe:found, alternatives:alts });
       return;
     }
+    onTrack?.("search_query", { query:q, result_type:"available", cafe_id:found.id });
     setResult({ type:"available", cafe:found });
   };
 
@@ -794,6 +802,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
 
   const handleKakaoAndDepart = () => {
     sessionStorage.setItem("kakao_prompt_shown", "1");
+    onTrack?.("share_click", { share_type:"kakao_depart", cafe_id:cafe.id });
     const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_share";
     navigator.clipboard?.writeText(url).catch(() => {});
     window.open(getDirectionUrl(cafe), "_blank");
@@ -815,7 +824,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
         background:"rgba(0,0,0,0.4)", backdropFilter:"blur(2px)",
       }}/>
       <div style={{
-        position:"fixed", bottom:0, left:"50%",
+        position:"fixed", bottom:0, left:0, right:0, margin:"0 auto",
         width:"100%", maxWidth:480, zIndex:301,
         background:"#fff", borderRadius:"20px 20px 0 0",
         animation:"slideUp 0.25s ease-out",
@@ -934,6 +943,116 @@ function BottomSheet({ cafe, onClose, onTrack }) {
   );
 }
 
+// ── FeedbackSection ───────────────────────────────────────────────────────
+function FeedbackSection({ onTrack }) {
+  const [state, setState]   = useState("idle"); // idle | bad_input | done
+  const [reason, setReason] = useState("");
+
+  const submit = (type) => {
+    onTrack("feedback_submit", { type, reason: type === "bad" ? reason.trim() : "" });
+    setState("done");
+  };
+
+  if (state === "done") {
+    return (
+      <div style={{
+        marginTop:16, padding:"16px", borderRadius:14,
+        background:"rgba(34,197,94,0.06)", border:"1.5px solid rgba(34,197,94,0.15)",
+        textAlign:"center",
+      }}>
+        <div style={{ fontSize:18, marginBottom:4 }}>🙏</div>
+        <div style={{ fontSize:13, fontWeight:700, color:"#16a34a" }}>감사합니다!</div>
+        <div style={{ fontSize:11, color:"#999", marginTop:2 }}>소중한 의견이 서비스 개선에 반영돼요</div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      marginTop:16, padding:"16px 18px", borderRadius:14,
+      background:"#fff", border:"1.5px solid rgba(0,0,0,0.07)",
+    }}>
+      <div style={{ fontSize:13, fontWeight:700, color:"#1a1a1a", marginBottom:12 }}>
+        이 서비스 어떠셨나요?
+      </div>
+
+      {state === "idle" && (
+        <div style={{ display:"flex", gap:8 }}>
+          <button
+            onClick={() => submit("good")}
+            style={{
+              flex:1, padding:"10px", borderRadius:10,
+              background:"rgba(34,197,94,0.08)", border:"1.5px solid rgba(34,197,94,0.2)",
+              color:"#16a34a", fontSize:13, fontWeight:700,
+              cursor:"pointer", fontFamily:"inherit",
+            }}
+          >
+            👍 좋아요
+          </button>
+          <button
+            onClick={() => setState("bad_input")}
+            style={{
+              flex:1, padding:"10px", borderRadius:10,
+              background:"rgba(239,68,68,0.06)", border:"1.5px solid rgba(239,68,68,0.15)",
+              color:"#ef4444", fontSize:13, fontWeight:700,
+              cursor:"pointer", fontFamily:"inherit",
+            }}
+          >
+            😢 아쉬워요
+          </button>
+        </div>
+      )}
+
+      {state === "bad_input" && (
+        <div>
+          <div style={{ fontSize:12, color:"#666", marginBottom:8 }}>
+            어떤 점이 아쉬우셨나요? (선택)
+          </div>
+          <textarea
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+            placeholder="예) 실제 자리가 달랐어요 / 찾는 카페가 없었어요"
+            rows={3}
+            style={{
+              width:"100%", padding:"10px 12px",
+              borderRadius:10, border:"1.5px solid #e5e7eb",
+              fontSize:13, fontFamily:"'Pretendard',-apple-system,sans-serif",
+              resize:"none", outline:"none", color:"#1a1a1a",
+              boxSizing:"border-box",
+            }}
+            onFocus={e => e.target.style.borderColor="#1a1a1a"}
+            onBlur={e  => e.target.style.borderColor="#e5e7eb"}
+          />
+          <div style={{ display:"flex", gap:8, marginTop:8 }}>
+            <button
+              onClick={() => setState("idle")}
+              style={{
+                flex:1, padding:"10px", borderRadius:10,
+                background:"rgba(0,0,0,0.04)", border:"none",
+                color:"#999", fontSize:12, fontWeight:500,
+                cursor:"pointer", fontFamily:"inherit",
+              }}
+            >
+              취소
+            </button>
+            <button
+              onClick={() => submit("bad")}
+              style={{
+                flex:2, padding:"10px", borderRadius:10,
+                background:"#1a1a1a", border:"none",
+                color:"#fff", fontSize:13, fontWeight:700,
+                cursor:"pointer", fontFamily:"inherit",
+              }}
+            >
+              제출하기
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── SummaryBar ─────────────────────────────────────────────────────────────
 function SummaryBar({ allOpenCafes }) {
   const counts = { 여유:0, 보통:0, 혼잡:0 };
@@ -1014,7 +1133,7 @@ export default function App() {
     };
   }
   const track = useCallback((eventType, extra={}) => {
-    logEvent(eventType, sessionCtx.current, extra);
+    logEvent(eventType, { ...sessionCtx.current, app_version:"v2", collection:"sessions_v2" }, extra);
   }, []);
 
   // ── Firebase 구독 ─────────────────────────────────────────────────────────
@@ -1059,21 +1178,13 @@ export default function App() {
 
   // ── 공유 핸들러 ───────────────────────────────────────────────────────────
   const handleShareGeneral = useCallback(() => {
-    track("share_general");
+    track("share_click", { share_type:"general" });
     const url = "https://cafe-seat-mvp.vercel.app/?utm=general_share";
     if (navigator.share) {
       navigator.share({ title:"실패없는 카페 선택 ☕", url }).catch(() => {});
     } else {
       navigator.clipboard?.writeText(url).then(() => alert("링크가 복사되었습니다!"));
     }
-  }, [track]);
-
-  const handleKakaoToSelf = useCallback(() => {
-    track("link_copy");
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=link_copy";
-    navigator.clipboard?.writeText(url)
-      .then(() => alert("링크가 복사되었습니다!\n카톡 나와의 채팅에 붙여넣기하세요 📋"))
-      .catch(() => alert("링크: " + url));
   }, [track]);
 
   // ── 리스트 계산 ───────────────────────────────────────────────────────────
@@ -1130,8 +1241,8 @@ export default function App() {
           50%      { opacity:0.5; transform:scale(1.3); }
         }
         @keyframes slideUp {
-          from { transform:translateX(-50%) translateY(100%); }
-          to   { transform:translateX(-50%) translateY(0); }
+          from { transform:translateY(100%); }
+          to   { transform:translateY(0); }
         }
         ::-webkit-scrollbar { width:0; }
       `}</style>
@@ -1146,17 +1257,32 @@ export default function App() {
           <div style={{ maxWidth:480, margin:"0 auto" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
               <div>
-                <div style={{ fontSize:11, color:"#666", letterSpacing:"0.1em", fontWeight:600 }}>
+                <div style={{ fontSize:11, color:"#aaa", letterSpacing:"0.1em", fontWeight:600 }}>
                   SINCHON · 연세대학교
                 </div>
                 <div style={{ fontSize:20, fontWeight:800, color:"#fff", marginTop:2 }}>
                   실패없는 카페 선택 ☕
                 </div>
-                <div style={{ fontSize:11, color:"#555", marginTop:8, paddingBottom:16 }}>
+                <div style={{ fontSize:11, color:"#888", marginTop:8, paddingBottom:16 }}>
                   {timeStr} 기준 · 예측 데이터 (Popular Times 기반)
                 </div>
               </div>
               <div style={{ display:"flex", gap:6, marginTop:4, alignItems:"center" }}>
+                {/* 카페 검색 */}
+                <button
+                  onClick={() => { setShowSearchModal(true); track("search_reopen"); }}
+                  style={{
+                    padding:"7px 11px", borderRadius:8,
+                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
+                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
+                    fontFamily:"inherit", transition:"background 0.15s", whiteSpace:"nowrap",
+                    display:"flex", alignItems:"center", gap:4,
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
+                >
+                  🔍 카페 검색
+                </button>
                 {/* 공유하기 */}
                 <button
                   onClick={handleShareGeneral}
@@ -1170,21 +1296,6 @@ export default function App() {
                   onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
                 >
                   공유하기
-                </button>
-                {/* 링크 복사 */}
-                <button
-                  onClick={handleKakaoToSelf}
-                  style={{
-                    padding:"7px 11px", borderRadius:8,
-                    background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.18)",
-                    color:"#fff", fontSize:11, fontWeight:600, cursor:"pointer",
-                    fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
-                    whiteSpace:"nowrap", transition:"background 0.15s",
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.22)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.12)"}
-                >
-                  🔗 링크 복사
                 </button>
               </div>
             </div>
@@ -1300,6 +1411,8 @@ export default function App() {
               실제 좌석 상황과 다를 수 있으며, 1시간 주기로 업데이트됩니다.
             </div>
           </div>
+
+          <FeedbackSection onTrack={track} />
         </div>
       </div>
 
@@ -1308,6 +1421,7 @@ export default function App() {
         <SearchModal
           cafes={cafes}
           loading={loading}
+          onTrack={track}
           onEnterList={() => {
             setShowSearchModal(false);
             track("enter_list");
