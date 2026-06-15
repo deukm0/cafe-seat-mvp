@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { subscribeCafes, logEvent, saveFeedback } from "./firebase";
+import { subscribeCafes, logEvent } from "./firebase";
 
 // ── 영업시간 ───────────────────────────────────────────────────────────────
 const CAFE_HOURS = {
@@ -943,12 +943,12 @@ function BottomSheet({ cafe, onClose, onTrack }) {
 }
 
 // ── FeedbackSection ───────────────────────────────────────────────────────
-function FeedbackSection({ sessionId }) {
+function FeedbackSection({ onTrack }) {
   const [state, setState]   = useState("idle"); // idle | bad_input | done
   const [reason, setReason] = useState("");
 
   const submit = (type) => {
-    saveFeedback({ type, reason: type === "bad" ? reason.trim() : "", session_id: sessionId });
+    onTrack("feedback_submit", { type, reason: type === "bad" ? reason.trim() : "" });
     setState("done");
   };
 
@@ -1411,7 +1411,7 @@ export default function App() {
             </div>
           </div>
 
-          <FeedbackSection sessionId={sessionCtx.current?.session_id} />
+          <FeedbackSection onTrack={track} />
         </div>
       </div>
 
