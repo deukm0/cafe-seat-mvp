@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { subscribeCafes, logEvent } from "./firebase";
+import { subscribeCafes, logEvent, saveFeedback } from "./firebase";
 
 // ── 영업시간 ───────────────────────────────────────────────────────────────
 const CAFE_HOURS = {
@@ -942,6 +942,116 @@ function BottomSheet({ cafe, onClose, onTrack }) {
   );
 }
 
+// ── FeedbackSection ───────────────────────────────────────────────────────
+function FeedbackSection({ sessionId }) {
+  const [state, setState]   = useState("idle"); // idle | bad_input | done
+  const [reason, setReason] = useState("");
+
+  const submit = (type) => {
+    saveFeedback({ type, reason: type === "bad" ? reason.trim() : "", session_id: sessionId });
+    setState("done");
+  };
+
+  if (state === "done") {
+    return (
+      <div style={{
+        marginTop:16, padding:"16px", borderRadius:14,
+        background:"rgba(34,197,94,0.06)", border:"1.5px solid rgba(34,197,94,0.15)",
+        textAlign:"center",
+      }}>
+        <div style={{ fontSize:18, marginBottom:4 }}>🙏</div>
+        <div style={{ fontSize:13, fontWeight:700, color:"#16a34a" }}>감사합니다!</div>
+        <div style={{ fontSize:11, color:"#999", marginTop:2 }}>소중한 의견이 서비스 개선에 반영돼요</div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      marginTop:16, padding:"16px 18px", borderRadius:14,
+      background:"#fff", border:"1.5px solid rgba(0,0,0,0.07)",
+    }}>
+      <div style={{ fontSize:13, fontWeight:700, color:"#1a1a1a", marginBottom:12 }}>
+        이 서비스 어떠셨나요?
+      </div>
+
+      {state === "idle" && (
+        <div style={{ display:"flex", gap:8 }}>
+          <button
+            onClick={() => submit("good")}
+            style={{
+              flex:1, padding:"10px", borderRadius:10,
+              background:"rgba(34,197,94,0.08)", border:"1.5px solid rgba(34,197,94,0.2)",
+              color:"#16a34a", fontSize:13, fontWeight:700,
+              cursor:"pointer", fontFamily:"inherit",
+            }}
+          >
+            👍 좋아요
+          </button>
+          <button
+            onClick={() => setState("bad_input")}
+            style={{
+              flex:1, padding:"10px", borderRadius:10,
+              background:"rgba(239,68,68,0.06)", border:"1.5px solid rgba(239,68,68,0.15)",
+              color:"#ef4444", fontSize:13, fontWeight:700,
+              cursor:"pointer", fontFamily:"inherit",
+            }}
+          >
+            😢 아쉬워요
+          </button>
+        </div>
+      )}
+
+      {state === "bad_input" && (
+        <div>
+          <div style={{ fontSize:12, color:"#666", marginBottom:8 }}>
+            어떤 점이 아쉬우셨나요? (선택)
+          </div>
+          <textarea
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+            placeholder="예) 실제 자리가 달랐어요 / 찾는 카페가 없었어요"
+            rows={3}
+            style={{
+              width:"100%", padding:"10px 12px",
+              borderRadius:10, border:"1.5px solid #e5e7eb",
+              fontSize:13, fontFamily:"'Pretendard',-apple-system,sans-serif",
+              resize:"none", outline:"none", color:"#1a1a1a",
+              boxSizing:"border-box",
+            }}
+            onFocus={e => e.target.style.borderColor="#1a1a1a"}
+            onBlur={e  => e.target.style.borderColor="#e5e7eb"}
+          />
+          <div style={{ display:"flex", gap:8, marginTop:8 }}>
+            <button
+              onClick={() => setState("idle")}
+              style={{
+                flex:1, padding:"10px", borderRadius:10,
+                background:"rgba(0,0,0,0.04)", border:"none",
+                color:"#999", fontSize:12, fontWeight:500,
+                cursor:"pointer", fontFamily:"inherit",
+              }}
+            >
+              취소
+            </button>
+            <button
+              onClick={() => submit("bad")}
+              style={{
+                flex:2, padding:"10px", borderRadius:10,
+                background:"#1a1a1a", border:"none",
+                color:"#fff", fontSize:13, fontWeight:700,
+                cursor:"pointer", fontFamily:"inherit",
+              }}
+            >
+              제출하기
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── SummaryBar ─────────────────────────────────────────────────────────────
 function SummaryBar({ allOpenCafes }) {
   const counts = { 여유:0, 보통:0, 혼잡:0 };
@@ -1300,6 +1410,8 @@ export default function App() {
               실제 좌석 상황과 다를 수 있으며, 1시간 주기로 업데이트됩니다.
             </div>
           </div>
+
+          <FeedbackSection sessionId={sessionCtx.current?.session_id} />
         </div>
       </div>
 
