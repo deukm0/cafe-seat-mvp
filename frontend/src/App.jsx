@@ -268,7 +268,7 @@ function MiniCafeCard({ cafe }) {
 }
 
 // ── SearchModal ────────────────────────────────────────────────────────────
-function SearchModal({ cafes, onEnterList, loading }) {
+function SearchModal({ cafes, onEnterList, loading, onTrack }) {
   const [query, setQuery]             = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [result, setResult]           = useState(null);
@@ -290,9 +290,16 @@ function SearchModal({ cafes, onEnterList, loading }) {
     if (name !== undefined) setQuery(name);
 
     const found = cafes.find(c => c.name.includes(q));
-    if (!found) { setResult({ type:"not_found", query:q }); return; }
-    if (found.status === "영업종료") { setResult({ type:"closed", cafe:found }); return; }
+    if (!found) {
+      onTrack?.("search_query", { query:q, result_type:"not_found" });
+      setResult({ type:"not_found", query:q }); return;
+    }
+    if (found.status === "영업종료") {
+      onTrack?.("search_query", { query:q, result_type:"closed", cafe_id:found.id });
+      setResult({ type:"closed", cafe:found }); return;
+    }
     if (found.status === "혼잡") {
+      onTrack?.("search_query", { query:q, result_type:"congested", cafe_id:found.id });
       const alts = openCafes
         .filter(c => c.id !== found.id && c.status !== "혼잡")
         .sort((a,b) => a.popularity-b.popularity)
@@ -300,6 +307,7 @@ function SearchModal({ cafes, onEnterList, loading }) {
       setResult({ type:"congested", cafe:found, alternatives:alts });
       return;
     }
+    onTrack?.("search_query", { query:q, result_type:"available", cafe_id:found.id });
     setResult({ type:"available", cafe:found });
   };
 
@@ -1300,6 +1308,7 @@ export default function App() {
         <SearchModal
           cafes={cafes}
           loading={loading}
+          onTrack={track}
           onEnterList={() => {
             setShowSearchModal(false);
             track("enter_list");

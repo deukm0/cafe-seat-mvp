@@ -123,6 +123,7 @@ export function logEvent(eventType, sessionCtx, extra = {}) {
       map_marker_click:"map_clicks",
       share_click:     "share_clicks",
       feedback_submit: "feedback_events",
+      search_query:    "search_queries",
     };
 
     const field = fieldMap[eventType];
@@ -141,6 +142,7 @@ export function logEvent(eventType, sessionCtx, extra = {}) {
         map_clicks: [],
         share_clicks: [],
         feedback_events: [],
+        search_queries: [],
       }, { merge: true });
     }
   } catch (e) {
