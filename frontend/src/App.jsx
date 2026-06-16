@@ -1122,8 +1122,11 @@ export default function App() {
   // ── 세션 트래킹 ──────────────────────────────────────────────────────────
   const sessionCtx = useRef(null);
   if (!sessionCtx.current) {
+    let _uid;
+    try { _uid = localStorage.getItem("cafe_uid"); if (!_uid) { _uid = crypto.randomUUID(); localStorage.setItem("cafe_uid", _uid); } } catch(e) { _uid = crypto.randomUUID(); }
     sessionCtx.current = {
       session_id:  crypto.randomUUID(),
+      uid:         _uid,
       source:      params.get("from") || (cbtiType ? "cbti" : "direct"),
       cbti_type:   cbtiType,
       utm:         params.get("utm") || null,
