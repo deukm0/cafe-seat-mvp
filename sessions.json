@@ -1,564 +1,862 @@
 {
-  "0923e790-a324-4009-b8bc-2fb4f0d537dd": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 13:12:47.817000+00:00",
-    "source": "direct",
+  "036930ca-724e-4577-ab58-e4edbab8752a": {
     "filter_clicks": [],
+    "utm": "admin",
+    "source": "direct",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "cafe_clicks": [
+      {
+        "cafe_id": "starbucks_yonsei",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T09:48:56.078Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T09:49:12.900Z"
+      },
+      {
+        "cafe_id": "twosome_sinchon_station",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T09:49:52.137Z"
+      },
+      {
+        "cafe_id": "twosome_sinchon_station",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T09:50:00.356Z"
+      },
+      {
+        "cafe_id": "chloris_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T09:50:07.132Z"
+      }
+    ],
+    "direction_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T09:49:17.882Z"
+      },
+      {
+        "cafe_id": "twosome_sinchon_station",
+        "cafe_status": "보통",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T09:49:54.572Z"
+      }
+    ],
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
     "cbti_type": null,
-    "utm": "everytime",
-    "cafe_clicks": [],
     "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 18:47:51",
+    "session_id": "036930ca-724e-4577-ab58-e4edbab8752a"
+  },
+  "06fbfa9a-a764-4102-83ea-101ea69e2d23": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/",
+    "source": "direct",
+    "utm": null,
+    "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 17:45:47",
+    "session_id": "06fbfa9a-a764-4102-83ea-101ea69e2d23"
+  },
+  "0923e790-a324-4009-b8bc-2fb4f0d537dd": {
+    "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 22:12:47"
   },
   "09409650-e53d-43c6-bf32-1e79e24fcab5": {
-    "direction_clicks": [],
-    "created_at": "2026-06-10 12:59:42.408000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "cafe_ann"
     ],
+    "device": "mobile",
+    "shared": false,
     "map_clicks": [
       "starbucks_sinchon",
       "coffeebean_sinchon",
       "cafe_ann"
     ],
-    "shared": false,
-    "device": "mobile"
+    "direction_clicks": [],
+    "created_at": "2026-06-10 21:59:42"
   },
   "0a6f24d2-ceb8-4506-a142-a5cf005c8853": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 06:31:55.758000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "커피 본질러",
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "커피 본질러",
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 15:31:55"
   },
   "0cdf0e0b-193e-42a3-aee0-e2382964cae5": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 00:45:13.718000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 09:45:13"
   },
   "15f684af-4ab3-4ead-ac31-66011148bed9": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 11:10:25.980000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 20:10:25"
   },
   "251a585f-51a5-4b0c-b02e-eab3d0422055": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 10:50:35.862000+00:00",
-    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
-    "device": "mobile",
-    "max_scroll_percent": 79,
-    "cbti_type": null,
+    "dwell_seconds": 28,
     "filter_clicks": [
       {
+        "filter_value": "여유",
         "event": "filter_click",
-        "timestamp": "2026-06-11T10:52:11.102Z",
-        "filter_value": "여유"
+        "timestamp": "2026-06-11T10:52:11.102Z"
       },
       {
+        "filter_value": "보통",
         "event": "filter_click",
-        "timestamp": "2026-06-11T10:52:11.685Z",
-        "filter_value": "보통"
+        "timestamp": "2026-06-11T10:52:11.685Z"
       },
       {
+        "filter_value": "혼잡",
         "event": "filter_click",
-        "timestamp": "2026-06-11T10:52:13.403Z",
-        "filter_value": "혼잡"
+        "timestamp": "2026-06-11T10:52:13.403Z"
       }
     ],
-    "utm": "kakaotalk",
-    "cafe_clicks": [
-      {
-        "cafe_status": "여유",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:18.731Z",
-        "cafe_id": "cafe_ann"
-      },
-      {
-        "cafe_status": "여유",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:19.273Z",
-        "cafe_id": "cafe_ann"
-      },
-      {
-        "cafe_status": "여유",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:20.030Z",
-        "cafe_id": "cafe_ann"
-      },
-      {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:33.993Z",
-        "cafe_id": "twosome_sinchon_station"
-      },
-      {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:56.411Z",
-        "cafe_id": "letmealone"
-      },
-      {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:57.055Z",
-        "cafe_id": "eagle_dabang"
-      },
-      {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:57.374Z",
-        "cafe_id": "hollys_sinchon"
-      },
-      {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T10:51:58.157Z",
-        "cafe_id": "hollys_sinchon"
-      }
-    ],
-    "session_id": "251a585f-51a5-4b0c-b02e-eab3d0422055",
-    "referer": null,
-    "source": "direct",
-    "share_clicks": [],
+    "cbti_type": null,
     "engaged": true,
-    "dwell_seconds": 28,
+    "device": "mobile",
     "map_clicks": [
       {
+        "cafe_id": "cafe_ann",
         "event": "map_marker_click",
-        "timestamp": "2026-06-11T10:51:29.114Z",
-        "cafe_id": "cafe_ann"
+        "timestamp": "2026-06-11T10:51:29.114Z"
       },
       {
+        "cafe_id": "hollys_sinchon",
         "event": "map_marker_click",
-        "timestamp": "2026-06-11T10:51:32.158Z",
-        "cafe_id": "hollys_sinchon"
+        "timestamp": "2026-06-11T10:51:32.158Z"
       }
     ],
-    "feedback_events": []
-  },
-  "3436ff31-e37f-41fc-af0a-418538129d57": {
-    "direction_clicks": [],
-    "created_at": "2026-06-05 07:53:11.711000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "장기 체류러",
-    "utm": null,
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "39dc3535-5a67-4ae7-9add-552fa25d7948": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 05:57:05.966000+00:00",
+    "created_at": "2026-06-11 19:50:35",
+    "session_id": "251a585f-51a5-4b0c-b02e-eab3d0422055",
+    "utm": "kakaotalk",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
     "source": "direct",
+    "cafe_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:18.731Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:19.273Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:20.030Z"
+      },
+      {
+        "cafe_id": "twosome_sinchon_station",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:33.993Z"
+      },
+      {
+        "cafe_id": "letmealone",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:56.411Z"
+      },
+      {
+        "cafe_id": "eagle_dabang",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:57.055Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:57.374Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:51:58.157Z"
+      }
+    ],
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 79,
+    "share_clicks": [],
+    "direction_clicks": []
+  },
+  "2fa08f40-b469-4298-b028-7ac72b2c7e2a": {
     "filter_clicks": [],
-    "cbti_type": null,
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "source": "direct",
     "utm": "everytime",
     "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "device": "mobile",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 21:12:12",
+    "session_id": "2fa08f40-b469-4298-b028-7ac72b2c7e2a"
+  },
+  "3436ff31-e37f-41fc-af0a-418538129d57": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "장기 체류러",
+    "cafe_clicks": [],
+    "device": "desktop",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 16:53:11"
+  },
+  "39dc3535-5a67-4ae7-9add-552fa25d7948": {
+    "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
     "map_clicks": [
       "sulbing_sinchon"
     ],
-    "shared": false,
-    "device": "mobile"
+    "direction_clicks": [],
+    "created_at": "2026-06-08 14:57:05"
   },
   "478a0d61-eb39-4ffe-9846-72784f10a528": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 06:04:41.616000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "everytime",
     "filter_clicks": [
       "혼잡",
       "보통"
     ],
-    "utm": "everytime",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
     "map_clicks": [
       "sulbing_sinchon",
       "coffeebean_sinchon"
     ],
-    "shared": false,
-    "device": "mobile"
+    "direction_clicks": [],
+    "created_at": "2026-06-08 15:04:41"
   },
   "4d6747ba-51f4-4b9b-9b1c-3f86ee596c1f": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 01:02:42.433000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "569d6168-5df2-48ef-9592-1bbe00e1b64e": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:10:58.095000+00:00",
-    "source": "direct",
     "filter_clicks": [],
-    "cbti_type": null,
-    "utm": "admin",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "5c424ff1-caed-4d6e-a3c2-23709b6e8aae": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 00:38:08.060000+00:00",
     "source": "direct",
-    "filter_clicks": [],
     "cbti_type": null,
-    "utm": "kakaotalk",
     "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "5f837afa-6f55-485c-a3ae-010b0c33290b": {
-    "direction_clicks": [],
-    "created_at": "2026-06-10 13:52:55.513000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": "everytime",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": true,
-    "device": "mobile"
-  },
-  "68f0e317-f5d9-4271-b2b0-0b2f1175c000": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 05:40:16.363000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": "everytime",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": true,
-    "device": "mobile"
-  },
-  "6d2bbd65-5980-40c6-9141-91cf71f077af": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 12:50:29.173000+00:00",
-    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
     "device": "mobile",
-    "max_scroll_percent": 100,
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 10:02:42"
+  },
+  "4ef02c24-88de-42e2-920f-d9d64fbddd0b": {
+    "filter_clicks": [],
+    "dwell_seconds": 87,
     "cbti_type": null,
-    "filter_clicks": [
-      {
-        "event": "filter_click",
-        "timestamp": "2026-06-11T12:51:25.249Z",
-        "filter_value": "혼잡"
-      },
-      {
-        "event": "filter_click",
-        "timestamp": "2026-06-11T12:51:26.163Z",
-        "filter_value": "여유"
-      },
-      {
-        "event": "filter_click",
-        "timestamp": "2026-06-11T12:51:26.631Z",
-        "filter_value": "전체"
-      },
-      {
-        "event": "filter_click",
-        "timestamp": "2026-06-11T12:51:29.107Z",
-        "filter_value": "여유"
-      }
-    ],
-    "utm": "everytime",
+    "engaged": true,
+    "device": "desktop",
+    "map_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "session_id": "4ef02c24-88de-42e2-920f-d9d64fbddd0b",
+    "utm": "admin",
+    "created_at": "2026-06-12 13:12:54",
+    "source": "direct",
     "cafe_clicks": [
       {
-        "cafe_status": "혼잡",
-        "event": "cafe_click",
-        "timestamp": "2026-06-11T12:51:21.859Z",
-        "cafe_id": "hollys_sinchon"
-      },
-      {
+        "cafe_id": "hollys_sinchon_station",
         "cafe_status": "여유",
         "event": "cafe_click",
-        "timestamp": "2026-06-11T12:51:27.983Z",
-        "cafe_id": "cafe_ann"
+        "timestamp": "2026-06-12T04:15:17.851Z"
       },
       {
+        "cafe_id": "cafe_ann",
         "cafe_status": "여유",
         "event": "cafe_click",
-        "timestamp": "2026-06-11T12:51:28.714Z",
-        "cafe_id": "cafe_ann"
+        "timestamp": "2026-06-12T04:15:21.258Z"
       }
     ],
-    "session_id": "6d2bbd65-5980-40c6-9141-91cf71f077af",
-    "referer": "https://everytime.kr/",
-    "source": "direct",
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 100,
     "share_clicks": [],
-    "engaged": true,
-    "dwell_seconds": 60,
-    "map_clicks": [
-      {
-        "event": "map_marker_click",
-        "timestamp": "2026-06-11T12:50:57.978Z",
-        "cafe_id": "letmealone"
-      }
-    ],
-    "feedback_events": []
+    "direction_clicks": []
   },
-  "7109d922-954e-4902-980e-7ae420b429c7": {
-    "direction_clicks": [],
-    "created_at": "2026-06-05 07:48:39.787000+00:00",
+  "569d6168-5df2-48ef-9592-1bbe00e1b64e": {
+    "utm": "admin",
+    "filter_clicks": [],
     "source": "direct",
-    "filter_clicks": [],
     "cbti_type": null,
-    "utm": null,
     "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "7f812322-088c-4672-9e2e-94c3bd4778df": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 02:53:45.222000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": "kakaotalk",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "87d683b9-9803-48e0-81d9-d7e83f2eea2b": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 05:41:53.674000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": null,
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "8dfebd1a-02a0-447f-bd1f-9fce17526922": {
-    "direction_clicks": [],
-    "created_at": "2026-06-07 12:54:30.884000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "감성 사냥꾼",
-    "utm": null,
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "9377e34e-548e-4e06-a39c-c6ced14bd5e7": {
-    "direction_clicks": [],
-    "created_at": "2026-06-05 07:48:40.190000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": null,
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "96cd57eb-ed45-420d-92da-5a34ef24acfb": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:34:14.750000+00:00",
-    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
     "device": "desktop",
-    "max_scroll_percent": 13,
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 16:10:58"
+  },
+  "570fba8b-4ca4-4333-b868-347063fc3943": {
     "filter_clicks": [],
-    "cbti_type": null,
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "source": "direct",
     "utm": "admin",
     "cafe_clicks": [],
-    "session_id": "96cd57eb-ed45-420d-92da-5a34ef24acfb",
-    "referer": null,
-    "source": "direct",
-    "share_clicks": [],
-    "engaged": true,
-    "dwell_seconds": 7,
-    "map_clicks": [],
-    "feedback_events": []
-  },
-  "9706bc23-9787-4de9-903a-19e11cff4c5f": {
     "direction_clicks": [],
-    "created_at": "2026-06-05 13:08:50.141000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "mobile",
     "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 21:06:32",
+    "session_id": "570fba8b-4ca4-4333-b868-347063fc3943"
+  },
+  "5c424ff1-caed-4d6e-a3c2-23709b6e8aae": {
+    "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 09:38:08"
+  },
+  "5f837afa-6f55-485c-a3ae-010b0c33290b": {
+    "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": true,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-10 22:52:55"
+  },
+  "68f0e317-f5d9-4271-b2b0-0b2f1175c000": {
+    "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": true,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 14:40:16"
+  },
+  "6d2bbd65-5980-40c6-9141-91cf71f077af": {
+    "filter_clicks": [
+      {
+        "filter_value": "혼잡",
+        "event": "filter_click",
+        "timestamp": "2026-06-11T12:51:25.249Z"
+      },
+      {
+        "filter_value": "여유",
+        "event": "filter_click",
+        "timestamp": "2026-06-11T12:51:26.163Z"
+      },
+      {
+        "filter_value": "전체",
+        "event": "filter_click",
+        "timestamp": "2026-06-11T12:51:26.631Z"
+      },
+      {
+        "filter_value": "여유",
+        "event": "filter_click",
+        "timestamp": "2026-06-11T12:51:29.107Z"
+      }
+    ],
+    "dwell_seconds": 60,
+    "cbti_type": null,
+    "engaged": true,
+    "device": "mobile",
+    "map_clicks": [
+      {
+        "cafe_id": "letmealone",
+        "event": "map_marker_click",
+        "timestamp": "2026-06-11T12:50:57.978Z"
+      }
+    ],
+    "created_at": "2026-06-11 21:50:29",
+    "session_id": "6d2bbd65-5980-40c6-9141-91cf71f077af",
+    "utm": "everytime",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "source": "direct",
+    "cafe_clicks": [
+      {
+        "cafe_id": "hollys_sinchon",
+        "cafe_status": "혼잡",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T12:51:21.859Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T12:51:27.983Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T12:51:28.714Z"
+      }
+    ],
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "max_scroll_percent": 100,
+    "share_clicks": [],
+    "direction_clicks": []
+  },
+  "7109d922-954e-4902-980e-7ae420b429c7": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "desktop",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 16:48:39"
+  },
+  "72b7b904-d34b-4eaf-bc24-d8f3027e1453": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/",
+    "source": "direct",
     "utm": null,
     "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "9b442b03-f9dc-4c27-8f6c-817101bb4e22": {
     "direction_clicks": [],
-    "created_at": "2026-06-08 11:41:46.934000+00:00",
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 17:45:46",
+    "session_id": "72b7b904-d34b-4eaf-bc24-d8f3027e1453"
+  },
+  "78da8e89-5885-4ea5-b7fb-4d63a5f28735": {
+    "filter_clicks": [],
+    "dwell_seconds": 0,
+    "cbti_type": null,
+    "engaged": false,
+    "device": "mobile",
+    "map_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/",
+    "session_id": "78da8e89-5885-4ea5-b7fb-4d63a5f28735",
+    "utm": null,
+    "created_at": "2026-06-12 13:16:18",
+    "source": "direct",
+    "cafe_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 0,
+    "share_clicks": [],
+    "direction_clicks": []
+  },
+  "7f812322-088c-4672-9e2e-94c3bd4778df": {
+    "utm": "kakaotalk",
+    "filter_clicks": [],
     "source": "direct",
     "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 11:53:45"
+  },
+  "87d683b9-9803-48e0-81d9-d7e83f2eea2b": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 14:41:53"
+  },
+  "8d052c34-4ec5-4c90-8909-641431fbdbbe": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "source": "direct",
+    "utm": "admin",
+    "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "mobile",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 18:47:35",
+    "session_id": "8d052c34-4ec5-4c90-8909-641431fbdbbe"
+  },
+  "8dfebd1a-02a0-447f-bd1f-9fce17526922": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "감성 사냥꾼",
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-07 21:54:30"
+  },
+  "8ecd4d49-e8e1-45c3-94df-a303be65a39f": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=general_share",
+    "source": "direct",
+    "utm": "general_share",
+    "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "mobile",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-13 10:34:36",
+    "session_id": "8ecd4d49-e8e1-45c3-94df-a303be65a39f"
+  },
+  "9008f21d-267d-4f8d-a2f6-d76e0d58279b": {
+    "filter_clicks": [
+      {
+        "filter_value": "혼잡",
+        "event": "filter_click",
+        "timestamp": "2026-06-12T04:36:05.715Z"
+      },
+      {
+        "filter_value": "전체",
+        "event": "filter_click",
+        "timestamp": "2026-06-12T04:36:10.795Z"
+      }
+    ],
+    "dwell_seconds": 1449,
+    "cbti_type": null,
+    "engaged": true,
+    "device": "desktop",
+    "map_clicks": [
+      {
+        "cafe_id": "elpis_sinchon",
+        "event": "map_marker_click",
+        "timestamp": "2026-06-12T04:35:54.802Z"
+      }
+    ],
+    "created_at": "2026-06-12 13:16:44",
+    "session_id": "9008f21d-267d-4f8d-a2f6-d76e0d58279b",
+    "utm": "admin",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "source": "direct",
+    "cafe_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T04:36:02.054Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T04:42:17.019Z"
+      }
+    ],
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 100,
+    "share_clicks": [],
+    "direction_clicks": []
+  },
+  "9377e34e-548e-4e06-a39c-c6ced14bd5e7": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "desktop",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 16:48:40"
+  },
+  "96cd57eb-ed45-420d-92da-5a34ef24acfb": {
+    "filter_clicks": [],
+    "dwell_seconds": 7,
+    "cbti_type": null,
+    "engaged": true,
+    "device": "desktop",
+    "map_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "session_id": "96cd57eb-ed45-420d-92da-5a34ef24acfb",
+    "utm": "admin",
+    "created_at": "2026-06-11 16:34:14",
+    "source": "direct",
+    "cafe_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 13,
+    "share_clicks": [],
+    "direction_clicks": []
+  },
+  "9706bc23-9787-4de9-903a-19e11cff4c5f": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "desktop",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 22:08:50"
+  },
+  "9b442b03-f9dc-4c27-8f6c-817101bb4e22": {
+    "utm": "everytime",
     "filter_clicks": [
       "혼잡"
     ],
-    "utm": "everytime",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 20:41:46"
   },
   "9b8ad87e-50da-46e7-ab06-f49ec5862b52": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:09:28.422000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "admin",
-    "map_clicks": [],
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "sulbing_sinchon"
     ],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 16:09:28"
   },
   "9bd326a4-bc19-4509-86d6-276595f1faea": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 06:11:29.785000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
-    "map_clicks": [],
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "twosome_sinchon_station"
     ],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
-  },
-  "a238a5ba-657a-4856-98fc-68b227a9dbbb": {
-    "direction_clicks": [],
-    "created_at": "2026-06-05 13:08:50.124000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": null,
-    "cafe_clicks": [],
     "map_clicks": [],
-    "shared": false,
-    "device": "desktop"
-  },
-  "aed78b26-5913-4d6f-909c-d6f5795d782f": {
     "direction_clicks": [],
-    "created_at": "2026-06-11 00:46:58.297000+00:00",
-    "source": "direct",
+    "created_at": "2026-06-11 15:11:29"
+  },
+  "a16c4dab-f4ef-4713-a48b-65ce9c002eb7": {
     "filter_clicks": [],
-    "cbti_type": null,
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
+    "source": "direct",
     "utm": "kakaotalk",
     "cafe_clicks": [],
+    "cbti_type": null,
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
+    "direction_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T11:04:16.583Z"
+      }
+    ],
+    "map_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "event": "map_marker_click",
+        "timestamp": "2026-06-12T11:04:12.993Z"
+      }
+    ],
+    "share_clicks": [],
+    "created_at": "2026-06-12 20:03:51",
+    "session_id": "a16c4dab-f4ef-4713-a48b-65ce9c002eb7"
+  },
+  "a238a5ba-657a-4856-98fc-68b227a9dbbb": {
+    "utm": null,
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "desktop",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 22:08:50"
+  },
+  "a950fe72-0dc9-4496-b081-57cbf879fd6d": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "source": "direct",
+    "utm": "everytime",
+    "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "device": "mobile",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 21:12:27",
+    "session_id": "a950fe72-0dc9-4496-b081-57cbf879fd6d"
+  },
+  "aed78b26-5913-4d6f-909c-d6f5795d782f": {
+    "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
     "map_clicks": [
       "twosome_yonsei"
     ],
-    "shared": false,
-    "device": "mobile"
+    "direction_clicks": [],
+    "created_at": "2026-06-11 09:46:58"
   },
   "b01335f0-c1ef-47ad-9c7a-4383473b0f50": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 14:24:07.443000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 23:24:07"
   },
   "b0bf8e0f-009a-4775-ba27-4f4927e3772a": {
-    "direction_clicks": [],
-    "created_at": "2026-06-05 08:09:48.333000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "장기 체류러",
     "utm": null,
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "장기 체류러",
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-05 17:09:48"
   },
   "b0f53ce0-db61-462b-861a-a480c1a019e2": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 09:38:11.357000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 18:38:11"
   },
   "b4053d63-b76e-4120-bc91-b49c34d6346c": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 00:45:29.195000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 09:45:29"
   },
   "b9a2ae42-5d7b-4a79-8299-0e6c473da9c8": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 01:17:32.475000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "everytime",
     "filter_clicks": [
       "보통",
       "여유"
     ],
-    "utm": "everytime",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 10:17:32"
   },
   "c279b2d9-a65c-4588-b7dd-a46fd0de3d30": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 09:38:33.645000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
-    "map_clicks": [],
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "fortyd",
       "cafe_ann",
@@ -567,290 +865,499 @@
       "starbucks_yonsei",
       "hollys_sinchon"
     ],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 18:38:33"
   },
   "c33a0f17-db27-4615-aa60-6b84f1b1cfcd": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 02:17:13.892000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 11:17:13"
   },
   "c88341f7-c5e1-4d5f-9968-0b8a856e07aa": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 10:51:24.078000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "everytime",
     "filter_clicks": [
       "여유",
       "보통"
     ],
-    "utm": "everytime",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
-  },
-  "c8e79984-4fde-48e3-a598-52f7eb681ff6": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 18:46:06.420000+00:00",
     "source": "direct",
     "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 19:51:24"
+  },
+  "c8e79984-4fde-48e3-a598-52f7eb681ff6": {
+    "utm": "everytime",
     "filter_clicks": [
       "여유"
     ],
-    "utm": "everytime",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 03:46:06"
   },
   "d1be2db4-1fb7-4852-8bec-0d8977213278": {
-    "direction_clicks": [
-      "letmealone"
-    ],
-    "created_at": "2026-06-08 10:09:38.288000+00:00",
-    "source": "cbti",
-    "cbti_type": "사교 공부러",
+    "utm": null,
     "filter_clicks": [
       "보통",
       "여유",
       "혼잡"
     ],
-    "utm": null,
-    "map_clicks": [],
+    "source": "cbti",
+    "cbti_type": "사교 공부러",
     "cafe_clicks": [
       "eagle_dabang",
       "twosome_sinchon_station",
       "letmealone",
       "chloris_sinchon"
     ],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "created_at": "2026-06-08 19:09:38",
+    "direction_clicks": [
+      "letmealone"
+    ]
+  },
+  "d1f28c4e-d358-46d4-a5b9-af9cb3aa720c": {
+    "filter_clicks": [],
+    "utm": "kakaotalk",
+    "source": "direct",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
+    "cafe_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-13T02:38:52.907Z"
+      }
+    ],
+    "cbti_type": null,
+    "referer": null,
+    "feedback_events": [],
+    "device": "mobile",
+    "direction_clicks": [],
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-13 11:38:18",
+    "session_id": "d1f28c4e-d358-46d4-a5b9-af9cb3aa720c"
   },
   "d2dace52-2af1-4737-b434-8c2a198b24e4": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:25:45.698000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "admin",
     "filter_clicks": [
       "여유"
     ],
-    "utm": "admin",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 16:25:45"
+  },
+  "d305e80c-5f13-4009-9d0b-61465b04ced0": {
+    "filter_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "source": "direct",
+    "utm": "everytime",
+    "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "device": "mobile",
+    "cbti_type": null,
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 19:15:30",
+    "session_id": "d305e80c-5f13-4009-9d0b-61465b04ced0"
   },
   "d63ae68e-eca8-4091-a721-53e22761fa55": {
+    "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
+    "cafe_clicks": [],
+    "device": "mobile",
+    "shared": false,
+    "map_clicks": [],
+    "created_at": "2026-06-11 10:12:49",
     "direction_clicks": [
       "flickon_coffee"
-    ],
-    "created_at": "2026-06-11 01:12:49.638000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
-    "utm": "kakaotalk",
-    "cafe_clicks": [],
-    "map_clicks": [],
-    "shared": false,
-    "device": "mobile"
+    ]
   },
   "d7165077-cc22-4b7a-841e-eba42c6be0c9": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 02:58:57.393000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "감성 사냥꾼",
     "utm": "kakaotalk",
-    "map_clicks": [],
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "감성 사냥꾼",
     "cafe_clicks": [
       "cafe_ann",
       "starbucks_yonsei"
     ],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 11:58:57"
   },
   "e2ff3cde-d0f1-4aeb-b7e0-9dca6f3dc653": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 11:23:53.860000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "cafe_ann"
     ],
+    "device": "mobile",
+    "shared": false,
     "map_clicks": [
       "cafe_ann",
       "twosome_yonsei"
     ],
-    "shared": false,
-    "device": "mobile"
+    "direction_clicks": [],
+    "created_at": "2026-06-08 20:23:53"
   },
   "e5bbbce4-f163-4a3a-980d-98d9dded9767": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:34:12.179000+00:00",
-    "landing_url": "https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/",
-    "feedback_events": [],
-    "device": "desktop",
-    "source": "direct",
     "filter_clicks": [],
-    "cbti_type": null,
-    "share_clicks": [],
+    "landing_url": "https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/",
+    "source": "direct",
     "utm": null,
     "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
+    "cbti_type": null,
     "map_clicks": [],
-    "session_id": "e5bbbce4-f163-4a3a-980d-98d9dded9767",
-    "referer": null
+    "share_clicks": [],
+    "created_at": "2026-06-11 16:34:12",
+    "session_id": "e5bbbce4-f163-4a3a-980d-98d9dded9767"
   },
   "ec6fd639-6d96-41ea-8403-32407f201c28": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 07:34:11.238000+00:00",
-    "landing_url": "https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/",
-    "feedback_events": [],
-    "device": "desktop",
-    "source": "direct",
     "filter_clicks": [],
-    "cbti_type": null,
-    "share_clicks": [],
+    "landing_url": "https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/",
+    "source": "direct",
     "utm": null,
     "cafe_clicks": [],
+    "direction_clicks": [],
+    "referer": null,
+    "feedback_events": [],
+    "device": "desktop",
+    "cbti_type": null,
     "map_clicks": [],
-    "session_id": "ec6fd639-6d96-41ea-8403-32407f201c28",
-    "referer": null
+    "share_clicks": [],
+    "created_at": "2026-06-11 16:34:11",
+    "session_id": "ec6fd639-6d96-41ea-8403-32407f201c28"
   },
   "ee96ba6f-5272-40d3-b48c-9d93e035cfd6": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 02:57:17.217000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "감성 사냥꾼",
     "utm": "kakaotalk",
-    "map_clicks": [],
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "감성 사냥꾼",
     "cafe_clicks": [
       "chloris_sinchon"
     ],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 11:57:17"
   },
-  "f0f82894-d1cb-4612-bd61-03162f7da761": {
-    "direction_clicks": [
-      {
-        "cafe_status": "여유",
-        "event": "direction_click",
-        "timestamp": "2026-06-11T10:49:22.967Z",
-        "cafe_id": "cafe_ann"
-      }
-    ],
-    "created_at": "2026-06-11 10:49:03.473000+00:00",
-    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
-    "feedback_events": [],
-    "max_scroll_percent": 101,
-    "cbti_type": null,
-    "filter_clicks": [
-      {
-        "event": "filter_click",
-        "timestamp": "2026-06-11T10:49:18.028Z",
-        "filter_value": "여유"
-      }
-    ],
-    "utm": "kakaotalk",
+  "ef064da7-6b1b-4330-93c7-d2f139aad243": {
+    "filter_clicks": [],
+    "utm": "admin",
+    "source": "direct",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
     "cafe_clicks": [
       {
+        "cafe_id": "sulbing_sinchon",
         "cafe_status": "보통",
         "event": "cafe_click",
-        "timestamp": "2026-06-11T10:49:10.115Z",
-        "cafe_id": "sulbing_sinchon"
+        "timestamp": "2026-06-12T08:48:58.217Z"
       },
       {
+        "cafe_id": "chloris_sinchon",
         "cafe_status": "보통",
         "event": "cafe_click",
-        "timestamp": "2026-06-11T10:49:10.843Z",
-        "cafe_id": "coffeebean_sinchon"
+        "timestamp": "2026-06-12T08:49:01.210Z"
       },
       {
+        "cafe_id": "fortyd",
         "cafe_status": "여유",
         "event": "cafe_click",
-        "timestamp": "2026-06-11T10:49:19.782Z",
-        "cafe_id": "cafe_ann"
+        "timestamp": "2026-06-12T08:49:07.965Z"
+      },
+      {
+        "cafe_id": "sulbing_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:49:47.030Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:50:50.420Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:50:54.808Z"
+      },
+      {
+        "cafe_id": "fortyd",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:50:57.475Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:51:02.977Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:17.132Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:31.461Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:35.409Z"
+      },
+      {
+        "cafe_id": "fortyd",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:40.754Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:46.355Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:53.725Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:54:57.602Z"
       }
     ],
-    "session_id": "f0f82894-d1cb-4612-bd61-03162f7da761",
+    "direction_clicks": [
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T08:54:19.294Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T08:54:32.457Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T08:54:37.664Z"
+      },
+      {
+        "cafe_id": "fortyd",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T08:54:41.900Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-12T08:54:47.852Z"
+      }
+    ],
     "referer": null,
-    "source": "direct",
+    "feedback_events": [],
+    "device": "desktop",
+    "cbti_type": null,
+    "map_clicks": [],
     "share_clicks": [],
-    "engaged": true,
+    "created_at": "2026-06-12 17:45:55",
+    "session_id": "ef064da7-6b1b-4330-93c7-d2f139aad243"
+  },
+  "f0f82894-d1cb-4612-bd61-03162f7da761": {
+    "filter_clicks": [
+      {
+        "filter_value": "여유",
+        "event": "filter_click",
+        "timestamp": "2026-06-11T10:49:18.028Z"
+      }
+    ],
     "dwell_seconds": 28,
+    "cbti_type": null,
+    "engaged": true,
+    "device": "mobile",
     "map_clicks": [
       {
+        "cafe_id": "letmealone",
         "event": "map_marker_click",
-        "timestamp": "2026-06-11T10:49:06.863Z",
-        "cafe_id": "letmealone"
+        "timestamp": "2026-06-11T10:49:06.863Z"
       }
     ],
-    "device": "mobile"
+    "created_at": "2026-06-11 19:49:03",
+    "session_id": "f0f82894-d1cb-4612-bd61-03162f7da761",
+    "utm": "kakaotalk",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
+    "source": "direct",
+    "cafe_clicks": [
+      {
+        "cafe_id": "sulbing_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:49:10.115Z"
+      },
+      {
+        "cafe_id": "coffeebean_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:49:10.843Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-11T10:49:19.782Z"
+      }
+    ],
+    "referer": null,
+    "feedback_events": [],
+    "max_scroll_percent": 101,
+    "share_clicks": [],
+    "direction_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "direction_click",
+        "timestamp": "2026-06-11T10:49:22.967Z"
+      }
+    ]
   },
   "f109ea48-e1c2-4b26-8ae5-e3c54d97b8f9": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 13:13:16.100000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "everytime",
     "filter_clicks": [
       "여유",
       "보통",
       "혼잡"
     ],
-    "utm": "everytime",
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 22:13:16"
   },
   "f112254a-6751-47e3-9192-4e59018b7105": {
-    "direction_clicks": [],
-    "created_at": "2026-06-11 06:11:42.186000+00:00",
-    "source": "direct",
-    "filter_clicks": [],
-    "cbti_type": null,
     "utm": "kakaotalk",
+    "filter_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-11 15:11:42"
   },
   "f3001af4-fe33-4289-ab43-bed92ffe67ae": {
-    "direction_clicks": [],
-    "created_at": "2026-06-09 14:42:47.735000+00:00",
-    "source": "direct",
-    "cbti_type": null,
+    "utm": "everytime",
     "filter_clicks": [
       "보통"
     ],
-    "utm": "everytime",
-    "map_clicks": [],
+    "source": "direct",
+    "cbti_type": null,
     "cafe_clicks": [
       "twosome_yonsei"
     ],
+    "device": "desktop",
     "shared": false,
-    "device": "desktop"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-09 23:42:47"
+  },
+  "fb3bebf7-3dd9-4b02-bc48-4799b419abbf": {
+    "filter_clicks": [],
+    "utm": "admin",
+    "source": "direct",
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=admin",
+    "cafe_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:49:20.905Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-12T08:49:25.637Z"
+      }
+    ],
+    "cbti_type": null,
+    "referer": null,
+    "feedback_events": [],
+    "device": "mobile",
+    "direction_clicks": [],
+    "map_clicks": [],
+    "share_clicks": [],
+    "created_at": "2026-06-12 17:49:15",
+    "session_id": "fb3bebf7-3dd9-4b02-bc48-4799b419abbf"
   },
   "fdcdd5ca-7804-4ab2-a05c-871f37c71398": {
-    "direction_clicks": [],
-    "created_at": "2026-06-08 06:09:06.548000+00:00",
-    "source": "cbti",
-    "filter_clicks": [],
-    "cbti_type": "사교 공부러",
     "utm": "everytime",
+    "filter_clicks": [],
+    "source": "cbti",
+    "cbti_type": "사교 공부러",
     "cafe_clicks": [],
-    "map_clicks": [],
+    "device": "mobile",
     "shared": false,
-    "device": "mobile"
+    "map_clicks": [],
+    "direction_clicks": [],
+    "created_at": "2026-06-08 15:09:06"
   }
 }

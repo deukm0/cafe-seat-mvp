@@ -1,0 +1,20 @@
+﻿session_id,created_at_kst,date,hour,device,utm,uid,result_type,finished,clicked_service,is_admin
+ad0a2dd9-0e8d-4599-a7e6-029de8bd143a,2026-06-05 16:51:39,2026-06-05,16,mobile,,,카페 자리 지박령,True,False,False
+4ede5739-4676-4e45-b82a-25ae12b46fde,2026-06-05 16:53:24,2026-06-05,16,mobile,,,공부 안 하는 사진작가,True,False,False
+5cec69f3-fea8-4654-8cf0-d7d2802fa394,2026-06-07 21:54:25,2026-06-07,21,mobile,,0f7c6bc2-ffd1-4794-a795-e36822344fd0,공부 안 하는 사진작가,True,True,False
+8b7c6ed3-989f-4498-baf2-83b4f99e5b38,2026-06-08 14:33:54,2026-06-08,14,mobile,everytime,c1a72b42-0f19-460c-a683-43c852158312,카페 자리 지박령,True,False,False
+4b88b3b4-ae9f-4af5-b096-437ddd0f4347,2026-06-08 14:34:04,2026-06-08,14,mobile,everytime,754e429a-7c63-4056-b714-efc2cf6e2216,공부는 핑계 수다러,True,False,False
+ada5d470-77b1-44ce-8f06-7ef22fa1a4e1,2026-06-08 14:34:58,2026-06-08,14,mobile,everytime,c1a72b42-0f19-460c-a683-43c852158312,카페 자리 지박령,True,False,False
+4640ec9c-d8ca-4d71-a73e-e64bbab4ac23,2026-06-08 14:35:39,2026-06-08,14,mobile,everytime,fa8b237f-91bd-412f-ba7d-4dec3a7a98b8,원두 따지는 까탈러,True,False,False
+37ee7174-2e7d-41f5-b3fe-b83a0ed76b4d,2026-06-08 14:35:46,2026-06-08,14,mobile,everytime,6bc4c8f6-3da5-4580-9f5d-1345db713f7b,카페 자리 지박령,True,False,False
+f906c669-6077-4f03-8f28-c009e35cd07b,2026-06-08 14:44:52,2026-06-08,14,mobile,everytime,d96d797e-20e9-4afe-bb19-47d3462bfd9c,원두 따지는 까탈러,True,True,False
+9628b42c-e835-4879-ac2c-f0d7f41fa441,2026-06-08 15:01:35,2026-06-08,15,mobile,everytime,44730766-47c4-4f83-879d-b49f7151938e,떠돌이 메뚜기족,True,False,False
+3478023f-f4b6-40fb-b682-cb1bc1d86d71,2026-06-08 15:07:38,2026-06-08,15,mobile,everytime,2f49051a-4172-475d-a1dc-dd2b856e3d97,공부는 핑계 수다러,True,True,False
+10f752ee-38fb-4932-b1a5-5b5d8c69b3ea,2026-06-08 19:08:08,2026-06-08,19,desktop,,569ad55a-6243-4d3c-a894-3f5a42fc9840,공부는 핑계 수다러,True,True,False
+3208d345-e423-40db-bf7b-359d7520f8a6,2026-06-10 17:53:43,2026-06-10,17,mobile,everytime,0868c34c-ea30-4a2b-8742-d892cee0bbf2,공부 안 하는 사진작가,True,False,False
+541ea502-a7d7-42bd-a510-a50f05b52b93,2026-06-11 09:38:18,2026-06-11,09,mobile,kakaotalk,84285506-2c76-4f57-a929-1facf8b52c18,떠돌이 메뚜기족,True,False,False
+74300943-c04c-46e8-824b-2449412cee58,2026-06-11 10:03:28,2026-06-11,10,mobile,kakaotalk,26b2839b-22ec-4842-bc9c-ce9c57a755c9,카페 자리 지박령,True,False,False
+42ebcdbe-8ea8-4006-8a54-948ccbf9d4d7,2026-06-11 11:00:43,2026-06-11,11,mobile,kakaotalk,9006bf0c-7e45-4a73-8767-b86eb4262110,카페 자리 지박령,True,False,False
+88920c06-d114-457b-a5b1-04f35dcefb13,2026-06-11 11:54:02,2026-06-11,11,mobile,kakaotalk,ade2535b-472f-47a3-a86b-68e422132aa9,떠돌이 메뚜기족,True,False,False
+362c23ef-cad8-4250-9087-009d4192a416,2026-06-11 11:54:09,2026-06-11,11,desktop,kakaotalk,4cda48b9-26d1-4fce-be18-c34cdfb22c2f,공부 안 하는 사진작가,True,True,False
+409e63e4-b5b4-4f45-92a5-a14ee2956b13,2026-06-13 16:31:29,2026-06-13,16,desktop,kakaotalk,202041a2-0584-4398-a75b-3f847380dfc9,카페 자리 지박령,True,False,False
