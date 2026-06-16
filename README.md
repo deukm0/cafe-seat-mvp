@@ -8,8 +8,8 @@
 
 | 서비스 | URL |
 |---|---|
-| 메인 서비스 | https://cafe-seat-mvp.vercel.app/ |
-| CBTI 퀴즈 (카공 빌런 유형 테스트) | https://cafe-seat-mvp.vercel.app/cafe-quiz.html |
+| 메인 서비스 | https://cafe-mvp.netlify.app/ |
+| CBTI 퀴즈 (카공 빌런 유형 테스트) | https://cafe-mvp.netlify.app/cafe-quiz.html |
 
 > 이미 배포되어 있으므로 위 링크에서 바로 확인 가능합니다.
 

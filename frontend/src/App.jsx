@@ -312,7 +312,7 @@ function SearchModal({ cafes, onEnterList, loading, onTrack }) {
   };
 
   const handleKakaoSave = (cafe) => {
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_save";
+    const url = "https://cafe-mvp.netlify.app/?utm=kakao_save";
     navigator.clipboard?.writeText(url)
       .then(() => alert(`☕ ${cafe.name} 링크 복사됨!\n카톡 나와의 채팅에 붙여넣기하세요 📋`))
       .catch(() => alert("링크: " + url));
@@ -803,7 +803,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
   const handleKakaoAndDepart = () => {
     sessionStorage.setItem("kakao_prompt_shown", "1");
     onTrack?.("share_click", { share_type:"kakao_depart", cafe_id:cafe.id });
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=kakao_share";
+    const url = "https://cafe-mvp.netlify.app/?utm=kakao_share";
     navigator.clipboard?.writeText(url).catch(() => {});
     window.open(getDirectionUrl(cafe), "_blank");
     onClose();
@@ -1080,7 +1080,7 @@ function SummaryBar({ allOpenCafes }) {
 function CbtiBanner() {
   return (
     <div
-      onClick={() => window.location.href = "https://cafe-seat-mvp.vercel.app/cafe-quiz.html"}
+      onClick={() => window.location.href = "https://cafe-mvp.netlify.app/cafe-quiz.html"}
       style={{
         padding:"14px 16px", borderRadius:14, cursor:"pointer",
         background:"linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08))",
@@ -1179,7 +1179,7 @@ export default function App() {
   // ── 공유 핸들러 ───────────────────────────────────────────────────────────
   const handleShareGeneral = useCallback(() => {
     track("share_click", { share_type:"general" });
-    const url = "https://cafe-seat-mvp.vercel.app/?utm=general_share";
+    const url = "https://cafe-mvp.netlify.app/?utm=general_share";
     if (navigator.share) {
       navigator.share({ title:"실패없는 카페 선택 ☕", url }).catch(() => {});
     } else {
