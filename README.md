@@ -53,7 +53,7 @@
 | 자동화 | GitHub Actions | 1시간 주기 크론으로 혼잡도 자동 업데이트 |
 | 데이터 | Google Maps Popular Times | 요일·시간대별 혼잡도 패턴 (수동 수집) |
 | 지도 | 네이버맵 API | 혼잡도 색상 핀으로 카페 위치 시각화 |
-| 배포 | Vercel | GitHub push → 자동 빌드·배포 |
+| 배포 | Netlify | GitHub push → 자동 빌드·배포 |
 
 ---
 
@@ -144,7 +144,7 @@ React 앱 (실시간)
 - `map_clicks` — 지도 핀 클릭
 - `filter_clicks` — 혼잡도 필터 사용
 
-채널 구분은 UTM 파라미터(`?utm=everytime/kakaotalk/instagram`)로 처리합니다.
+채널 구분은 UTM 파라미터(`?utm=everytime/kakaotalk/admin`)로 처리합니다.
 
 ---
 
