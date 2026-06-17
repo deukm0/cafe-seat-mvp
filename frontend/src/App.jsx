@@ -1307,7 +1307,7 @@ export default function App() {
         </div>
 
         {/* ── 지도 (visibleList 기준 핀 표시) ── */}
-        <div style={{ maxWidth:480, margin:"0 auto" }}>
+        <div style={{ maxWidth:480, margin:"0 auto", position:"relative", zIndex:1 }}>
           <CafeMap
             visibleCafes={visibleList}
             selectedId={selectedId}
