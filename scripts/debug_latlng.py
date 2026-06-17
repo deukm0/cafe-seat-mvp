@@ -3,8 +3,9 @@ debug_latlng.py — 진단용 스크립트 (Firebase 수정 없음, 로그만 �
 실행: python scripts/debug_latlng.py
 """
 import requests
+import os
 
-GOOGLE_API_KEY = "AIzaSyBP2TkDr-zu-Ld0VDj1UH8uAuiXmrNmHlM"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") or os.environ.get("VITE_GOOGLE_MAPS_API_KEY")
 PLACES_URL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
 
 CAFE_QUERIES = {

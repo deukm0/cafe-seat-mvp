@@ -8,9 +8,10 @@ Google Places API로 17개 카페 좌표(lat/lng)를 조회해서 Firebase에 �
 import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
 
 # ── 설정 ────────────────────────────────────────────────────────────────────
-GOOGLE_API_KEY = "AIzaSyBP2TkDr-zu-Ld0VDj1UH8uAuiXmrNmHlM"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") or os.environ.get("VITE_GOOGLE_MAPS_API_KEY")
 PLACES_URL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
 
 # Firebase 초기화
