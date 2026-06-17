@@ -754,7 +754,7 @@ function CafeCard({ cafe, index, isCbtiPick, isSelected, cardRef, onCardClick })
         <div style={{ flex:1 }}>
           <div style={{ height:6, borderRadius:99, background:"rgba(0,0,0,0.06)", overflow:"hidden" }}>
             <div style={{
-              height:"100%", width:`${cafe.popularity}%`,
+              height:"100%", width:`${Math.round((1 - cafe.popularity / 100) * 100)}%`,
               background:cfg.color, borderRadius:99,
               transition:"width 0.8s cubic-bezier(.4,0,.2,1)",
             }}/>
