@@ -105,25 +105,6 @@
     "share_clicks": [],
     "direction_clicks": []
   },
-  "01c9eeed-b0c8-4f45-90b6-7bf2a3bf0306": {
-    "filter_clicks": [],
-    "cbti_type": null,
-    "device": "desktop",
-    "map_clicks": [],
-    "collection": "sessions_v2",
-    "session_id": "01c9eeed-b0c8-4f45-90b6-7bf2a3bf0306",
-    "utm": null,
-    "app_version": "v2",
-    "source": "direct",
-    "created_at": "2026-06-15 12:31:34",
-    "cafe_clicks": [],
-    "landing_url": "https://cafe-seat-dppj6baap-deukmo-lee-s-projects.vercel.app/",
-    "referer": null,
-    "feedback_events": [],
-    "share_clicks": [],
-    "search_queries": [],
-    "direction_clicks": []
-  },
   "047a7717-44c3-4845-a423-5197b79c83e1": {
     "filter_clicks": [],
     "cbti_type": null,
@@ -184,6 +165,26 @@
     "referer": "https://everytime.kr/",
     "feedback_events": [],
     "share_clicks": [],
+    "direction_clicks": []
+  },
+  "06898c5c-aad2-477a-92ba-c23a4354da7d": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "desktop",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "06898c5c-aad2-477a-92ba-c23a4354da7d",
+    "utm": "kakaotalk",
+    "app_version": "v2",
+    "source": "direct",
+    "created_at": "2026-06-16 10:35:24",
+    "cafe_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=kakaotalk",
+    "referer": "https://vercel.com/",
+    "feedback_events": [],
+    "interactions": [],
+    "share_clicks": [],
+    "search_queries": [],
     "direction_clicks": []
   },
   "08d1543e-ee53-4cb7-a814-5fb29cf67a8f": {
@@ -349,6 +350,109 @@
     "share_clicks": [],
     "direction_clicks": []
   },
+  "59241a76-0b84-47a2-ab26-a349c09d465c": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "mobile",
+    "map_clicks": [],
+    "created_at": "2026-06-16 19:48:31",
+    "session_id": "59241a76-0b84-47a2-ab26-a349c09d465c",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "uid": "414c2957-3bbc-4aa6-a633-c23c0d70a564",
+    "cafe_clicks": [
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:48:53.070Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:49:22.953Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:50:02.444Z"
+      },
+      {
+        "cafe_id": "starbucks_myeongmul",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:50:15.688Z"
+      },
+      {
+        "cafe_id": "elpis_sinchon",
+        "cafe_status": "보통",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:50:19.335Z"
+      },
+      {
+        "cafe_id": "hollys_sinchon_station",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:50:21.428Z"
+      },
+      {
+        "cafe_id": "cafe_ann",
+        "cafe_status": "여유",
+        "event": "cafe_click",
+        "timestamp": "2026-06-16T10:50:24.337Z"
+      }
+    ],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "collection": "sessions_v2",
+    "share_clicks": [],
+    "interactions": [
+      {
+        "event": "enter_list",
+        "timestamp": "2026-06-16T10:48:40.467Z"
+      },
+      {
+        "is_cbti": false,
+        "expanded": true,
+        "event": "expand_click",
+        "timestamp": "2026-06-16T10:48:44.052Z"
+      }
+    ],
+    "search_queries": [
+      {
+        "cafe_id": "eagle_dabang",
+        "result_type": "congested",
+        "event": "search_query",
+        "timestamp": "2026-06-16T10:48:35.860Z",
+        "query": "독수리다방"
+      }
+    ],
+    "direction_clicks": []
+  },
+  "600f8c8a-d827-47d0-af91-6ec972e74238": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "desktop",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "600f8c8a-d827-47d0-af91-6ec972e74238",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "created_at": "2026-06-16 10:02:35",
+    "cafe_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "referer": "https://vercel.com/",
+    "feedback_events": [],
+    "interactions": [],
+    "share_clicks": [],
+    "search_queries": [],
+    "direction_clicks": []
+  },
   "6213cb13-4d45-4f7e-8afb-e39c5c777a21": {
     "filter_clicks": [],
     "cbti_type": null,
@@ -482,6 +586,44 @@
       }
     ],
     "search_queries": [],
+    "direction_clicks": []
+  },
+  "70eee1f6-bc32-43c8-bd36-4819848ab756": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "mobile",
+    "map_clicks": [],
+    "created_at": "2026-06-16 13:24:42",
+    "session_id": "70eee1f6-bc32-43c8-bd36-4819848ab756",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "collection": "sessions_v2",
+    "cafe_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "share_clicks": [],
+    "interactions": [
+      {
+        "event": "enter_list",
+        "timestamp": "2026-06-16T04:24:50.956Z"
+      },
+      {
+        "is_cbti": false,
+        "expanded": true,
+        "event": "expand_click",
+        "timestamp": "2026-06-16T04:24:54.086Z"
+      }
+    ],
+    "search_queries": [
+      {
+        "result_type": "not_found",
+        "event": "search_query",
+        "timestamp": "2026-06-16T04:24:48.293Z",
+        "query": "Letme"
+      }
+    ],
     "direction_clicks": []
   },
   "716a279c-ed4b-41ea-90dd-98f6958c25a9": {
@@ -812,6 +954,59 @@
     "share_clicks": [],
     "direction_clicks": []
   },
+  "a3aaf479-f00f-4b72-ba8f-0c2e7ca4ec27": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "mobile",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "a3aaf479-f00f-4b72-ba8f-0c2e7ca4ec27",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "uid": "414c2957-3bbc-4aa6-a633-c23c0d70a564",
+    "cafe_clicks": [],
+    "created_at": "2026-06-16 20:02:14",
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "interactions": [],
+    "share_clicks": [],
+    "search_queries": [],
+    "direction_clicks": []
+  },
+  "b4daf488-47d4-4f12-8495-565a2cfb0544": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "mobile",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "b4daf488-47d4-4f12-8495-565a2cfb0544",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "uid": "414c2957-3bbc-4aa6-a633-c23c0d70a564",
+    "cafe_clicks": [],
+    "created_at": "2026-06-16 20:02:19",
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "share_clicks": [],
+    "interactions": [
+      {
+        "event": "enter_list",
+        "timestamp": "2026-06-16T11:02:20.243Z"
+      },
+      {
+        "is_cbti": false,
+        "expanded": true,
+        "event": "expand_click",
+        "timestamp": "2026-06-16T11:02:26.823Z"
+      }
+    ],
+    "search_queries": [],
+    "direction_clicks": []
+  },
   "c593a873-ae75-49c2-a4f7-e6afa375847e": {
     "filter_clicks": [],
     "cbti_type": null,
@@ -892,6 +1087,66 @@
     ],
     "share_clicks": [],
     "search_queries": [],
+    "direction_clicks": []
+  },
+  "dea6c0b7-0c02-4400-a322-4af9e98cb143": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "desktop",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "dea6c0b7-0c02-4400-a322-4af9e98cb143",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "uid": "57795782-b373-43f9-9551-f8b879ce5f22",
+    "cafe_clicks": [],
+    "created_at": "2026-06-17 13:45:28",
+    "referer": null,
+    "feedback_events": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "share_clicks": [],
+    "interactions": [
+      {
+        "event": "enter_list",
+        "timestamp": "2026-06-17T04:45:29.577Z"
+      }
+    ],
+    "search_queries": [],
+    "direction_clicks": []
+  },
+  "e51638a6-4851-433d-ab7a-d0a712f86dcd": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "mobile",
+    "map_clicks": [],
+    "created_at": "2026-06-18 12:58:01",
+    "session_id": "e51638a6-4851-433d-ab7a-d0a712f86dcd",
+    "utm": "everytime",
+    "app_version": "v2",
+    "source": "direct",
+    "uid": "a17ccef4-56e0-43d8-84a5-e7762bd95102",
+    "cafe_clicks": [],
+    "collection": "sessions_v2",
+    "referer": "https://everytime.kr/",
+    "feedback_events": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=everytime",
+    "share_clicks": [],
+    "interactions": [
+      {
+        "event": "enter_list",
+        "timestamp": "2026-06-18T03:58:07.941Z"
+      }
+    ],
+    "search_queries": [
+      {
+        "cafe_id": "twosome_yonsei",
+        "result_type": "available",
+        "event": "search_query",
+        "timestamp": "2026-06-18T03:58:06.171Z",
+        "query": "투썸플레이스 신촌연세로점"
+      }
+    ],
     "direction_clicks": []
   },
   "f2fc39d7-b961-4076-805b-611f74171afc": {
@@ -984,6 +1239,26 @@
     "referer": "https://everytime.kr/",
     "feedback_events": [],
     "share_clicks": [],
+    "direction_clicks": []
+  },
+  "fbd1d63f-49fe-429a-8bbf-fdd588510164": {
+    "filter_clicks": [],
+    "cbti_type": null,
+    "device": "desktop",
+    "map_clicks": [],
+    "collection": "sessions_v2",
+    "session_id": "fbd1d63f-49fe-429a-8bbf-fdd588510164",
+    "utm": "general_share",
+    "app_version": "v2",
+    "source": "direct",
+    "created_at": "2026-06-16 10:01:19",
+    "cafe_clicks": [],
+    "landing_url": "https://cafe-seat-mvp.vercel.app/?utm=general_share",
+    "referer": "https://vercel.com/",
+    "feedback_events": [],
+    "interactions": [],
+    "share_clicks": [],
+    "search_queries": [],
     "direction_clicks": []
   }
 }

@@ -176,7 +176,8 @@ function ClosingBadge({ minutes }) {
 }
 
 // ── HourlyChart ────────────────────────────────────────────────────────────
-function HourlyChart({ popularTimes }) {
+// 막대 높이 = 여유 좌석 수 기준 (높을수록 여유로움). 카드 진행바와 동일한 "여유" 방향으로 통일.
+function HourlyChart({ popularTimes, totalSeats }) {
   const dayKey = DAY_KEYS[new Date().getDay()];
   const raw = popularTimes?.[dayKey] || [];
   const now = new Date().getHours();
@@ -191,17 +192,27 @@ function HourlyChart({ popularTimes }) {
 
   return (
     <div>
-      <div style={{ display:"flex", alignItems:"flex-end", gap:2, height:50 }}>
+      <div style={{ display:"flex", alignItems:"flex-end", gap:2, height:64 }}>
         {hours.map((val, i) => {
           const h = startHour + i;
           const isNow = h === now;
-          const barH = val > 0 ? Math.max(Math.round((val/100)*46), 3) : 2;
+          const availRatio = val > 0 ? (100 - val) / 100 : 0;
+          const availSeats = val > 0 ? Math.max(Math.round(totalSeats * availRatio), 0) : null;
+          const barH = val > 0 ? Math.max(Math.round(availRatio * 40), 3) : 2;
           const color = val===0 ? "#e5e7eb" : val<=40 ? "#22c55e" : val<=70 ? "#f59e0b" : "#ef4444";
           return (
             <div key={h} style={{
               flex:1, display:"flex", flexDirection:"column",
               alignItems:"center", justifyContent:"flex-end", height:"100%",
             }}>
+              {isNow && availSeats !== null && (
+                <div style={{
+                  fontSize:10, fontWeight:800, color, marginBottom:3,
+                  whiteSpace:"nowrap",
+                }}>
+                  {availSeats}석
+                </div>
+              )}
               <div style={{
                 width:"100%", height:barH,
                 background:color, borderRadius:"2px 2px 0 0",
@@ -754,7 +765,7 @@ function CafeCard({ cafe, index, isCbtiPick, isSelected, cardRef, onCardClick })
         <div style={{ flex:1 }}>
           <div style={{ height:6, borderRadius:99, background:"rgba(0,0,0,0.06)", overflow:"hidden" }}>
             <div style={{
-              height:"100%", width:`${Math.round((1 - cafe.popularity / 100) * 100)}%`,
+              height:"100%", width:`${cafe.popularity}%`,
               background:cfg.color, borderRadius:99,
               transition:"width 0.8s cubic-bezier(.4,0,.2,1)",
             }}/>
@@ -870,7 +881,7 @@ function BottomSheet({ cafe, onClose, onTrack }) {
             </div>
             <div style={{ height:8, borderRadius:99, background:"rgba(0,0,0,0.06)", overflow:"hidden" }}>
               <div style={{
-                height:"100%", width:`${Math.round((1 - cafe.popularity / 100) * 100)}%`,
+                height:"100%", width:`${cafe.popularity}%`,
                 background:cfg.color, borderRadius:99,
                 transition:"width 0.8s cubic-bezier(.4,0,.2,1)",
               }}/>
@@ -886,14 +897,14 @@ function BottomSheet({ cafe, onClose, onTrack }) {
             <span style={{ fontSize:13, fontWeight:700, color:"#1a1a1a" }}>{hourStr}</span>
           </div>
 
-          {/* 시간대별 혼잡도 차트 */}
+          {/* 시간대별 여유 좌석 차트 */}
           {hasPopularTimes && (
             <div style={{ marginBottom:20 }}>
               <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:10, display:"flex", alignItems:"center", gap:6 }}>
-                시간대별 혼잡도
+                시간대별 여유 좌석
                 <span style={{ fontSize:10, color:"#bbb", fontWeight:400 }}>현재 시간 강조</span>
               </div>
-              <HourlyChart popularTimes={cafe.popular_times}/>
+              <HourlyChart popularTimes={cafe.popular_times} totalSeats={cafe.totalSeats}/>
             </div>
           )}
 
@@ -1307,7 +1318,7 @@ export default function App() {
         </div>
 
         {/* ── 지도 (visibleList 기준 핀 표시) ── */}
-        <div style={{ maxWidth:480, margin:"0 auto", position:"relative", zIndex:1 }}>
+        <div style={{ maxWidth:480, margin:"0 auto" }}>
           <CafeMap
             visibleCafes={visibleList}
             selectedId={selectedId}

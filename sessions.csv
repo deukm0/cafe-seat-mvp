@@ -1,66 +1,66 @@
 ﻿session_id,created_at_kst,date,hour,device,source,utm,cbti_type,landing_url,referer,n_cafe_clicks,n_direction_clicks,n_map_clicks,n_filter_clicks,n_share_clicks,n_feedback,is_admin
-7109d922-954e-4902-980e-7ae420b429c7,2026-06-05 16:48,2026-06-05,16,desktop,direct,,,,,0,0,0,0,0,0,FALSE
-9377e34e-548e-4e06-a39c-c6ced14bd5e7,2026-06-05 16:48,2026-06-05,16,desktop,direct,,,,,0,0,0,0,0,0,FALSE
-3436ff31-e37f-41fc-af0a-418538129d57,2026-06-05 16:53,2026-06-05,16,desktop,cbti,,장기 체류러,,,0,0,0,0,0,0,FALSE
-b0bf8e0f-009a-4775-ba27-4f4927e3772a,2026-06-05 17:09,2026-06-05,17,mobile,cbti,,장기 체류러,,,0,0,0,0,0,0,FALSE
-9706bc23-9787-4de9-903a-19e11cff4c5f,2026-06-05 22:08,2026-06-05,22,desktop,direct,,,,,0,0,0,0,0,0,FALSE
-a238a5ba-657a-4856-98fc-68b227a9dbbb,2026-06-05 22:08,2026-06-05,22,desktop,direct,,,,,0,0,0,0,0,0,FALSE
-8dfebd1a-02a0-447f-bd1f-9fce17526922,2026-06-07 21:54,2026-06-07,21,mobile,cbti,,감성 사냥꾼,,,0,0,0,0,0,0,FALSE
-68f0e317-f5d9-4271-b2b0-0b2f1175c000,2026-06-08 14:40,2026-06-08,14,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-87d683b9-9803-48e0-81d9-d7e83f2eea2b,2026-06-08 14:41,2026-06-08,14,mobile,direct,,,,,0,0,0,0,0,0,FALSE
-39dc3535-5a67-4ae7-9add-552fa25d7948,2026-06-08 14:57,2026-06-08,14,mobile,direct,everytime,,,,0,0,1,0,0,0,FALSE
-478a0d61-eb39-4ffe-9846-72784f10a528,2026-06-08 15:04,2026-06-08,15,mobile,direct,everytime,,,,0,0,2,2,0,0,FALSE
-fdcdd5ca-7804-4ab2-a05c-871f37c71398,2026-06-08 15:09,2026-06-08,15,mobile,cbti,everytime,사교 공부러,,,0,0,0,0,0,0,FALSE
-0a6f24d2-ceb8-4506-a142-a5cf005c8853,2026-06-08 15:31,2026-06-08,15,mobile,cbti,everytime,커피 본질러,,,0,0,0,0,0,0,FALSE
-d1be2db4-1fb7-4852-8bec-0d8977213278,2026-06-08 19:09,2026-06-08,19,desktop,cbti,,사교 공부러,,,4,1,0,3,0,0,FALSE
-c88341f7-c5e1-4d5f-9968-0b8a856e07aa,2026-06-08 19:51,2026-06-08,19,mobile,direct,everytime,,,,0,0,0,2,0,0,FALSE
-15f684af-4ab3-4ead-ac31-66011148bed9,2026-06-08 20:10,2026-06-08,20,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-e2ff3cde-d0f1-4aeb-b7e0-9dca6f3dc653,2026-06-08 20:23,2026-06-08,20,mobile,direct,everytime,,,,1,0,2,0,0,0,FALSE
-9b442b03-f9dc-4c27-8f6c-817101bb4e22,2026-06-08 20:41,2026-06-08,20,mobile,direct,everytime,,,,0,0,0,1,0,0,FALSE
-b01335f0-c1ef-47ad-9c7a-4383473b0f50,2026-06-08 23:24,2026-06-08,23,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-c8e79984-4fde-48e3-a598-52f7eb681ff6,2026-06-09 3:46,2026-06-09,3,mobile,direct,everytime,,,,0,0,0,1,0,0,FALSE
-b9a2ae42-5d7b-4a79-8299-0e6c473da9c8,2026-06-09 10:17,2026-06-09,10,mobile,direct,everytime,,,,0,0,0,2,0,0,FALSE
-b0f53ce0-db61-462b-861a-a480c1a019e2,2026-06-09 18:38,2026-06-09,18,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-c279b2d9-a65c-4588-b7dd-a46fd0de3d30,2026-06-09 18:38,2026-06-09,18,mobile,direct,everytime,,,,6,0,0,0,0,0,FALSE
-0923e790-a324-4009-b8bc-2fb4f0d537dd,2026-06-09 22:12,2026-06-09,22,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-f109ea48-e1c2-4b26-8ae5-e3c54d97b8f9,2026-06-09 22:13,2026-06-09,22,mobile,direct,everytime,,,,0,0,0,3,0,0,FALSE
-f3001af4-fe33-4289-ab43-bed92ffe67ae,2026-06-09 23:42,2026-06-09,23,desktop,direct,everytime,,,,1,0,0,1,0,0,FALSE
-09409650-e53d-43c6-bf32-1e79e24fcab5,2026-06-10 21:59,2026-06-10,21,mobile,direct,everytime,,,,1,0,3,0,0,0,FALSE
-5f837afa-6f55-485c-a3ae-010b0c33290b,2026-06-10 22:52,2026-06-10,22,mobile,direct,everytime,,,,0,0,0,0,0,0,FALSE
-5c424ff1-caed-4d6e-a3c2-23709b6e8aae,2026-06-11 9:38,2026-06-11,9,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-0cdf0e0b-193e-42a3-aee0-e2382964cae5,2026-06-11 9:45,2026-06-11,9,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-b4053d63-b76e-4120-bc91-b49c34d6346c,2026-06-11 9:45,2026-06-11,9,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-aed78b26-5913-4d6f-909c-d6f5795d782f,2026-06-11 9:46,2026-06-11,9,mobile,direct,kakaotalk,,,,0,0,1,0,0,0,FALSE
-4d6747ba-51f4-4b9b-9b1c-3f86ee596c1f,2026-06-11 10:02,2026-06-11,10,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-d63ae68e-eca8-4091-a721-53e22761fa55,2026-06-11 10:12,2026-06-11,10,mobile,direct,kakaotalk,,,,0,1,0,0,0,0,FALSE
-c33a0f17-db27-4615-aa60-6b84f1b1cfcd,2026-06-11 11:17,2026-06-11,11,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-7f812322-088c-4672-9e2e-94c3bd4778df,2026-06-11 11:53,2026-06-11,11,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-ee96ba6f-5272-40d3-b48c-9d93e035cfd6,2026-06-11 11:57,2026-06-11,11,desktop,cbti,kakaotalk,감성 사냥꾼,,,1,0,0,0,0,0,FALSE
-d7165077-cc22-4b7a-841e-eba42c6be0c9,2026-06-11 11:58,2026-06-11,11,desktop,cbti,kakaotalk,감성 사냥꾼,,,2,0,0,0,0,0,FALSE
-9bd326a4-bc19-4509-86d6-276595f1faea,2026-06-11 15:11,2026-06-11,15,mobile,direct,kakaotalk,,,,1,0,0,0,0,0,FALSE
-f112254a-6751-47e3-9192-4e59018b7105,2026-06-11 15:11,2026-06-11,15,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,FALSE
-9b8ad87e-50da-46e7-ab06-f49ec5862b52,2026-06-11 16:09,2026-06-11,16,desktop,direct,admin,,,,1,0,0,0,0,0,TRUE
-569d6168-5df2-48ef-9592-1bbe00e1b64e,2026-06-11 16:10,2026-06-11,16,desktop,direct,admin,,,,0,0,0,0,0,0,TRUE
-d2dace52-2af1-4737-b434-8c2a198b24e4,2026-06-11 16:25,2026-06-11,16,desktop,direct,admin,,,,0,0,0,1,0,0,TRUE
-ec6fd639-6d96-41ea-8403-32407f201c28,2026-06-11 16:34,2026-06-11,16,desktop,direct,,,https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,FALSE
-e5bbbce4-f163-4a3a-980d-98d9dded9767,2026-06-11 16:34,2026-06-11,16,desktop,direct,,,https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,FALSE
-96cd57eb-ed45-420d-92da-5a34ef24acfb,2026-06-11 16:34,2026-06-11,16,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,TRUE
-f0f82894-d1cb-4612-bd61-03162f7da761,2026-06-11 19:49,2026-06-11,19,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,3,1,1,1,0,0,FALSE
-251a585f-51a5-4b0c-b02e-eab3d0422055,2026-06-11 19:50,2026-06-11,19,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,8,0,2,3,0,0,FALSE
-6d2bbd65-5980-40c6-9141-91cf71f077af,2026-06-11 21:50,2026-06-11,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,3,0,1,4,0,0,FALSE
-4ef02c24-88de-42e2-920f-d9d64fbddd0b,2026-06-12 13:12,2026-06-12,13,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,0,0,0,0,TRUE
-78da8e89-5885-4ea5-b7fb-4d63a5f28735,2026-06-12 13:16,2026-06-12,13,mobile,direct,,,https://cafe-seat-mvp.vercel.app/,,0,0,0,0,0,0,FALSE
-9008f21d-267d-4f8d-a2f6-d76e0d58279b,2026-06-12 13:16,2026-06-12,13,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,1,2,0,0,TRUE
-72b7b904-d34b-4eaf-bc24-d8f3027e1453,2026-06-12 17:45,2026-06-12,17,desktop,direct,,,https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,FALSE
-06fbfa9a-a764-4102-83ea-101ea69e2d23,2026-06-12 17:45,2026-06-12,17,desktop,direct,,,https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,FALSE
-ef064da7-6b1b-4330-93c7-d2f139aad243,2026-06-12 17:45,2026-06-12,17,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,15,5,0,0,0,0,TRUE
-fb3bebf7-3dd9-4b02-bc48-4799b419abbf,2026-06-12 17:49,2026-06-12,17,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,0,0,0,0,TRUE
-8d052c34-4ec5-4c90-8909-641431fbdbbe,2026-06-12 18:47,2026-06-12,18,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,TRUE
-036930ca-724e-4577-ab58-e4edbab8752a,2026-06-12 18:47,2026-06-12,18,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,5,2,0,0,0,0,TRUE
-d305e80c-5f13-4009-9d0b-61465b04ced0,2026-06-12 19:15,2026-06-12,19,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,FALSE
-a16c4dab-f4ef-4713-a48b-65ce9c002eb7,2026-06-12 20:03,2026-06-12,20,desktop,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,0,1,1,0,0,0,FALSE
-570fba8b-4ca4-4333-b868-347063fc3943,2026-06-12 21:06,2026-06-12,21,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,TRUE
-2fa08f40-b469-4298-b028-7ac72b2c7e2a,2026-06-12 21:12,2026-06-12,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,FALSE
-a950fe72-0dc9-4496-b081-57cbf879fd6d,2026-06-12 21:12,2026-06-12,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,FALSE
-8ecd4d49-e8e1-45c3-94df-a303be65a39f,2026-06-13 10:34,2026-06-13,10,mobile,direct,general_share,,https://cafe-seat-mvp.vercel.app/?utm=general_share,,0,0,0,0,0,0,FALSE
-d1f28c4e-d358-46d4-a5b9-af9cb3aa720c,2026-06-13 11:38,2026-06-13,11,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,1,0,0,0,0,0,FALSE
+7109d922-954e-4902-980e-7ae420b429c7,2026-06-05 16:48:39,2026-06-05,16,desktop,direct,,,,,0,0,0,0,0,0,False
+9377e34e-548e-4e06-a39c-c6ced14bd5e7,2026-06-05 16:48:40,2026-06-05,16,desktop,direct,,,,,0,0,0,0,0,0,False
+3436ff31-e37f-41fc-af0a-418538129d57,2026-06-05 16:53:11,2026-06-05,16,desktop,cbti,,장기 체류러,,,0,0,0,0,0,0,False
+b0bf8e0f-009a-4775-ba27-4f4927e3772a,2026-06-05 17:09:48,2026-06-05,17,mobile,cbti,,장기 체류러,,,0,0,0,0,0,0,False
+9706bc23-9787-4de9-903a-19e11cff4c5f,2026-06-05 22:08:50,2026-06-05,22,desktop,direct,,,,,0,0,0,0,0,0,False
+a238a5ba-657a-4856-98fc-68b227a9dbbb,2026-06-05 22:08:50,2026-06-05,22,desktop,direct,,,,,0,0,0,0,0,0,False
+8dfebd1a-02a0-447f-bd1f-9fce17526922,2026-06-07 21:54:30,2026-06-07,21,mobile,cbti,,감성 사냥꾼,,,0,0,0,0,0,0,False
+68f0e317-f5d9-4271-b2b0-0b2f1175c000,2026-06-08 14:40:16,2026-06-08,14,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+87d683b9-9803-48e0-81d9-d7e83f2eea2b,2026-06-08 14:41:53,2026-06-08,14,mobile,direct,,,,,0,0,0,0,0,0,False
+39dc3535-5a67-4ae7-9add-552fa25d7948,2026-06-08 14:57:05,2026-06-08,14,mobile,direct,everytime,,,,0,0,1,0,0,0,False
+478a0d61-eb39-4ffe-9846-72784f10a528,2026-06-08 15:04:41,2026-06-08,15,mobile,direct,everytime,,,,0,0,2,2,0,0,False
+fdcdd5ca-7804-4ab2-a05c-871f37c71398,2026-06-08 15:09:06,2026-06-08,15,mobile,cbti,everytime,사교 공부러,,,0,0,0,0,0,0,False
+0a6f24d2-ceb8-4506-a142-a5cf005c8853,2026-06-08 15:31:55,2026-06-08,15,mobile,cbti,everytime,커피 본질러,,,0,0,0,0,0,0,False
+d1be2db4-1fb7-4852-8bec-0d8977213278,2026-06-08 19:09:38,2026-06-08,19,desktop,cbti,,사교 공부러,,,4,1,0,3,0,0,False
+c88341f7-c5e1-4d5f-9968-0b8a856e07aa,2026-06-08 19:51:24,2026-06-08,19,mobile,direct,everytime,,,,0,0,0,2,0,0,False
+15f684af-4ab3-4ead-ac31-66011148bed9,2026-06-08 20:10:25,2026-06-08,20,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+e2ff3cde-d0f1-4aeb-b7e0-9dca6f3dc653,2026-06-08 20:23:53,2026-06-08,20,mobile,direct,everytime,,,,1,0,2,0,0,0,False
+9b442b03-f9dc-4c27-8f6c-817101bb4e22,2026-06-08 20:41:46,2026-06-08,20,mobile,direct,everytime,,,,0,0,0,1,0,0,False
+b01335f0-c1ef-47ad-9c7a-4383473b0f50,2026-06-08 23:24:07,2026-06-08,23,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+c8e79984-4fde-48e3-a598-52f7eb681ff6,2026-06-09 03:46:06,2026-06-09,03,mobile,direct,everytime,,,,0,0,0,1,0,0,False
+b9a2ae42-5d7b-4a79-8299-0e6c473da9c8,2026-06-09 10:17:32,2026-06-09,10,mobile,direct,everytime,,,,0,0,0,2,0,0,False
+b0f53ce0-db61-462b-861a-a480c1a019e2,2026-06-09 18:38:11,2026-06-09,18,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+c279b2d9-a65c-4588-b7dd-a46fd0de3d30,2026-06-09 18:38:33,2026-06-09,18,mobile,direct,everytime,,,,6,0,0,0,0,0,False
+0923e790-a324-4009-b8bc-2fb4f0d537dd,2026-06-09 22:12:47,2026-06-09,22,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+f109ea48-e1c2-4b26-8ae5-e3c54d97b8f9,2026-06-09 22:13:16,2026-06-09,22,mobile,direct,everytime,,,,0,0,0,3,0,0,False
+f3001af4-fe33-4289-ab43-bed92ffe67ae,2026-06-09 23:42:47,2026-06-09,23,desktop,direct,everytime,,,,1,0,0,1,0,0,False
+09409650-e53d-43c6-bf32-1e79e24fcab5,2026-06-10 21:59:42,2026-06-10,21,mobile,direct,everytime,,,,1,0,3,0,0,0,False
+5f837afa-6f55-485c-a3ae-010b0c33290b,2026-06-10 22:52:55,2026-06-10,22,mobile,direct,everytime,,,,0,0,0,0,0,0,False
+5c424ff1-caed-4d6e-a3c2-23709b6e8aae,2026-06-11 09:38:08,2026-06-11,09,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+0cdf0e0b-193e-42a3-aee0-e2382964cae5,2026-06-11 09:45:13,2026-06-11,09,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+b4053d63-b76e-4120-bc91-b49c34d6346c,2026-06-11 09:45:29,2026-06-11,09,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+aed78b26-5913-4d6f-909c-d6f5795d782f,2026-06-11 09:46:58,2026-06-11,09,mobile,direct,kakaotalk,,,,0,0,1,0,0,0,False
+4d6747ba-51f4-4b9b-9b1c-3f86ee596c1f,2026-06-11 10:02:42,2026-06-11,10,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+d63ae68e-eca8-4091-a721-53e22761fa55,2026-06-11 10:12:49,2026-06-11,10,mobile,direct,kakaotalk,,,,0,1,0,0,0,0,False
+c33a0f17-db27-4615-aa60-6b84f1b1cfcd,2026-06-11 11:17:13,2026-06-11,11,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+7f812322-088c-4672-9e2e-94c3bd4778df,2026-06-11 11:53:45,2026-06-11,11,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+ee96ba6f-5272-40d3-b48c-9d93e035cfd6,2026-06-11 11:57:17,2026-06-11,11,desktop,cbti,kakaotalk,감성 사냥꾼,,,1,0,0,0,0,0,False
+d7165077-cc22-4b7a-841e-eba42c6be0c9,2026-06-11 11:58:57,2026-06-11,11,desktop,cbti,kakaotalk,감성 사냥꾼,,,2,0,0,0,0,0,False
+9bd326a4-bc19-4509-86d6-276595f1faea,2026-06-11 15:11:29,2026-06-11,15,mobile,direct,kakaotalk,,,,1,0,0,0,0,0,False
+f112254a-6751-47e3-9192-4e59018b7105,2026-06-11 15:11:42,2026-06-11,15,mobile,direct,kakaotalk,,,,0,0,0,0,0,0,False
+9b8ad87e-50da-46e7-ab06-f49ec5862b52,2026-06-11 16:09:28,2026-06-11,16,desktop,direct,admin,,,,1,0,0,0,0,0,True
+569d6168-5df2-48ef-9592-1bbe00e1b64e,2026-06-11 16:10:58,2026-06-11,16,desktop,direct,admin,,,,0,0,0,0,0,0,True
+d2dace52-2af1-4737-b434-8c2a198b24e4,2026-06-11 16:25:45,2026-06-11,16,desktop,direct,admin,,,,0,0,0,1,0,0,True
+ec6fd639-6d96-41ea-8403-32407f201c28,2026-06-11 16:34:11,2026-06-11,16,desktop,direct,,,https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,False
+e5bbbce4-f163-4a3a-980d-98d9dded9767,2026-06-11 16:34:12,2026-06-11,16,desktop,direct,,,https://cafe-seat-aqqnqkoqn-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,False
+96cd57eb-ed45-420d-92da-5a34ef24acfb,2026-06-11 16:34:14,2026-06-11,16,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,True
+f0f82894-d1cb-4612-bd61-03162f7da761,2026-06-11 19:49:03,2026-06-11,19,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,3,1,1,1,0,0,False
+251a585f-51a5-4b0c-b02e-eab3d0422055,2026-06-11 19:50:35,2026-06-11,19,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,8,0,2,3,0,0,False
+6d2bbd65-5980-40c6-9141-91cf71f077af,2026-06-11 21:50:29,2026-06-11,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,3,0,1,4,0,0,False
+4ef02c24-88de-42e2-920f-d9d64fbddd0b,2026-06-12 13:12:54,2026-06-12,13,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,0,0,0,0,True
+78da8e89-5885-4ea5-b7fb-4d63a5f28735,2026-06-12 13:16:18,2026-06-12,13,mobile,direct,,,https://cafe-seat-mvp.vercel.app/,,0,0,0,0,0,0,False
+9008f21d-267d-4f8d-a2f6-d76e0d58279b,2026-06-12 13:16:44,2026-06-12,13,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,1,2,0,0,True
+72b7b904-d34b-4eaf-bc24-d8f3027e1453,2026-06-12 17:45:46,2026-06-12,17,desktop,direct,,,https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,False
+06fbfa9a-a764-4102-83ea-101ea69e2d23,2026-06-12 17:45:47,2026-06-12,17,desktop,direct,,,https://cafe-seat-pd838ve2g-deukmo-lee-s-projects.vercel.app/,,0,0,0,0,0,0,False
+ef064da7-6b1b-4330-93c7-d2f139aad243,2026-06-12 17:45:55,2026-06-12,17,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,15,5,0,0,0,0,True
+fb3bebf7-3dd9-4b02-bc48-4799b419abbf,2026-06-12 17:49:15,2026-06-12,17,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,2,0,0,0,0,0,True
+8d052c34-4ec5-4c90-8909-641431fbdbbe,2026-06-12 18:47:35,2026-06-12,18,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,True
+036930ca-724e-4577-ab58-e4edbab8752a,2026-06-12 18:47:51,2026-06-12,18,desktop,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,5,2,0,0,0,0,True
+d305e80c-5f13-4009-9d0b-61465b04ced0,2026-06-12 19:15:30,2026-06-12,19,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,False
+a16c4dab-f4ef-4713-a48b-65ce9c002eb7,2026-06-12 20:03:51,2026-06-12,20,desktop,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,0,1,1,0,0,0,False
+570fba8b-4ca4-4333-b868-347063fc3943,2026-06-12 21:06:32,2026-06-12,21,mobile,direct,admin,,https://cafe-seat-mvp.vercel.app/?utm=admin,,0,0,0,0,0,0,True
+2fa08f40-b469-4298-b028-7ac72b2c7e2a,2026-06-12 21:12:12,2026-06-12,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,False
+a950fe72-0dc9-4496-b081-57cbf879fd6d,2026-06-12 21:12:27,2026-06-12,21,mobile,direct,everytime,,https://cafe-seat-mvp.vercel.app/?utm=everytime,https://everytime.kr/,0,0,0,0,0,0,False
+8ecd4d49-e8e1-45c3-94df-a303be65a39f,2026-06-13 10:34:36,2026-06-13,10,mobile,direct,general_share,,https://cafe-seat-mvp.vercel.app/?utm=general_share,,0,0,0,0,0,0,False
+d1f28c4e-d358-46d4-a5b9-af9cb3aa720c,2026-06-13 11:38:18,2026-06-13,11,mobile,direct,kakaotalk,,https://cafe-seat-mvp.vercel.app/?utm=kakaotalk,,1,0,0,0,0,0,False

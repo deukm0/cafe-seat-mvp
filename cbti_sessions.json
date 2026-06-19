@@ -115,6 +115,15 @@
     "device": "mobile",
     "clicked_service": false
   },
+  "7ea5b1ec-5646-48c7-8675-14ab2b136c1b": {
+    "uid": "b1b09682-e0d7-4add-a5d4-81a76193e3d7",
+    "utm": null,
+    "result_type": "떠돌이 메뚜기족",
+    "finished": true,
+    "created_at": "2026-06-16 16:21:40",
+    "device": "desktop",
+    "clicked_service": true
+  },
   "88920c06-d114-457b-a5b1-04f35dcefb13": {
     "uid": "ade2535b-472f-47a3-a86b-68e422132aa9",
     "utm": "kakaotalk",
@@ -158,6 +167,15 @@
     "finished": true,
     "device": "mobile",
     "clicked_service": false
+  },
+  "bcdfe851-2b36-46a9-88d6-7fc0cc825060": {
+    "uid": "b1b09682-e0d7-4add-a5d4-81a76193e3d7",
+    "utm": null,
+    "result_type": "원두 따지는 까탈러",
+    "finished": true,
+    "created_at": "2026-06-16 16:15:26",
+    "device": "desktop",
+    "clicked_service": true
   },
   "f906c669-6077-4f03-8f28-c009e35cd07b": {
     "uid": "d96d797e-20e9-4afe-bb19-47d3462bfd9c",
