@@ -8,7 +8,7 @@
   "group": "daily-tools",
   "period": { "start": "2026-05-21", "end": null },
   "thesis": "카페에 자리가 있는지는 소프트웨어 안에 존재하지 않는 물리 정보다. Google Maps Popular Times를 재가공해 '도착하기 전에 어디에 자리가 있는가'를 답할 수 있는지 검증해본 프로젝트다.",
-  "stack": ["React", "Vite", "Firebase Firestore", "GitHub Actions", "Naver Maps API", "Python", "Netlify"],
+  "stack": ["React", "Vite", "Firebase Firestore", "GitHub Actions", "Naver Maps API", "Python", "Vercel"],
   "links": {
     "live": "https://cafe-seat-mvp.vercel.app",
     "repo": "https://github.com/deukm0/cafe-seat-mvp",
@@ -25,7 +25,7 @@
   "kind": "product",
   "detail": {
     "goal": "도착해서 자리가 없어 헤매는 실패를 없애는 것 — 출발 전에 '지금 어디에 자리가 있는가'를 알려준다.",
-    "overview": "React+Vite 프론트가 Firestore를 실시간 구독하고, GitHub Actions가 매시간 Google Maps Popular Times 기반 혼잡도를 재계산해 갱신한다. 혼잡도에서 점유율을 역산해 가용 좌석을 추정하고 네이버맵 색상 핀으로 보여준다. SW·AI 비즈니스 응용설계 수업 프로젝트로 시작해 Netlify에 배포했으며, 운영 비용이 들지 않는 구조라 개발 종료 후에도 자동으로 계속 돌아간다."
+    "overview": "React+Vite 프론트가 Firestore를 실시간 구독하고, GitHub Actions가 매시간 Google Maps Popular Times 기반 혼잡도를 재계산해 갱신한다. 혼잡도에서 점유율을 역산해 가용 좌석을 추정하고 네이버맵 색상 핀으로 보여준다. SW·AI 비즈니스 응용설계 수업 프로젝트로 시작해 Vercel에 배포했으며, 운영 비용이 들지 않는 구조라 개발 종료 후에도 자동으로 계속 돌아간다."
   },
   "product": {
     "problem": [
@@ -51,7 +51,7 @@
       "네이버맵 API 연동과 혼잡도 색상 핀",
       "세션 행동 로그 설계와 UTM 채널 추적",
       "CBTI 퀴즈 제작",
-      "Netlify 배포와 운영"
+      "Vercel 배포와 운영"
     ],
     "userFlow": [
       {
