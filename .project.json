@@ -10,7 +10,7 @@
   "thesis": "카페에 자리가 있는지는 소프트웨어 안에 존재하지 않는 물리 정보다. Google Maps Popular Times를 재가공해 '도착하기 전에 어디에 자리가 있는가'를 답할 수 있는지 검증해본 프로젝트다.",
   "stack": ["React", "Vite", "Firebase Firestore", "GitHub Actions", "Naver Maps API", "Python", "Netlify"],
   "links": {
-    "live": "https://cafe-mvp.netlify.app",
+    "live": "https://cafe-seat-mvp.vercel.app",
     "repo": "https://github.com/deukm0/cafe-seat-mvp",
     "writeup": null
   },

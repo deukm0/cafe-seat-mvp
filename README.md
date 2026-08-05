@@ -16,8 +16,8 @@
 
 | 서비스 | URL |
 |---|---|
-| 메인 서비스 | https://cafe-mvp.netlify.app/ |
-| CBTI 퀴즈 (카공 빌런 유형 테스트) | https://cafe-mvp.netlify.app/cafe-quiz.html |
+| 메인 서비스 | https://cafe-seat-mvp.vercel.app/ |
+| CBTI 퀴즈 (카공 빌런 유형 테스트) | https://cafe-seat-mvp.vercel.app/cafe-quiz.html |
 
 > 이미 배포되어 있으므로 위 링크에서 바로 확인 가능합니다.
 
@@ -61,7 +61,7 @@
 | 자동화 | GitHub Actions | 1시간 주기 크론으로 혼잡도 자동 업데이트 |
 | 데이터 | Google Maps Popular Times | 요일·시간대별 혼잡도 패턴 (수동 수집) |
 | 지도 | 네이버맵 API | 혼잡도 색상 핀으로 카페 위치 시각화 |
-| 배포 | Netlify | GitHub push → 자동 빌드·배포 |
+| 배포 | Vercel | GitHub push → 자동 빌드·배포 (CI/CD) |
 
 ---
 

@@ -6,8 +6,8 @@ cafe-mvp/                 ← GitHub에 올라가는 프로젝트 전체
 │  requirements.txt       ← Python 패키지 목록
 │                            (pip install -r requirements.txt 하면 자동 설치)
 │
-│  netlify.toml           ← Netlify한테 배포 방법 알려주는 설정
-│                            ("frontend 폴더 빌드해서 올려라")
+│  (배포 설정)            ← Vercel이 GitHub 연동으로 frontend 폴더를 빌드해 올린다
+│                            초기 계획의 netlify.toml은 쓰지 않는다
 │
 │  README.md              ← 프로젝트 설명서 (GitHub에서 첫 화면에 보임)
 │  firebase_schema.md     ← Firestore 구조 설계 메모
