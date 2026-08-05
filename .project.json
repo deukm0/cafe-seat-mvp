@@ -4,7 +4,7 @@
   "name": "실패없는 카페 선택",
   "tagline": "신촌 주변 카페의 현재 혼잡도를 확인하고 자리가 있는 카페를 미리 찾아주는 서비스",
   "summary": "도착하기 전에 어느 카페에 자리가 있는지 알려주는 서비스",
-  "status": "shipped",
+  "status": "running",
   "group": "daily-tools",
   "period": { "start": "2026-05-21", "end": null },
   "thesis": "카페에 자리가 있는지는 소프트웨어 안에 존재하지 않는 물리 정보다. Google Maps Popular Times를 재가공해 '도착하기 전에 어디에 자리가 있는가'를 답할 수 있는지 검증해본 프로젝트다.",
