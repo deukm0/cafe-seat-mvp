@@ -6,9 +6,20 @@
   "summary": "도착하기 전에 어느 카페에 자리가 있는지 알려주는 서비스",
   "status": "running",
   "group": "daily-tools",
-  "period": { "start": "2026-05-21", "end": "2026-06-19" },
+  "period": {
+    "start": "2026-05-21",
+    "end": "2026-06-19"
+  },
   "thesis": "카페에 자리가 있는지는 소프트웨어 안에 존재하지 않는 물리 정보다. Google Maps Popular Times를 재가공해 '도착하기 전에 어디에 자리가 있는가'를 답할 수 있는지 검증해본 프로젝트다.",
-  "stack": ["React", "Vite", "Firebase Firestore", "GitHub Actions", "Naver Maps API", "Python", "Vercel"],
+  "stack": [
+    "React",
+    "Vite",
+    "Firebase Firestore",
+    "GitHub Actions",
+    "Naver Maps API",
+    "Python",
+    "Vercel"
+  ],
   "links": {
     "live": "https://cafe-seat-mvp.vercel.app",
     "repo": "https://github.com/deukm0/cafe-seat-mvp",
@@ -49,7 +60,7 @@
       "GitHub Actions 크론 파이프라인 구축",
       "React·Vite 프론트엔드 구현",
       "네이버맵 API 연동과 혼잡도 색상 핀",
-      "세션 행동 로그 설계와 UTM 채널 추적",
+      "세션 행동 로그 설계와 UTM 파라미터 기반 유입 채널 추적",
       "CBTI 퀴즈 제작",
       "Vercel 배포와 운영"
     ],
@@ -81,7 +92,7 @@
     "decisions": [
       {
         "title": "혼잡도를 실측하지 않고 Google Maps Popular Times를 재가공",
-        "decision": "입출구 센서나 POS 연동이 이상적이지만 개인이 MVP 단계에서 할 수 있는 일이 아니다. 이미 공개돼 있는 Popular Times를 브라우저 콘솔에서 추출해 요일·시간대 패턴으로 정리하고, 좌석 수는 17개 카페를 직접 돌며 세는 쪽을 택했다.",
+        "decision": "입출구 센서나 매장 POS(판매시점관리) 연동이 이상적이지만 개인이 MVP 단계에서 할 수 있는 일이 아니다. 이미 공개돼 있는 Popular Times를 브라우저 콘솔에서 추출해 요일·시간대 패턴으로 정리하고, 좌석 수는 17개 카페를 직접 돌며 세는 쪽을 택했다.",
         "tradeoff": "실시간 관측이 아니라 구글 사용자들의 과거 방문 패턴에서 나온 통계적 예측값이다. 시험 기간처럼 평소와 다른 날은 맞지 않는다. 대신 서비스 안에 예측 기반임을 명시해 신뢰도를 보완했다."
       },
       {
