@@ -1,66 +1,57 @@
-<svg viewBox="0 0 1240 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="실패없는 카페 선택 시스템 구조도">
+<svg viewBox="0 0 350 258" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="실패없는 카페 선택 흐름 — 좌석 실측에서 길찾기까지 여섯 단계">
+  <title>공개 패턴에서 오늘 갈 카페까지</title>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1c1b18" />
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#24231f" />
     </marker>
+    <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbfaf6" />
+      <stop offset="100%" stop-color="#f1ead8" />
+    </linearGradient>
   </defs>
 
-  <text x="30" y="26" font-size="11" letter-spacing="2" fill="#757066">원천 데이터</text>
-  <text x="230" y="26" font-size="11" letter-spacing="2" fill="#757066">자동 파이프라인</text>
-  <text x="600" y="26" font-size="11" letter-spacing="2" fill="#757066">저장</text>
-  <text x="820" y="26" font-size="11" letter-spacing="2" fill="#757066">서비스</text>
-  <text x="1030" y="26" font-size="11" letter-spacing="2" fill="#757066">사용자가 얻는 것</text>
+  <rect x="10" y="8" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="18" y="24" font-size="10" letter-spacing="1" fill="#6e6960">1</text>
+  <text x="57" y="41" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">카페 등록</text>
+  <text x="57" y="59" text-anchor="middle" font-size="11" fill="#5f5d55">17개 카페</text>
+  <text x="57" y="74" text-anchor="middle" font-size="11" fill="#5f5d55">좌석 수 실측</text>
 
-  <rect x="30" y="150" width="160" height="96" fill="none" stroke="#1c1b18" stroke-width="1" />
-  <text x="110" y="184" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">Google Maps</text>
-  <text x="110" y="204" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">Popular Times</text>
-  <text x="110" y="228" text-anchor="middle" font-size="11" fill="#6e6a62">요일·시간대 패턴 (수동 수집)</text>
+  <rect x="128" y="8" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="136" y="24" font-size="10" letter-spacing="1" fill="#6e6960">2</text>
+  <text x="175" y="41" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">패턴 수집</text>
+  <text x="175" y="59" text-anchor="middle" font-size="11" fill="#5f5d55">요일·시간대</text>
+  <text x="175" y="74" text-anchor="middle" font-size="11" fill="#5f5d55">공개 데이터</text>
 
-  <line x1="190" y1="198" x2="224" y2="198" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
+  <rect x="246" y="8" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="254" y="24" font-size="10" letter-spacing="1" fill="#6e6960">3</text>
+  <text x="293" y="41" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">매시간 갱신</text>
+  <text x="293" y="59" text-anchor="middle" font-size="11" fill="#5f5d55">크론 실행</text>
+  <text x="293" y="74" text-anchor="middle" font-size="11" fill="#5f5d55">지금 시각 값</text>
 
-  <rect x="230" y="100" width="320" height="230" fill="none" stroke="#1c1b18" stroke-width="1" />
-  <text x="250" y="132" font-size="16" font-weight="600" fill="#1c1b18">GitHub Actions 크론 — 매시간</text>
+  <rect x="246" y="124" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="254" y="140" font-size="10" letter-spacing="1" fill="#6e6960">4</text>
+  <text x="293" y="157" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">자리 추정</text>
+  <text x="293" y="175" text-anchor="middle" font-size="11" fill="#5f5d55">총 좌석 × 여유</text>
+  <text x="293" y="190" text-anchor="middle" font-size="11" fill="#5f5d55">3단계 판정</text>
 
-  <rect x="250" y="152" width="280" height="66" fill="none" stroke="#6e6a62" stroke-width="1" />
-  <text x="390" y="179" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">혼잡도 재계산</text>
-  <text x="390" y="202" text-anchor="middle" font-size="12" fill="#6e6a62">현재 요일·시간의 패턴 적용</text>
+  <rect x="128" y="124" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="136" y="140" font-size="10" letter-spacing="1" fill="#6e6960">5</text>
+  <text x="175" y="157" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">지도·목록</text>
+  <text x="175" y="175" text-anchor="middle" font-size="11" fill="#5f5d55">실시간 구독</text>
+  <text x="175" y="190" text-anchor="middle" font-size="11" fill="#5f5d55">색상 핀</text>
 
-  <rect x="250" y="240" width="280" height="66" fill="none" stroke="#6e6a62" stroke-width="1" />
-  <text x="390" y="267" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">가용 좌석 추정</text>
-  <text x="390" y="290" text-anchor="middle" font-size="12" fill="#6e6a62">총 좌석 × (1 − 점유율)</text>
+  <rect x="10" y="124" width="94" height="76" fill="url(#boxGrad)" stroke="#24231f" stroke-width="1" />
+  <text x="18" y="140" font-size="10" letter-spacing="1" fill="#6e6960">6</text>
+  <text x="57" y="157" text-anchor="middle" font-size="13" font-weight="600" fill="#24231f">고르고 이동</text>
+  <text x="57" y="175" text-anchor="middle" font-size="11" fill="#5f5d55">여유로운 곳</text>
+  <text x="57" y="190" text-anchor="middle" font-size="11" fill="#5f5d55">길찾기</text>
 
-  <line x1="550" y1="215" x2="594" y2="215" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
-  <text x="572" y="203" text-anchor="middle" font-size="11" fill="#6e6a62">매시간 갱신</text>
+  <line x1="104" y1="46" x2="126" y2="46" stroke="#24231f" stroke-width="1" marker-end="url(#arrow)" />
+  <line x1="222" y1="46" x2="244" y2="46" stroke="#24231f" stroke-width="1" marker-end="url(#arrow)" />
+  <line x1="293" y1="84" x2="293" y2="122" stroke="#24231f" stroke-width="1" marker-end="url(#arrow)" />
+  <line x1="244" y1="162" x2="224" y2="162" stroke="#24231f" stroke-width="1" marker-end="url(#arrow)" />
+  <line x1="126" y1="162" x2="106" y2="162" stroke="#24231f" stroke-width="1" marker-end="url(#arrow)" />
 
-  <rect x="600" y="150" width="190" height="130" fill="none" stroke="#1c1b18" stroke-width="1" />
-  <text x="695" y="184" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1b18">Firebase Firestore</text>
-  <text x="695" y="212" text-anchor="middle" font-size="12" fill="#6e6a62">cafes · occupancy</text>
-  <text x="695" y="232" text-anchor="middle" font-size="12" fill="#6e6a62">sessions — 행동 로그</text>
-
-  <line x1="790" y1="215" x2="814" y2="215" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
-  <text x="802" y="203" text-anchor="middle" font-size="11" fill="#6e6a62">실시간</text>
-
-  <rect x="820" y="150" width="180" height="130" fill="none" stroke="#1c1b18" stroke-width="1" />
-  <text x="910" y="184" text-anchor="middle" font-size="15" font-weight="600" fill="#1c1b18">React + Vite 앱</text>
-  <text x="910" y="212" text-anchor="middle" font-size="12" fill="#6e6a62">onSnapshot 실시간 구독</text>
-  <text x="910" y="232" text-anchor="middle" font-size="12" fill="#6e6a62">네이버맵 색상 핀</text>
-  <text x="910" y="252" text-anchor="middle" font-size="12" fill="#6e6a62">CBTI 퀴즈</text>
-
-  <line x1="1000" y1="190" x2="1024" y2="142" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
-  <line x1="1000" y1="215" x2="1024" y2="234" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
-  <line x1="1000" y1="240" x2="1024" y2="326" stroke="#1c1b18" stroke-width="1" marker-end="url(#arrow)" />
-
-  <rect x="1030" y="110" width="180" height="64" fill="none" stroke="#1c1b18" stroke-width="1.5" />
-  <text x="1120" y="137" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">출발 전에 자리 확인</text>
-  <text x="1120" y="160" text-anchor="middle" font-size="12" fill="#6e6a62">도착 허탕 제거</text>
-
-  <rect x="1030" y="202" width="180" height="64" fill="none" stroke="#1c1b18" stroke-width="1.5" />
-  <text x="1120" y="229" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">혼잡도 한눈에</text>
-  <text x="1120" y="252" text-anchor="middle" font-size="12" fill="#6e6a62">여유 · 보통 · 혼잡 색상</text>
-
-  <rect x="1030" y="294" width="180" height="64" fill="none" stroke="#1c1b18" stroke-width="1.5" />
-  <text x="1120" y="321" text-anchor="middle" font-size="14" font-weight="600" fill="#1c1b18">켜두면 알아서 돈다</text>
-  <text x="1120" y="344" text-anchor="middle" font-size="12" fill="#6e6a62">운영 비용 0 · 자동 갱신</text>
-
-  <text x="620" y="456" text-anchor="middle" font-size="12" fill="#6e6a62">자리가 있는지는 소프트웨어 밖의 물리 정보 — 공개 패턴 데이터를 재가공해 답을 만든다 · 개발 종료 후에도 자동으로 운영 중</text>
+  <text x="175" y="228" text-anchor="middle" font-size="11" fill="#6e6960">실측이 아니라 공개 패턴 기반 추정값이다</text>
+  <text x="175" y="246" text-anchor="middle" font-size="11" fill="#6e6960">서버 없이 크론으로 돌아 지금도 갱신된다</text>
 </svg>

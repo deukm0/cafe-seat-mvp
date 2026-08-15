@@ -1,0 +1,57 @@
+<svg viewBox="0 0 1000 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="실패없는 카페 선택 흐름 — 좌석 실측에서 길찾기까지 여섯 단계">
+  <title>공개 패턴에서 오늘 갈 카페까지</title>
+  <defs>
+    <marker id="arrow-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#24231f" />
+    </marker>
+    <linearGradient id="boxGradW" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbfaf6" />
+      <stop offset="100%" stop-color="#f1ead8" />
+    </linearGradient>
+  </defs>
+
+  <rect x="30" y="16" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="50" y="44" font-size="13" letter-spacing="1.5" fill="#6e6960">1</text>
+  <text x="170" y="61" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">카페 등록</text>
+  <text x="170" y="87" text-anchor="middle" font-size="16" fill="#5f5d55">17개 카페의 좌석 수를</text>
+  <text x="170" y="109" text-anchor="middle" font-size="16" fill="#5f5d55">현장에서 세어 넣는다</text>
+
+  <rect x="360" y="16" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="380" y="44" font-size="13" letter-spacing="1.5" fill="#6e6960">2</text>
+  <text x="500" y="61" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">패턴 수집</text>
+  <text x="500" y="87" text-anchor="middle" font-size="16" fill="#5f5d55">요일·시간대 혼잡도를</text>
+  <text x="500" y="109" text-anchor="middle" font-size="16" fill="#5f5d55">공개 데이터에서 뽑는다</text>
+
+  <rect x="690" y="16" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="710" y="44" font-size="13" letter-spacing="1.5" fill="#6e6960">3</text>
+  <text x="830" y="61" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">매시간 갱신</text>
+  <text x="830" y="87" text-anchor="middle" font-size="16" fill="#5f5d55">크론이 지금 시각의</text>
+  <text x="830" y="109" text-anchor="middle" font-size="16" fill="#5f5d55">혼잡도를 다시 고른다</text>
+
+  <rect x="690" y="196" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="710" y="224" font-size="13" letter-spacing="1.5" fill="#6e6960">4</text>
+  <text x="830" y="241" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">남은 자리 추정</text>
+  <text x="830" y="267" text-anchor="middle" font-size="16" fill="#5f5d55">총 좌석 × (1 − 혼잡도)</text>
+  <text x="830" y="289" text-anchor="middle" font-size="16" fill="#5f5d55">여유·보통·혼잡으로</text>
+
+  <rect x="360" y="196" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="380" y="224" font-size="13" letter-spacing="1.5" fill="#6e6960">5</text>
+  <text x="500" y="241" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">지도와 목록</text>
+  <text x="500" y="267" text-anchor="middle" font-size="16" fill="#5f5d55">실시간 구독으로</text>
+  <text x="500" y="289" text-anchor="middle" font-size="16" fill="#5f5d55">색상 핀에 반영한다</text>
+
+  <rect x="30" y="196" width="280" height="118" fill="url(#boxGradW)" stroke="#24231f" stroke-width="1.2" />
+  <text x="50" y="224" font-size="13" letter-spacing="1.5" fill="#6e6960">6</text>
+  <text x="170" y="241" text-anchor="middle" font-size="22" font-weight="600" fill="#24231f">고르고 이동</text>
+  <text x="170" y="267" text-anchor="middle" font-size="16" fill="#5f5d55">여유로운 곳을 골라</text>
+  <text x="170" y="289" text-anchor="middle" font-size="16" fill="#5f5d55">길찾기로 넘어간다</text>
+
+  <line x1="310" y1="75" x2="358" y2="75" stroke="#24231f" stroke-width="1.2" marker-end="url(#arrow-w)" />
+  <line x1="640" y1="75" x2="688" y2="75" stroke="#24231f" stroke-width="1.2" marker-end="url(#arrow-w)" />
+  <line x1="830" y1="134" x2="830" y2="194" stroke="#24231f" stroke-width="1.2" marker-end="url(#arrow-w)" />
+  <line x1="688" y1="255" x2="642" y2="255" stroke="#24231f" stroke-width="1.2" marker-end="url(#arrow-w)" />
+  <line x1="358" y1="255" x2="312" y2="255" stroke="#24231f" stroke-width="1.2" marker-end="url(#arrow-w)" />
+
+  <text x="500" y="352" text-anchor="middle" font-size="15" fill="#6e6960">실시간 관측이 아니라 공개된 방문 패턴에서 나온 추정값이다</text>
+  <text x="500" y="376" text-anchor="middle" font-size="15" fill="#6e6960">서버 없이 크론과 무료 한도로 돌아 개발을 매듭진 뒤에도 살아 있다</text>
+</svg>
