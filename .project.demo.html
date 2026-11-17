@@ -31,10 +31,18 @@
   .calc { text-align:center; font-size:13px; color:var(--muted); background:rgba(251,250,246,.6); border-radius:12px; padding:8px; }
   .calc b { color:var(--ink); font-variant-numeric:tabular-nums; }
   .note { text-align:center; font-size:12px; color:var(--faint); }
+  .cue { font-size:13px; font-weight:600; text-align:center; color:var(--ink); transition:opacity .25s ease-out; }
+  .cue span { font-weight:400; color:var(--faint); }
+  .cue.gone { opacity:0; }
+  @media (prefers-reduced-motion:reduce) { .cue { transition:none; } }
+  /* 허브 폰 카드(폭 약 350px · 높이 약 360px)에서 셋째 카페 테두리가 잘리지 않고 안내가 탭에 붙지 않게 */
+  @media (max-width:400px) { .cafe { min-width:0; padding:6px 2px; } .table { padding:8px; gap:4px; } }
+  @media (max-height:400px) { body { padding:14px 16px; } .stage { gap:10px; } }
 </style>
 </head>
 <body>
 <div class="stage">
+  <div class="cue" id="cue">시간대를 눌러 보세요 <span>· 남은 자리가 바뀝니다</span></div>
   <div class="times" role="group" aria-label="언제 갈까">
     <button type="button" data-t="0" aria-pressed="true">평일 오후 3시</button>
     <button type="button" data-t="1" aria-pressed="false">토요일 오후 2시</button>
@@ -46,6 +54,11 @@
   <div class="note">예시 값 · 실시간 관측이 아니라 시간대별 방문 패턴으로 추정한다</div>
 </div>
 <script>
+  // 첫 조작 안내 — 한 번 만지면 흐려진 뒤 자리를 비운다(허브 대표 카드 시안 B, 2026-11-17).
+  const cue = document.getElementById("cue");
+  const dismissCue = () => { if (!cue || cue.hidden || cue.classList.contains("gone")) return; cue.classList.add("gone"); setTimeout(() => { cue.hidden = true; }, 260); };
+  document.addEventListener("click", (e) => { if (e.target.closest("button")) dismissCue(); });
+  document.addEventListener("input", dismissCue);
   // 카페별 총 좌석과 시간대별 혼잡도(0~1) — 예시 값
   const CAFES = [
     { name:"카페 A", seats:12, busy:[0.55, 0.9, 0.35] },
