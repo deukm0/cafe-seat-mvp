@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실패없는 카페 선택 미니 데모</title>
+<!-- 프로젝트 허브 대표 카드의 미니 데모. 허브가 sandbox iframe으로 띄운다(외부 리소스 없음).
+     서비스의 판단 하나만 흉내 낸다: 남은 자리 = 총 좌석 × (1 − 시간대 혼잡도).
+     카페 이름·좌석·혼잡도는 예시 값이다(실제 17곳의 값이 아니다). -->
+<style>
+  :root { --bg:#e9dfc6; --ink:#24231f; --muted:#5f5d55; --faint:#6e6960; --olive:#68604d; --paper:#fbfaf6;
+    --free:#4f8a5b; --freebg:#dcebd6; --mid:#a8842f; --midbg:#f3e6bf; --busy:#b04a43; --busybg:#f2d3cd; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--ink); font:14px/1.5 "Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden; }
+  .stage { width:100%; max-width:520px; display:flex; flex-direction:column; gap:14px; }
+  .times { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; }
+  button { font:inherit; font-size:13px; font-weight:600; border:0; border-radius:999px; padding:7px 14px; cursor:pointer; background:var(--paper); color:var(--muted); }
+  button[aria-pressed="true"] { background:var(--olive); color:#fff; }
+  button:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+  .bubble { align-self:center; background:#fff; border-radius:16px; padding:8px 16px; font-weight:700; position:relative; box-shadow:0 2px 0 rgba(68,63,49,.14); }
+  .cafes { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .cafe { display:flex; flex-direction:column; align-items:center; gap:8px; padding:8px 4px; border-radius:16px; cursor:pointer; border:2px solid transparent; background:none; }
+  .cafe.pick { border-color:var(--free); background:rgba(255,255,255,.35); }
+  .table { display:grid; grid-template-columns:repeat(4, 14px); gap:5px; padding:10px; border-radius:50%; background:var(--paper); }
+  .seat { width:14px; height:14px; border-radius:4px; background:var(--olive); transition:background .3s ease-out; }
+  .seat.empty { background:var(--freebg); box-shadow:inset 0 0 0 2px var(--free); }
+  .pill { font-size:12px; font-weight:700; border-radius:999px; padding:3px 10px; }
+  .free { background:var(--freebg); color:var(--free); } .mid { background:var(--midbg); color:#7a5f1c; } .busy { background:var(--busybg); color:var(--busy); }
+  .calc { text-align:center; font-size:13px; color:var(--muted); background:rgba(251,250,246,.6); border-radius:12px; padding:8px; }
+  .calc b { color:var(--ink); font-variant-numeric:tabular-nums; }
+  .note { text-align:center; font-size:12px; color:var(--faint); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="times" role="group" aria-label="언제 갈까">
+    <button type="button" data-t="0" aria-pressed="true">평일 오후 3시</button>
+    <button type="button" data-t="1" aria-pressed="false">토요일 오후 2시</button>
+    <button type="button" data-t="2" aria-pressed="false">밤 9시</button>
+  </div>
+  <div class="bubble" id="bubble" aria-live="polite"></div>
+  <div class="cafes" id="cafes"></div>
+  <div class="calc" id="calc"></div>
+  <div class="note">예시 값 · 실시간 관측이 아니라 시간대별 방문 패턴으로 추정한다</div>
+</div>
+<script>
+  // 카페별 총 좌석과 시간대별 혼잡도(0~1) — 예시 값
+  const CAFES = [
+    { name:"카페 A", seats:12, busy:[0.55, 0.9, 0.35] },
+    { name:"카페 B", seats:16, busy:[0.85, 0.7, 0.2] },
+    { name:"카페 C", seats:8,  busy:[0.25, 0.95, 0.6] },
+  ];
+  let t = 0, picked = null;
+  const level = (left, seats) => { const r = left / seats; return r >= 0.4 ? ["free","여유"] : r >= 0.15 ? ["mid","보통"] : ["busy","혼잡"]; };
+  function draw() {
+    const rows = CAFES.map((c) => { const left = Math.round(c.seats * (1 - c.busy[t])); return { ...c, left, lv: level(left, c.seats) }; });
+    const best = rows.reduce((a, b) => (b.left / b.seats > a.left / a.seats ? b : a));
+    const focus = picked !== null ? rows[picked] : best;
+    document.getElementById("cafes").innerHTML = rows.map((c, i) => `
+      <button type="button" class="cafe ${c === focus ? "pick" : ""}" data-i="${i}" aria-label="${c.name} 남은 자리 ${c.left}석, ${c.lv[1]}">
+        <span class="table">${Array.from({ length: c.seats }, (_, k) => `<span class="seat ${k < c.left ? "empty" : ""}"></span>`).join("")}</span>
+        <span class="pill ${c.lv[0]}">${c.name} · ${c.lv[1]}</span>
+      </button>`).join("");
+    document.getElementById("calc").innerHTML =
+      `${focus.name} 남은 자리 = <b>${focus.seats}석</b> × (1 − <b>${focus.busy[t].toFixed(2)}</b>) ≈ <b>${focus.left}석</b>`;
+    document.getElementById("bubble").textContent = best.lv[0] === "busy"
+      ? "지금은 다 붐벼. 조금 있다 가자" : `지금 가면 ${best.name}에 앉을 수 있어!`;
+    document.querySelectorAll(".cafe").forEach((el) => el.onclick = () => { picked = Number(el.dataset.i); draw(); });
+  }
+  document.querySelectorAll(".times button").forEach((b) => b.onclick = () => {
+    document.querySelectorAll(".times button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    t = Number(b.dataset.t); picked = null; draw();
+  });
+  draw();
+</script>
+</body>
+</html>
