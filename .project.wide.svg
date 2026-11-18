@@ -1,33 +1,34 @@
-<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="실패없는 카페 선택 판단 흐름 — 좌석 수와 시간대 혼잡도로 남은 자리를 계산해 색 핀으로 보여주고 사용자가 고른다">
+<svg viewBox="0 0 1000 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="실패없는 카페 선택 흐름 — 좌석 수를 세고 시간대 혼잡도를 모아 매시간 남은 자리를 추정해 색 핀으로 보여 주고, 사용자가 골라 길찾기로 간다">
   <title>공개 패턴에서 오늘 갈 카페까지</title>
-  <defs>
-    <marker id="flow-arrow-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8e75" />
-    </marker>
-  </defs>
 
-  <rect x="0" y="0" width="250" height="204" rx="18" fill="#ffffff" stroke="#e2dac8" stroke-width="1" />
-  <text x="22" y="34" font-size="12" fill="#6e6960" font-weight="700" letter-spacing="2">입력</text>
-  <rect x="280" y="0" width="270" height="204" rx="18" fill="#68604d" />
-  <text x="302" y="34" font-size="12" fill="#c9cfb3" font-weight="700" letter-spacing="2">판단</text>
-  <rect x="580" y="0" width="195" height="204" rx="18" fill="#f1ead8" />
-  <text x="602" y="34" font-size="12" fill="#6e6960" font-weight="700" letter-spacing="2">결과</text>
-  <rect x="805" y="0" width="195" height="204" rx="18" fill="#f1ead8" />
-  <text x="827" y="34" font-size="12" fill="#6e6960" font-weight="700" letter-spacing="2">사용자</text>
-  <text x="22" y="76" font-size="20" fill="#24231f" font-weight="600">좌석 수</text>
-  <text x="22" y="102" font-size="15" fill="#5f5d55">17곳을 현장에서 셌다</text>
-  <line x1="22" y1="122" x2="228" y2="122" stroke="#e2dac8" stroke-width="1" />
-  <text x="22" y="156" font-size="20" fill="#24231f" font-weight="600">시간대 혼잡도</text>
-  <text x="22" y="182" font-size="15" fill="#5f5d55">공개 방문 패턴, 매시간</text>
-  <text x="302" y="116" font-size="22" fill="#ffffff" font-weight="600">남은 자리 계산</text>
-  <text x="302" y="142" font-size="15" fill="#efe8d6">총 좌석 × (1 − 혼잡도)</text>
-  <text x="602" y="116" font-size="20" fill="#24231f" font-weight="600">색 핀</text>
-  <text x="602" y="142" font-size="15" fill="#5f5d55">여유 · 보통 · 혼잡</text>
-  <text x="827" y="105" font-size="20" fill="#24231f" font-weight="600">고르고 이동</text>
-  <text x="827" y="131" font-size="15" fill="#5f5d55">여유로운 곳으로</text>
-  <text x="827" y="152" font-size="15" fill="#5f5d55">길찾기</text>
-  <line x1="255" y1="102.0" x2="274" y2="102.0" stroke="#8a8e75" stroke-width="1.5" marker-end="url(#flow-arrow-w)" />
-  <line x1="555" y1="102.0" x2="574" y2="102.0" stroke="#8a8e75" stroke-width="1.5" marker-end="url(#flow-arrow-w)" />
-  <line x1="780" y1="102.0" x2="799" y2="102.0" stroke="#8a8e75" stroke-width="1.5" marker-end="url(#flow-arrow-w)" />
-  <text x="500.0" y="244" font-size="15" fill="#6e6960" text-anchor="middle">실시간 관측이 아니라 공개 방문 패턴에서 나온 추정값이다</text>
+  <line x1="83" y1="34" x2="917" y2="34" stroke="#d8ccb0" stroke-width="3" />
+  <circle cx="83" cy="34" r="22" fill="#fbfaf6" stroke="#68604d" stroke-width="2.5" />
+  <text x="83" y="39.8" font-size="16" font-weight="700" fill="#68604d" text-anchor="middle">1</text>
+  <text x="83" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">카페 등록</text>
+  <text x="83" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">좌석 수를</text>
+  <text x="83" y="154" font-size="15" fill="#5f5d55" text-anchor="middle">현장에서 센다</text>
+  <circle cx="250" cy="34" r="22" fill="#fbfaf6" stroke="#68604d" stroke-width="2.5" />
+  <text x="250" y="39.8" font-size="16" font-weight="700" fill="#68604d" text-anchor="middle">2</text>
+  <text x="250" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">패턴 수집</text>
+  <text x="250" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">시간대별 혼잡도를</text>
+  <text x="250" y="154" font-size="15" fill="#5f5d55" text-anchor="middle">모은다</text>
+  <circle cx="417" cy="34" r="22" fill="#fbfaf6" stroke="#68604d" stroke-width="2.5" />
+  <text x="417" y="39.8" font-size="16" font-weight="700" fill="#68604d" text-anchor="middle">3</text>
+  <text x="417" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">매시간 갱신</text>
+  <text x="417" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">지금 시각의</text>
+  <text x="417" y="154" font-size="15" fill="#5f5d55" text-anchor="middle">혼잡도를 고른다</text>
+  <circle cx="583" cy="34" r="22" fill="#fbfaf6" stroke="#68604d" stroke-width="2.5" />
+  <text x="583" y="39.8" font-size="16" font-weight="700" fill="#68604d" text-anchor="middle">4</text>
+  <text x="583" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">남은 자리 추정</text>
+  <text x="583" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">좌석 × (1 − 혼잡도)</text>
+  <circle cx="750" cy="34" r="22" fill="#fbfaf6" stroke="#68604d" stroke-width="2.5" />
+  <text x="750" y="39.8" font-size="16" font-weight="700" fill="#68604d" text-anchor="middle">5</text>
+  <text x="750" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">지도와 목록</text>
+  <text x="750" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">여유 · 보통 · 혼잡</text>
+  <text x="750" y="154" font-size="15" fill="#5f5d55" text-anchor="middle">색 핀</text>
+  <circle cx="917" cy="34" r="22" fill="#68604d" stroke="#68604d" stroke-width="2.5" />
+  <text x="917" y="39.8" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+  <text x="917" y="104" font-size="20" fill="#24231f" font-weight="600" text-anchor="middle">고르고 이동</text>
+  <text x="917" y="132" font-size="15" fill="#5f5d55" text-anchor="middle">길찾기로 넘어간다</text>
+  <text x="500.0" y="208" font-size="15" fill="#6e6960" text-anchor="middle">실시간 관측이 아니라 공개 방문 패턴에서 나온 추정값이다</text>
 </svg>
